@@ -7,7 +7,7 @@
 
 import UIKit
 
-class PreparingSearchViewController: ViewController{
+class PreparingSearchViewController: ViewController {
     var ingredientsUsed = ""
     var ingredientsList = [String]()
     var parameters: Parameters = .search
@@ -70,14 +70,14 @@ class PreparingSearchViewController: ViewController{
         ingredientAdded = "- " + ingredientAdded
         ingredientsList.append(ingredientAdded) // Adding new ingredient
         ingredientName.text = ""
-        viewWillAppear(true)
+        ingredientTableView.reloadData()
     }
     
     private func gettingIngredients() {
-            guard ingredientsList.count > 0 else {
+        guard ingredientsList.count > 0 else {
             let error = APIErrors.nothingIsWritten
             if let errorMessage = error.errorDescription, let errorTitle = error.failureReason {
-            allErrors(errorMessage: errorMessage, errorTitle: errorTitle)
+                allErrors(errorMessage: errorMessage, errorTitle: errorTitle)
             }
             return
         }
@@ -90,7 +90,7 @@ class PreparingSearchViewController: ViewController{
     private func disMissKeyboardMethod() {
         ingredientName.resignFirstResponder()
     }
-
+    
     private func allErrors(errorMessage: String, errorTitle: String) {
         let alertVC = UIAlertController(title: errorTitle, message: errorMessage, preferredStyle: .alert)
         alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))

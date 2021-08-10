@@ -19,6 +19,8 @@ class RecipeChoosenViewController: UIViewController {
     
     var recipesStored = [RecipeStored]()
     
+    let recipeCoreDataManager = RecipeCoreDataManager()
+    
     @IBOutlet weak var blogNameLabel: UILabel!
     @IBOutlet weak var imageRecipe: UIImageView!
     @IBOutlet weak var ingredientsList: UITextView!
@@ -42,7 +44,7 @@ class RecipeChoosenViewController: UIViewController {
         favoriteOrNot.contentVerticalAlignment = .fill
         favoriteOrNot.contentHorizontalAlignment = .fill
         
-        recipesStored = recipeEntity.loadRecipes() // On charge les données du CoreData
+        recipesStored = recipeCoreDataManager.loadRecipes() // On charge les données du CoreData
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -56,7 +58,7 @@ class RecipeChoosenViewController: UIViewController {
         } else {
             let error = APIErrors.noImage
             if let errorMessage = error.errorDescription, let errorTitle = error.failureReason {
-            allErrors(errorMessage: errorMessage, errorTitle: errorTitle)
+                allErrors(errorMessage: errorMessage, errorTitle: errorTitle)
             }
         }
         if let imageUrlUnwrapped = URL(string: urlImage) {
@@ -64,7 +66,7 @@ class RecipeChoosenViewController: UIViewController {
         } else {
             let error = APIErrors.noImage
             if let errorMessage = error.errorDescription, let errorTitle = error.failureReason {
-            allErrors(errorMessage: errorMessage, errorTitle: errorTitle)
+                allErrors(errorMessage: errorMessage, errorTitle: errorTitle)
             }
             imageRecipe.image = UIImage(named: "imageDefault") // No image, so Default image
         }
@@ -88,7 +90,7 @@ class RecipeChoosenViewController: UIViewController {
         } else {
             let error = APIErrors.noUrl
             if let errorMessage = error.errorDescription, let errorTitle = error.failureReason {
-            allErrors(errorMessage: errorMessage, errorTitle: errorTitle)
+                allErrors(errorMessage: errorMessage, errorTitle: errorTitle)
             }
             print("no url") // Ajouter un message d'erreur
         }
@@ -114,8 +116,8 @@ class RecipeChoosenViewController: UIViewController {
     
     private func isRecipeNotAlreadyRegistred()-> Bool {
         //if recipesFromCoreData.loadRecipes().count == 0 { // If there is no recipe in favorite
-           // if RecipeStored.all.count == 0 {
-                if recipesStored.count == 0 {
+        // if RecipeStored.all.count == 0 {
+        if recipesStored.count == 0 {
             return true
         }
         //for object in recipesFromCoreData.loadRecipes() {
@@ -141,12 +143,13 @@ class RecipeChoosenViewController: UIViewController {
         recipeEntity.ingredients = recipeToSave.ingredientsNeeded
         
         do {
-    try? AppDelegate.viewContext.save()
+            try? AppDelegate.viewContext.save()
         } //catch { // À traiter plus tard
-          //  print("Oh une erreur.")
-       // }
+        //  print("Oh une erreur.")
+        // }
         //recipeEntity.saveRecipe()
     }
+    
     private func convertFromUsableToCoreData(recipeToSave: Recipe) -> RecipeStored {
         let recipeToStore = RecipeStored(context: AppDelegate.viewContext)
         recipeToStore.name = recipeToSave.name
@@ -157,9 +160,10 @@ class RecipeChoosenViewController: UIViewController {
         recipeToStore.ingredients = recipeToSave.ingredientsNeeded
         return recipeToStore
     }
+    
     private func deleteRecipeFromCoreData() {
-       // for object in recipesFromCoreData.loadRecipes() {
-       //for object in RecipeStored.all {
+        // for object in recipesFromCoreData.loadRecipes() {
+        //for object in RecipeStored.all {
         for object in recipesStored {
             if createRecipeObject(object: object) == recipeChoosen {
                 print("Trouvé, on efface")
@@ -171,6 +175,7 @@ class RecipeChoosenViewController: UIViewController {
             }
         }
     }
+    
     private func isRecipeNotFavorite(answer : Bool) {
         if answer == false {
             favoriteOrNot.setImage(UIImage(systemName: "heart.fill"), for: .normal)

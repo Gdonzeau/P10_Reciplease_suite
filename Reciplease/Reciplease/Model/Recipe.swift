@@ -53,7 +53,7 @@ struct Recipe {
     let duration: Float
     let ingredientsNeeded: [String]
     
-    // Je sais, pas de ! mais là, c'est pour tester
+
     init(from recipeEntity: RecipeStored) {
         
         self.name = recipeEntity.name ?? "No name"

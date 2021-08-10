@@ -21,6 +21,8 @@ class RecipeListViewController: ViewController {
     
     //var recipesStored = [RecipeStored]()
     
+
+    
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
@@ -44,7 +46,7 @@ class RecipeListViewController: ViewController {
         } else { // On charge les données depuis le CoreData
             //let recipeEntity = RecipeStored(context: AppDelegate.viewContext)
             
-            let result = recipeEntity.loadRecipes()
+            let result = recipeCoreDataManager.loadRecipes()
             print(result.count)
             recipesStored = result
             
@@ -207,13 +209,13 @@ extension RecipeListViewController: UITableViewDelegate { // To delete cells one
             if parameters == .search {
                 downloadedRecipes.remove(at: indexPath.row)
             } else {
-                let recipeToDelete = RecipeStored(context: AppDelegate.viewContext)
-                let recipes = recipeToDelete.loadRecipes()
+    
+                let recipes = recipeCoreDataManager.loadRecipes()
                 
                 for object in recipes {
                     let recipeToCompare = convertFromCoreDataToUsable(recipe: object)
                     if recipeToCompare == convertFromCoreDataToUsable(recipe: recipesStored[indexPath.row]) {
-                        recipeToDelete.deleteRecipe(recipeToDelete: object)
+                        recipeCoreDataManager.deleteRecipe(recipeToDelete: object)
                     }
                 }
                 //recipesFromCoreData.deleteRecipe(recipeToDelete: convertFromCoreDataToUsable(recipe: RecipeStored.all[indexPath.row]))
