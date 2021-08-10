@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		040EB68026C281E20051DD2D /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040EB67F26C281E20051DD2D /* CoreDataStack.swift */; };
 		04311935269C87A50031E33E /* PreparingSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04311934269C87A50031E33E /* PreparingSearchViewController.swift */; };
 		04311949269CA9AC0031E33E /* RecipeListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04311948269CA9AB0031E33E /* RecipeListViewController.swift */; };
 		045CD4C126B845CB00F01C34 /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045CD4C026B845CB00F01C34 /* InfoView.swift */; };
@@ -51,6 +52,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		040EB67F26C281E20051DD2D /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		04311934269C87A50031E33E /* PreparingSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreparingSearchViewController.swift; sourceTree = "<group>"; };
 		04311948269CA9AB0031E33E /* RecipeListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeListViewController.swift; sourceTree = "<group>"; };
 		045CD4C026B845CB00F01C34 /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
@@ -177,6 +179,7 @@
 				04F8A602269DC67800B12445 /* RecipesReceived.swift */,
 				04E2691726A23D4100300B4B /* RecipeStored.swift */,
 				047F993526AF01B400A83EEA /* Parameters.swift */,
+				040EB67F26C281E20051DD2D /* CoreDataStack.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -497,6 +500,7 @@
 				04311935269C87A50031E33E /* PreparingSearchViewController.swift in Sources */,
 				046E0548269328AD00C2F91C /* AppDelegate.swift in Sources */,
 				047F993626AF01B400A83EEA /* Parameters.swift in Sources */,
+				040EB68026C281E20051DD2D /* CoreDataStack.swift in Sources */,
 				046E05B9269501BF00C2F91C /* NetworkErrors.swift in Sources */,
 				046E054A269328AD00C2F91C /* SceneDelegate.swift in Sources */,
 				04F8A60E269E49A100B12445 /* RecipeTableViewCell.swift in Sources */,

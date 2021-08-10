@@ -130,15 +130,22 @@ class RecipeChoosenViewController: UIViewController {
     }
     
     private func savingRecipe(recipeToSave: Recipe) {
-        let recipe = RecipeStored(context: AppDelegate.viewContext) //Appel du CoreDate RecipeService
+        //let recipeEntity = RecipeStored(context: AppDelegate.viewContext) //Appel du CoreDate RecipeService
         //let recipe = convertFromUsableToCoreData(recipeToSave: recipeToSave)
-        recipe.name = recipeToSave.name
-        recipe.imageUrl = recipeToSave.imageURL
-        recipe.url = recipeToSave.url
-        recipe.person = recipeToSave.numberOfPeople
-        recipe.totalTime = recipeToSave.duration
-        recipe.ingredients = recipeToSave.ingredientsNeeded
-        recipe.saveRecipe()
+        recipeEntity.name = recipeToSave.name
+        
+        recipeEntity.imageUrl = recipeToSave.imageURL
+        recipeEntity.url = recipeToSave.url
+        recipeEntity.person = recipeToSave.numberOfPeople
+        recipeEntity.totalTime = recipeToSave.duration
+        recipeEntity.ingredients = recipeToSave.ingredientsNeeded
+        
+        do {
+    try? AppDelegate.viewContext.save()
+        } //catch { // À traiter plus tard
+          //  print("Oh une erreur.")
+       // }
+        //recipeEntity.saveRecipe()
     }
     private func convertFromUsableToCoreData(recipeToSave: Recipe) -> RecipeStored {
         let recipeToStore = RecipeStored(context: AppDelegate.viewContext)

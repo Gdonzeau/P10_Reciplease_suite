@@ -22,8 +22,8 @@ class RecipeStored: NSManagedObject { // Le storage Service
                 answer.append(response[index])
                 }
             }
-            return answer // Peut-être pas nécessaire. Juste retourner response ?
-            //return response
+            //return answer // Peut-être pas nécessaire. Juste retourner response ?
+            return response // Deux réponses dans le
         } catch {
             let error = APIErrors.noData // Peut-être pas API... mais juste Error
             print(error)
