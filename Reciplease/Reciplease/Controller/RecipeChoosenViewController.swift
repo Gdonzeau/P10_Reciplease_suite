@@ -43,11 +43,14 @@ class RecipeChoosenViewController: UIViewController {
         isRecipeNotFavorite(answer: isRecipeNotAlreadyRegistred())
         favoriteOrNot.contentVerticalAlignment = .fill
         favoriteOrNot.contentHorizontalAlignment = .fill
+        // Pourquoi y avait-il ces lignes ci-dessous ?
+        /*
         do {
         recipesStored = try recipeCoreDataManager.loadRecipes() // On charge les données du CoreData
         } catch {
             print("Erreur de chargement")
         }
+        */
     }
     
     override func viewWillAppear(_ animated: Bool) {

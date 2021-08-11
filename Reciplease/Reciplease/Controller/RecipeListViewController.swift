@@ -36,23 +36,6 @@ class RecipeListViewController: UIViewController {
         } else {
             // On charge les données depuis le CoreData
             do {
-                // Test
-            let request: NSFetchRequest<RecipeStored> = RecipeStored.fetchRequest()
-                    
-                    do {
-                        let storedRecipes = try AppDelegate.viewContext.fetch(request)
-                        for recipe in storedRecipes {
-                            let recipeConverted = convertFromCoreDataToUsable(recipe: recipe)
-                            favoriteRecipes.append(recipeConverted)
-                        }
-                        toggleActivityIndicator(shown: false)
-                    } catch {
-                        print("erreur")
-                    }
-                
-            // Fin du test
-            /*
-            do {
             let result = try recipeCoreDataManager.loadRecipes()
             print(result.count)
             //recipesStored = result
@@ -64,12 +47,11 @@ class RecipeListViewController: UIViewController {
             if favoriteRecipes.count == 0 {
                 imageView.isHidden = false
             }
- */
+ 
             } catch {
                 print("Erreur de chargement")
             }
         }
-        
         receipesTableView.reloadData()
     }
     

@@ -37,6 +37,7 @@ class RecipeCoreDataManager {
         
         do {
             recipesEntities = try viewContext.fetch(request)
+            print("Nous avons \(recipesEntities.count)")
             
         } catch let myError {
             throw myError
