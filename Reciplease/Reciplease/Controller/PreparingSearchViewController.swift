@@ -7,7 +7,7 @@
 
 import UIKit
 
-class PreparingSearchViewController: ViewController {
+class PreparingSearchViewController: UIViewController {
     var ingredientsUsed = ""
     var ingredientsList = [String]()
     var parameters: Parameters = .search

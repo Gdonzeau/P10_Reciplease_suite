@@ -10,20 +10,19 @@ import Alamofire
 
 class ViewController: UIViewController {
     
-   
-    
-    var recipesStored = [RecipeStored]()
-    
-    
+    var recipesStored = [Recipe]()
     let recipeCoreDataManager = RecipeCoreDataManager()
  
-    //var recipeFromCoreData = RecipeEntity(context: AppDelegate.viewContext)
-    //var basicRecipe = Recipe(from: RecipeStored()) //Recette de base, vide
     override func viewDidLoad() {
         super.viewDidLoad()
         //recipeEntity.deleteAll()
-        recipesStored = recipeCoreDataManager.loadRecipes()
+        do {
+        recipesStored = try recipeCoreDataManager.loadRecipes()
         print("Nombre de recettes en mémoire : \(recipesStored.count)")
+        } catch let myError {
+            print(myError)
+            print("Je n'ai pas réussi à charger les recettes.")
+        }
         
     }
 

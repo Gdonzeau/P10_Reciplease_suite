@@ -17,7 +17,7 @@ class RecipeChoosenViewController: UIViewController {
     var recipeChoosen = Recipe(from: RecipeStored(context: AppDelegate.viewContext))
     var recipeEntity = RecipeStored(context: AppDelegate.viewContext)
     
-    var recipesStored = [RecipeStored]()
+    var recipesStored = [Recipe]()
     
     let recipeCoreDataManager = RecipeCoreDataManager()
     
@@ -43,8 +43,11 @@ class RecipeChoosenViewController: UIViewController {
         isRecipeNotFavorite(answer: isRecipeNotAlreadyRegistred())
         favoriteOrNot.contentVerticalAlignment = .fill
         favoriteOrNot.contentHorizontalAlignment = .fill
-        
-        recipesStored = recipeCoreDataManager.loadRecipes() // On charge les données du CoreData
+        do {
+        recipesStored = try recipeCoreDataManager.loadRecipes() // On charge les données du CoreData
+        } catch {
+            print("Erreur de chargement")
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -75,7 +78,25 @@ class RecipeChoosenViewController: UIViewController {
     private func saveOrDelete() {
         if isRecipeNotAlreadyRegistred() == true {
             favoriteOrNot.setImage(UIImage(systemName: "heart.fill"), for: .normal)
-            savingRecipe(recipeToSave: recipeChoosen)
+            
+            //savingRecipe(recipeToSave: recipeChoosen)
+            let recipeEntity = RecipeStored(context: AppDelegate.viewContext)
+            recipeEntity.name = recipeChoosen.name
+            
+            recipeEntity.imageUrl = recipeChoosen.imageURL
+            recipeEntity.url = recipeChoosen.url
+            recipeEntity.person = recipeChoosen.numberOfPeople
+            recipeEntity.totalTime = recipeChoosen.duration
+            recipeEntity.ingredients = recipeChoosen.ingredientsNeeded
+            
+            do {
+                try? AppDelegate.viewContext.save()
+            } //catch { // À traiter plus tard
+            //  print("Oh une erreur.")
+            // }
+            
+            
+            
         } else {
             favoriteOrNot.setImage(UIImage(systemName: "heart"), for: .normal)
             deleteRecipeFromCoreData()
@@ -123,8 +144,7 @@ class RecipeChoosenViewController: UIViewController {
         //for object in recipesFromCoreData.loadRecipes() {
         //for object in RecipeStored.all {
         for object in recipesStored {
-            
-            if createRecipeObject(object: object) == recipeChoosen { // is the recipe on the View already favorit ?
+            if object == recipeChoosen { // is the recipe on the View already favorit ?
                 return false
             }
         }
@@ -132,8 +152,10 @@ class RecipeChoosenViewController: UIViewController {
     }
     
     private func savingRecipe(recipeToSave: Recipe) {
+        recipeCoreDataManager.saveRecipe(recipeToSave: recipeToSave)
         //let recipeEntity = RecipeStored(context: AppDelegate.viewContext) //Appel du CoreDate RecipeService
         //let recipe = convertFromUsableToCoreData(recipeToSave: recipeToSave)
+        /*
         recipeEntity.name = recipeToSave.name
         
         recipeEntity.imageUrl = recipeToSave.imageURL
@@ -148,8 +170,9 @@ class RecipeChoosenViewController: UIViewController {
         //  print("Oh une erreur.")
         // }
         //recipeEntity.saveRecipe()
+ */
     }
-    
+    /*
     private func convertFromUsableToCoreData(recipeToSave: Recipe) -> RecipeStored {
         let recipeToStore = RecipeStored(context: AppDelegate.viewContext)
         recipeToStore.name = recipeToSave.name
@@ -160,14 +183,14 @@ class RecipeChoosenViewController: UIViewController {
         recipeToStore.ingredients = recipeToSave.ingredientsNeeded
         return recipeToStore
     }
-    
+    */
     private func deleteRecipeFromCoreData() {
         // for object in recipesFromCoreData.loadRecipes() {
         //for object in RecipeStored.all {
         for object in recipesStored {
-            if createRecipeObject(object: object) == recipeChoosen {
+            if object == recipeChoosen {
                 print("Trouvé, on efface")
-                AppDelegate.viewContext.delete(object)
+                recipeCoreDataManager.deleteRecipe(recipeToDelete: object)
                 try? AppDelegate.viewContext.save()
                 return
             } else {

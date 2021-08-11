@@ -6,23 +6,15 @@
 //
 
 import UIKit
-//import CoreData
+import CoreData // Sorti des commentaires pour test
 
-class RecipeListViewController: ViewController {
+class RecipeListViewController: UIViewController {
     
-    //var recipesStored = [RecipeStored]()
     var ingredientsUsed = ""
     var parameters: Parameters = .favorites // By default
     var favoriteRecipes = [Recipe]() // To store recipes from Core Data
-    //var recipesFromCoreData = RecipeStored(context: AppDelegate.viewContext)
     var downloadedRecipes = [Recipe]()
-    //var recipeEmpty = Recipe(from: RecipeEntity(context: AppDelegate.viewContext))
-    //var recipeEntity = RecipeStored(context: AppDelegate.viewContext)
-    
-    //var recipesStored = [RecipeStored]()
-    
-
-    
+    let recipeCoreDataManager = RecipeCoreDataManager()
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
@@ -30,8 +22,6 @@ class RecipeListViewController: ViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //let recipeEntity = RecipeStored(context: AppDelegate.viewContext)
-        //let recipesStored = recipeEntity.loadRecipes() // On charge les données du CoreData
         imageView.isHidden = true
         toggleActivityIndicator(shown: true)
         self.receipesTableView.rowHeight = 120.0
@@ -43,21 +33,43 @@ class RecipeListViewController: ViewController {
         imageView.isHidden = true
         if parameters == .search {
             searchForRecipes(ingredients: ingredientsUsed)
-        } else { // On charge les données depuis le CoreData
-            //let recipeEntity = RecipeStored(context: AppDelegate.viewContext)
-            
-            let result = recipeCoreDataManager.loadRecipes()
+        } else {
+            // On charge les données depuis le CoreData
+            do {
+                // Test
+            let request: NSFetchRequest<RecipeStored> = RecipeStored.fetchRequest()
+                    
+                    do {
+                        let storedRecipes = try AppDelegate.viewContext.fetch(request)
+                        for recipe in storedRecipes {
+                            let recipeConverted = convertFromCoreDataToUsable(recipe: recipe)
+                            favoriteRecipes.append(recipeConverted)
+                        }
+                        toggleActivityIndicator(shown: false)
+                    } catch {
+                        print("erreur")
+                    }
+                
+            // Fin du test
+            /*
+            do {
+            let result = try recipeCoreDataManager.loadRecipes()
             print(result.count)
-            recipesStored = result
+            //recipesStored = result
+            favoriteRecipes = result
             
             toggleActivityIndicator(shown: false)
             
-            if recipesStored.count == 0 {
-            //if result.count == 0 {
-                //receipesTableView.isHidden = true
+            //if recipesStored.count == 0 {
+            if favoriteRecipes.count == 0 {
                 imageView.isHidden = false
             }
+ */
+            } catch {
+                print("Erreur de chargement")
+            }
         }
+        
         receipesTableView.reloadData()
     }
     
@@ -68,9 +80,8 @@ class RecipeListViewController: ViewController {
             if parameters == .search {
                 recipeChoosenVC.recipeChoosen = downloadedRecipes[index]
             } else {
-                //recipeChoosenVC.recipeChoosen = convertFromCoreDataToUsable(recipe: recipesFromCoreData.loadRecipes()[index])
-                //recipeChoosenVC.recipeChoosen = convertFromCoreDataToUsable(recipe: RecipeStored.all[index])
-                recipeChoosenVC.recipeChoosen = convertFromCoreDataToUsable(recipe: recipesStored[index])
+                //recipeChoosenVC.recipeChoosen = recipesStored[index]
+                recipeChoosenVC.recipeChoosen = favoriteRecipes[index]
             }
         }
     }
@@ -86,7 +97,7 @@ class RecipeListViewController: ViewController {
             switch result {
             case .success(let recipes) :
                 self.toggleActivityIndicator(shown: false)
-                self.savingAnswer(recipes:recipes) // self.recipes = recipes
+                self.savingAnswer(recipes:recipes)
                 self.receipesTableView.reloadData()
                 
             case .failure(let error) :
@@ -105,11 +116,25 @@ class RecipeListViewController: ViewController {
         
         toggleActivityIndicator(shown: false)
     }
+    
     private func convertFromCoreDataToUsable(recipe:RecipeStored)-> Recipe {
-        
         let recette = Recipe(from: recipe)
         return recette
     }
+ 
+    
+    /*
+    private func convertFromUsableToCoreData(recipeToSave: Recipe) -> RecipeStored {
+        let recipeCoreData = RecipeStored(context: AppDelegate.viewContext)
+        recipeCoreData.name = recipeToSave.name
+        recipeCoreData.imageUrl = recipeToSave.imageURL
+        recipeCoreData.url = recipeToSave.url
+        recipeCoreData.person = recipeToSave.numberOfPeople
+        recipeCoreData.totalTime = recipeToSave.duration
+        recipeCoreData.ingredients = recipeToSave.ingredientsNeeded
+        return recipeCoreData
+    }
+ */
     
     private func allErrors(errorMessage: String, errorTitle: String) {
         let alertVC = UIAlertController(title: errorTitle, message: errorMessage, preferredStyle: .alert)
@@ -137,19 +162,16 @@ extension RecipeListViewController: UITableViewDataSource {
             }
             return downloadedRecipes.count
         default:
-            //print("nombre de favoris : \(recipesFromCoreData.loadRecipes().count)")
-            //print("Nombre de favoris : \(RecipeStored.all.count)")
-            print("Nombre de favoris : \(recipesStored.count)")
-            //if recipesFromCoreData.loadRecipes().count == 0 {
-            //if RecipeStored.all.count == 0 {
-                if recipesStored.count == 0 {
+            //print("Nombre de favoris : \(recipesStored.count)")
+            print("Nombre de favoris : \(favoriteRecipes.count)")
+            if favoriteRecipes.count == 0 {
+            //if recipesStored.count == 0 {
                 imageView.isHidden = false
             } else {
                 imageView.isHidden = true
             }
-            //return recipesFromCoreData.loadRecipes().count
-            //return RecipeStored.all.count
-            return recipesStored.count
+            return favoriteRecipes.count
+            //return recipesStored.count
         }
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -159,14 +181,13 @@ extension RecipeListViewController: UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "RecipeCell", for: indexPath) as? RecipeTableViewCell else {
             return UITableViewCell()
         }
-        //var recipe = recipeEmpty
-        var recipe = Recipe(from: RecipeStored(context: AppDelegate.viewContext))
+        var recipe = Recipe(from: RecipeStored(context: AppDelegate.viewContext)) // ???
+        //var recipe = Recipe(from: RecipeStored(context: recipeCoreDataManager.shared.))
         if parameters == .search {
             recipe = downloadedRecipes[indexPath.row]
         } else {
-            //recipe = convertFromCoreDataToUsable(recipe: recipesFromCoreData.loadRecipes()[indexPath.row])
-            //recipe = convertFromCoreDataToUsable(recipe: RecipeStored.all[indexPath.row])
-            recipe = convertFromCoreDataToUsable(recipe: recipesStored[indexPath.row])
+            recipe = favoriteRecipes[indexPath.row]
+            //recipe = recipesStored[indexPath.row]
         }
         
         let name = recipe.name
@@ -209,19 +230,18 @@ extension RecipeListViewController: UITableViewDelegate { // To delete cells one
             if parameters == .search {
                 downloadedRecipes.remove(at: indexPath.row)
             } else {
-    
-                let recipes = recipeCoreDataManager.loadRecipes()
-                
-                for object in recipes {
-                    let recipeToCompare = convertFromCoreDataToUsable(recipe: object)
-                    if recipeToCompare == convertFromCoreDataToUsable(recipe: recipesStored[indexPath.row]) {
-                        recipeCoreDataManager.deleteRecipe(recipeToDelete: object)
+                do {
+                    let recipes = try recipeCoreDataManager.loadRecipes()
+                    
+                    for object in recipes {
+                        if object == favoriteRecipes[indexPath.row] {
+                        //if object == recipesStored[indexPath.row] {
+                            recipeCoreDataManager.deleteRecipe(recipeToDelete: object)
+                        }
                     }
+                } catch {
+                    print("Je n'arriv pas à charger.")
                 }
-                //recipesFromCoreData.deleteRecipe(recipeToDelete: convertFromCoreDataToUsable(recipe: RecipeStored.all[indexPath.row]))
-                //recipesFromCoreData.deleteRecipe(recipeToDelete: convertFromCoreDataToUsable(recipe: recipesStored[indexPath.row]))
-                //AppDelegate.viewContext.delete(recipesFromCoreData.loadRecipes()[indexPath.row])
-                //try? AppDelegate.viewContext.save()
             }
             tableView.deleteRows(at: [indexPath], with: .bottom)
         }
