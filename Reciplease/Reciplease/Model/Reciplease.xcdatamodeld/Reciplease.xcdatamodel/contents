@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17709" systemVersion="19H1217" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="EntityTest" representedClassName=".EntityTest" syncable="YES" codeGenerationType="category">
+        <attribute name="invited" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+    </entity>
     <entity name="RecipeStored" representedClassName=".RecipeStored" syncable="YES" codeGenerationType="category">
         <attribute name="imageUrl" optional="YES" attributeType="String"/>
         <attribute name="ingredients" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName="[String]"/>
@@ -10,5 +14,6 @@
     </entity>
     <elements>
         <element name="RecipeStored" positionX="0" positionY="0" width="128" height="133"/>
+        <element name="EntityTest" positionX="0" positionY="45" width="128" height="73"/>
     </elements>
 </model>
