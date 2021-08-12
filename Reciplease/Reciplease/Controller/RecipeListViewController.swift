@@ -192,9 +192,10 @@ extension RecipeListViewController: UITableViewDataSource {
         guard let URLUnwrapped = URL(string: imageUrl) else {
             let error = APIErrors.noUrl
             if let errorMessage = error.errorDescription, let errorTitle = error.failureReason {
-                allErrors(errorMessage: errorMessage, errorTitle: errorTitle)
+                //allErrors(errorMessage: errorMessage, errorTitle: errorTitle)
+                print("Lien internet mauvais")
             }
-            print("Lien internet mauvais")
+            //print("Lien internet mauvais")
             return UITableViewCell()
         }
         image.load(url: URLUnwrapped)

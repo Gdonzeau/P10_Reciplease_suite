@@ -8,6 +8,9 @@
 import UIKit
 
 class PreparingSearchViewController: UIViewController {
+    // Pour le test
+    let recipeCoreDataManager = RecipeCoreDataManager()
+    // fin du test
     var ingredientsUsed = ""
     var ingredientsList = [String]()
     var parameters: Parameters = .search
@@ -40,6 +43,36 @@ class PreparingSearchViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        // Test
+        /*
+         On charge le nombre d'entitiesTest en mémoire.
+         On affiche leur nombre. S'il est supérieur à zéro, on affiche les données (nom et nombre de personnes)
+         On crée une nouvelle EntityTest avec pour nom "Name"+ un nombre aléatoire
+         et pour nombre de personnes le nombre d'EntitiesTest déjà enregistrées.
+         */
+        // On charge les entités
+        var entitiesPresent = [EntityTest]()
+        if var entityReceived = try? recipeCoreDataManager.loadEntities() {
+            print("Il y a actuellement \(entityReceived.count) entités déjà enregistrée(s)")
+            if entityReceived.count > 0 {
+                for object in entityReceived {
+                    print("Entité \(String(describing: object.name)) avec \(object.invited) personnes")
+                    entitiesPresent.append(object)
+                    // On se retrouve avec un tableau d'entités.
+                }
+                entityReceived = []
+                print("Reste : \(entityReceived.count)")
+            }
+        }
+        // Puis on crée une nouvelle entité que l'on sauvegarde
+        let newEntity = EntityTest(context: AppDelegate.viewContext)
+        let randomNumber = Int.random(in: 1 ... 100)
+        newEntity.name = "Name" + String(randomNumber)
+        entitiesPresent = [] // On remet le tableau chargé précédemment à zéro car ?
+        try? AppDelegate.viewContext.save() // On essaie de svg
+        print("Sauvegardé")
+        // Fin du Test
+        
         paraTest = "Salut"
         ingredientName.attributedPlaceholder = NSAttributedString(string: "Lemon, Cheese, Sausages,...",
                                                                   attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray])

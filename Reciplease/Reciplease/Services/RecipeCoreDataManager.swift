@@ -15,20 +15,37 @@ class RecipeCoreDataManager {
     init(persistentContainer: NSPersistentContainer = (UIApplication.shared.delegate as! AppDelegate).persistentContainer) {
         self.viewContext = persistentContainer.viewContext
     }
+    // EntityTest
+    func loadEntities() throws -> [EntityTest] {
+        let request: NSFetchRequest<EntityTest> = EntityTest.fetchRequest()
+        var entitiesTest = [EntityTest]()
+        if let entitiesReceived = try? AppDelegate.viewContext.fetch(request) {
+            for object in entitiesReceived {
+                let newEntity = EntityTest(context: AppDelegate.viewContext)
+                newEntity.name = object.name
+                newEntity.invited = object.invited
+                entitiesTest.append(newEntity)
+            }
+        }
+        return entitiesTest
+    }
+    func saveEntities() {
+        
+    }
     
     /*
-    func loadRecipes() -> [RecipeStored] {
-        
-        let request: NSFetchRequest<RecipeStored> = RecipeStored.fetchRequest()
-        
-        do {
-            let storedRecipes = try viewContext.fetch(request)
-            return storedRecipes
-        } catch {
-            return []
-        }
-    }
-    */
+     func loadRecipes() -> [RecipeStored] {
+     
+     let request: NSFetchRequest<RecipeStored> = RecipeStored.fetchRequest()
+     
+     do {
+     let storedRecipes = try viewContext.fetch(request)
+     return storedRecipes
+     } catch {
+     return []
+     }
+     }
+     */
     func loadRecipes() throws -> [Recipe] {
         let request: NSFetchRequest<RecipeStored> = RecipeStored.fetchRequest()
         let recipesEntities:[RecipeStored]
@@ -43,13 +60,13 @@ class RecipeCoreDataManager {
             throw myError
         }
         /*
-        let convertedArray = recipesEntities.map { (recipeEntity) -> Recipe in
-            return Recipe(from: recipeEntity)
-        }
-        return convertedArray
- */
-         return recipesEntities.map { Recipe(from: $0) }
- 
+         let convertedArray = recipesEntities.map { (recipeEntity) -> Recipe in
+         return Recipe(from: recipeEntity)
+         }
+         return convertedArray
+         */
+        return recipesEntities.map { Recipe(from: $0) }
+        
     }
     
     //func saveRecipe(recipeToSave: Recipe) {
@@ -60,13 +77,13 @@ class RecipeCoreDataManager {
         print(recipeToSave.name)
         let recipe = convertFromUsableToCoreData(recipeToConvert: recipeToSave)
         /*
-        //let recipe = RecipeStored()
-        recipe.imageUrl = recipeToSave.imageURL
-        recipe.ingredients = recipeToSave.ingredientsNeeded
-        recipe.name = recipeToSave.name
-        recipe.totalTime = recipeToSave.duration
-        recipe.person = Float(Int(recipeToSave.numberOfPeople))
-        recipe.url = recipeToSave.url
+         //let recipe = RecipeStored()
+         recipe.imageUrl = recipeToSave.imageURL
+         recipe.ingredients = recipeToSave.ingredientsNeeded
+         recipe.name = recipeToSave.name
+         recipe.totalTime = recipeToSave.duration
+         recipe.person = Float(Int(recipeToSave.numberOfPeople))
+         recipe.url = recipeToSave.url
          */
         //print(recipe.name)
         do {

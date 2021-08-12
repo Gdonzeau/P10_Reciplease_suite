@@ -4,7 +4,7 @@
 //
 //  Created by Guillaume Donzeau on 05/07/2021.
 //
-
+/*
 import UIKit
 import Alamofire
 
@@ -24,8 +24,14 @@ class ViewController: UIViewController {
             print("Je n'ai pas réussi à charger les recettes.")
         }
         
+        //let entityForTrain = try? recipeCoreDataManager.loadEntities()
+        if let entityReceived = try? recipeCoreDataManager.loadEntities() {
+        print(entityReceived.count)
+        }
+        
     }
 
  
 }
 
+*/
