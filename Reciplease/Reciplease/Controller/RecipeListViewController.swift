@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import CoreData // Sorti des commentaires pour test
+//import CoreData // Sorti des commentaires pour test
 
 class RecipeListViewController: UIViewController {
     
@@ -26,11 +26,15 @@ class RecipeListViewController: UIViewController {
         toggleActivityIndicator(shown: true)
         self.receipesTableView.rowHeight = 120.0
         whichImage()
+        //loadingRecipes()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         imageView.isHidden = true
+        loadingRecipes()
+        toggleActivityIndicator(shown: false)
+        /*
         if parameters == .search {
             searchForRecipes(ingredients: ingredientsUsed)
         } else {
@@ -52,6 +56,7 @@ class RecipeListViewController: UIViewController {
                 print("Erreur de chargement")
             }
         }
+        */
         receipesTableView.reloadData()
     }
     
@@ -65,6 +70,14 @@ class RecipeListViewController: UIViewController {
                 //recipeChoosenVC.recipeChoosen = recipesStored[index]
                 recipeChoosenVC.recipeChoosen = favoriteRecipes[index]
             }
+        }
+    }
+    private func loadingRecipes() {
+        if parameters == .favorites {
+            favoriteRecipes = recipeCoreDataManager.loadRecipes()
+        } else {
+           print("Recherche API")
+            searchForRecipes(ingredients: ingredientsUsed)
         }
     }
     private func whichImage() {
@@ -223,7 +236,7 @@ extension RecipeListViewController: UITableViewDelegate { // To delete cells one
                         }
                     }
                 } catch {
-                    print("Je n'arriv pas à charger.")
+                    print("Je n'arrive pas à charger.")
                 }
             }
             tableView.deleteRows(at: [indexPath], with: .bottom)

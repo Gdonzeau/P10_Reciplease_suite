@@ -22,7 +22,7 @@ class RecipeCoreDataManager {
         }
         return recipes
     }
-    func loadRecipes() throws -> [Recipe] {
+    func loadRecipes() -> [Recipe] { // throws retiré, mais à remettre
         let request: NSFetchRequest<RecipeStored> = RecipeStored.fetchRequest()
         var recipesEntities = [Recipe]()
         guard let recipesReceived = try? AppDelegate.viewContext.fetch(request) else {

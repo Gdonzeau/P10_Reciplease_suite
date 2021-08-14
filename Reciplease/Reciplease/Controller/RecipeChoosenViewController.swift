@@ -81,8 +81,11 @@ class RecipeChoosenViewController: UIViewController {
     private func saveOrDelete() {
         if isRecipeNotAlreadyRegistred() == true {
             favoriteOrNot.setImage(UIImage(systemName: "heart.fill"), for: .normal)
-            
+            if let recipeUrl = recipeChoosen.url, let recipeImageUrl = recipeChoosen.imageURL {
+            recipeCoreDataManager.saveRecipe(name: recipeChoosen.name, person: recipeChoosen.numberOfPeople, totalTime: recipeChoosen.duration, url: recipeUrl, imageUrl: recipeImageUrl, ingredients: recipeChoosen.ingredientsNeeded)
+            }
             //savingRecipe(recipeToSave: recipeChoosen)
+            /*
             let recipeEntity = RecipeStored(context: AppDelegate.viewContext)
             recipeEntity.name = recipeChoosen.name
             
@@ -91,18 +94,20 @@ class RecipeChoosenViewController: UIViewController {
             recipeEntity.person = recipeChoosen.numberOfPeople
             recipeEntity.totalTime = recipeChoosen.duration
             recipeEntity.ingredients = recipeChoosen.ingredientsNeeded
-            
+            */
+            /*
             do {
                 try? AppDelegate.viewContext.save()
             } //catch { // À traiter plus tard
             //  print("Oh une erreur.")
             // }
-            
+            */
             
             
         } else {
             favoriteOrNot.setImage(UIImage(systemName: "heart"), for: .normal)
-            deleteRecipeFromCoreData()
+            recipeCoreDataManager.deleteRecipe(recipeToDelete: recipeChoosen)
+            //deleteRecipeFromCoreData()
         }
     }
     private func openUrl() {
@@ -153,7 +158,7 @@ class RecipeChoosenViewController: UIViewController {
         }
         return true
     }
-    
+    /*
     private func savingRecipe(recipeToSave: Recipe) {
         recipeCoreDataManager.saveRecipe(recipeToSave: recipeToSave)
         //let recipeEntity = RecipeStored(context: AppDelegate.viewContext) //Appel du CoreDate RecipeService
@@ -175,6 +180,7 @@ class RecipeChoosenViewController: UIViewController {
         //recipeEntity.saveRecipe()
  */
     }
+    */
     /*
     private func convertFromUsableToCoreData(recipeToSave: Recipe) -> RecipeStored {
         let recipeToStore = RecipeStored(context: AppDelegate.viewContext)
@@ -187,6 +193,7 @@ class RecipeChoosenViewController: UIViewController {
         return recipeToStore
     }
     */
+    /*
     private func deleteRecipeFromCoreData() {
         // for object in recipesFromCoreData.loadRecipes() {
         //for object in RecipeStored.all {
@@ -201,7 +208,7 @@ class RecipeChoosenViewController: UIViewController {
             }
         }
     }
-    
+    */
     private func isRecipeNotFavorite(answer : Bool) {
         if answer == false {
             favoriteOrNot.setImage(UIImage(systemName: "heart.fill"), for: .normal)
