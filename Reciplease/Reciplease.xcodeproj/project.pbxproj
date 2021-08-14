@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		04311935269C87A50031E33E /* PreparingSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04311934269C87A50031E33E /* PreparingSearchViewController.swift */; };
 		04311949269CA9AC0031E33E /* RecipeListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04311948269CA9AB0031E33E /* RecipeListViewController.swift */; };
+		04531A5926C67A48004C71D8 /* EntityUsable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04531A5826C67A48004C71D8 /* EntityUsable.swift */; };
 		045CD4C126B845CB00F01C34 /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045CD4C026B845CB00F01C34 /* InfoView.swift */; };
 		046E0548269328AD00C2F91C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046E0547269328AD00C2F91C /* AppDelegate.swift */; };
 		046E054A269328AD00C2F91C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046E0549269328AD00C2F91C /* SceneDelegate.swift */; };
@@ -55,6 +56,7 @@
 /* Begin PBXFileReference section */
 		04311934269C87A50031E33E /* PreparingSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreparingSearchViewController.swift; sourceTree = "<group>"; };
 		04311948269CA9AB0031E33E /* RecipeListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeListViewController.swift; sourceTree = "<group>"; };
+		04531A5826C67A48004C71D8 /* EntityUsable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntityUsable.swift; sourceTree = "<group>"; };
 		045CD4C026B845CB00F01C34 /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
 		046E0544269328AD00C2F91C /* Reciplease.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Reciplease.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		046E0547269328AD00C2F91C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -182,6 +184,7 @@
 				04E2691726A23D4100300B4B /* RecipeStored.swift */,
 				047F993526AF01B400A83EEA /* Parameters.swift */,
 				0491BC8026C52FAE0055914B /* EntityTest.swift */,
+				04531A5826C67A48004C71D8 /* EntityUsable.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -506,6 +509,7 @@
 				046E05B9269501BF00C2F91C /* NetworkErrors.swift in Sources */,
 				046E054A269328AD00C2F91C /* SceneDelegate.swift in Sources */,
 				0491BC8126C52FAE0055914B /* EntityTest.swift in Sources */,
+				04531A5926C67A48004C71D8 /* EntityUsable.swift in Sources */,
 				04F8A60E269E49A100B12445 /* RecipeTableViewCell.swift in Sources */,
 				04C5EC3026C28EFB007DEBB0 /* RecipeCoreDataManager.swift in Sources */,
 				04E2691826A23D4100300B4B /* RecipeStored.swift in Sources */,
