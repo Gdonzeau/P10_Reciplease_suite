@@ -32,6 +32,8 @@ class RecipeListViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         imageView.isHidden = true
+        let resultat = RecipeCoreDataManager.all
+        print(resultat.count)
         loadingRecipes()
         toggleActivityIndicator(shown: false)
         /*
@@ -73,8 +75,12 @@ class RecipeListViewController: UIViewController {
         }
     }
     private func loadingRecipes() {
+        favoriteRecipes = [Recipe]()
+        print("on a au début \(favoriteRecipes.count)")
+        downloadedRecipes = [Recipe]()
         if parameters == .favorites {
-            favoriteRecipes = recipeCoreDataManager.loadRecipes()
+            favoriteRecipes = RecipeCoreDataManager.loadRecipes()
+            print("on a maintenant \(favoriteRecipes.count)")
         } else {
            print("Recherche API")
             searchForRecipes(ingredients: ingredientsUsed)
@@ -111,12 +117,12 @@ class RecipeListViewController: UIViewController {
         
         toggleActivityIndicator(shown: false)
     }
-    
+    /*
     private func convertFromCoreDataToUsable(recipe:RecipeStored)-> Recipe {
         let recette = Recipe(from: recipe)
         return recette
     }
- 
+ */
     
     /*
     private func convertFromUsableToCoreData(recipeToSave: Recipe) -> RecipeStored {
@@ -179,8 +185,10 @@ extension RecipeListViewController: UITableViewDataSource {
         var recipe = Recipe(from: RecipeStored(context: AppDelegate.viewContext)) // ???
         //var recipe = Recipe(from: RecipeStored(context: recipeCoreDataManager.shared.))
         if parameters == .search {
+            print("On recherche")
             recipe = downloadedRecipes[indexPath.row]
         } else {
+            print("On charge")
             recipe = favoriteRecipes[indexPath.row]
             //recipe = recipesStored[indexPath.row]
         }
@@ -226,7 +234,10 @@ extension RecipeListViewController: UITableViewDelegate { // To delete cells one
             if parameters == .search {
                 downloadedRecipes.remove(at: indexPath.row)
             } else {
-                do {
+                favoriteRecipes.remove(at: indexPath.row)
+                    let recipeToDelete = favoriteRecipes[indexPath.row]
+                    RecipeCoreDataManager.deleteRecipe(recipeToDelete:recipeToDelete)
+                    /*
                     let recipes = try recipeCoreDataManager.loadRecipes()
                     
                     for object in recipes {
@@ -235,9 +246,7 @@ extension RecipeListViewController: UITableViewDelegate { // To delete cells one
                             recipeCoreDataManager.deleteRecipe(recipeToDelete: object)
                         }
                     }
-                } catch {
-                    print("Je n'arrive pas à charger.")
-                }
+ */
             }
             tableView.deleteRows(at: [indexPath], with: .bottom)
         }

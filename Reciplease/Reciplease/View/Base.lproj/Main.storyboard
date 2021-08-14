@@ -20,7 +20,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="2aN-AQ-If6" kind="relationship" relationship="rootViewController" id="ZUJ-Ir-KbL"/>
+                        <segue destination="2aN-AQ-If6" kind="relationship" relationship="rootViewController" destinationCreationSelector="segueToFavoritList" id="ZUJ-Ir-KbL"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SSj-4z-zQh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -564,7 +564,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="WZK-tf-qLm"/>
+        <segue reference="ZUJ-Ir-KbL"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="clock" catalog="system" width="128" height="121"/>

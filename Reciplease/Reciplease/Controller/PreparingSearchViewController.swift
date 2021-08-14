@@ -11,7 +11,7 @@ import UIKit
 class PreparingSearchViewController: UIViewController {
     // Pour le test
     let recipeCoreDataManager = RecipeCoreDataManager()
-    var entitiesPresent = [EntityTest]()
+    //var entitiesPresent = [EntityTest]()
     // fin du test
     var ingredientsUsed = ""
     var ingredientsList = [String]()
@@ -55,10 +55,19 @@ class PreparingSearchViewController: UIViewController {
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "segueToReceiptList" {
+            print("Not from favorit")
             let recipeListVC = segue.destination as! RecipeListViewController
             recipeListVC.ingredientsUsed = ingredientsUsed
             recipeListVC.parameters = parameters
         }
+        /*
+        if segue.identifier == "segueToFavoritList" {
+            print("From favorit")
+            let recipeListVC = segue.destination as! RecipeListViewController
+            parameters = .favorites
+            recipeListVC.parameters = parameters
+        }
+        */
     }
     private func deleteIngredientTableView() {
         ingredientsUsed = ""

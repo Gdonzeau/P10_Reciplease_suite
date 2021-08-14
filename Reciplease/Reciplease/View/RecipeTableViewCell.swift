@@ -83,9 +83,6 @@ class RecipeTableViewCell: UITableViewCell {
         //informations.text =  "🕒 : " + time + " min. \n Pers: \(String(person))"
         SVTiming.backgroundColor = UIColor(displayP3Red: 0.2, green: 0.2, blue: 0.2, alpha: 0.5)
         SVHowManyPerson.backgroundColor = UIColor(displayP3Red: 0.2, green: 0.2, blue: 0.2, alpha: 0.5)
-        
-        
-        
     }
 }
 // Because of : 'NSKeyedUnarchiveFromData' should not be used to for un-archiving and will be removed in a future release

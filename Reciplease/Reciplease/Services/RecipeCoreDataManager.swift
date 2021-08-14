@@ -5,7 +5,7 @@
 //  Created by Guillaume Donzeau on 10/08/2021.
 //
 
-import Foundation
+//import Foundation
 import UIKit
 import CoreData
 
@@ -22,7 +22,7 @@ class RecipeCoreDataManager {
         }
         return recipes
     }
-    func loadRecipes() -> [Recipe] { // throws retiré, mais à remettre
+    static func loadRecipes() -> [Recipe] { // throws retiré, mais à remettre
         let request: NSFetchRequest<RecipeStored> = RecipeStored.fetchRequest()
         var recipesEntities = [Recipe]()
         guard let recipesReceived = try? AppDelegate.viewContext.fetch(request) else {
@@ -55,7 +55,8 @@ class RecipeCoreDataManager {
         
     }
     
-    func saveRecipe(name: String, person: Float, totalTime: Float, url: String, imageUrl: String, ingredients: [String]) {
+    static func saveRecipe(name: String, person: Float, totalTime: Float, url: String, imageUrl: String, ingredients: [String]) {
+        print("Saving")
         let recipeToSave = RecipeStored(context: AppDelegate.viewContext)
         recipeToSave.name = name
         recipeToSave.person = person
@@ -64,10 +65,9 @@ class RecipeCoreDataManager {
         recipeToSave.imageUrl = imageUrl
         recipeToSave.ingredients = ingredients
         try? AppDelegate.viewContext.save()
-        
     }
     
-    func deleteRecipe(recipeToDelete: Recipe) {
+    static func deleteRecipe(recipeToDelete: Recipe) {
         let request: NSFetchRequest<RecipeStored> = RecipeStored.fetchRequest()
         let recipeCoreDataToDelete = convertFromUsableToCoreData(recipeToConvert: recipeToDelete)
         do {
@@ -77,7 +77,7 @@ class RecipeCoreDataManager {
                 if recipeCoreDataToDelete == recipe {
                 //viewContext.delete(recipe)
                 AppDelegate.viewContext.delete(recipe)
-                try? viewContext.save()
+                    try? AppDelegate.viewContext.save()
                 }
             }
         } catch {
@@ -88,15 +88,15 @@ class RecipeCoreDataManager {
         //try? viewContext.save()
     }
     // On ne touche pas... Et on n'utilise pas
-    func deleteAll() {
+    static func deleteAll() {
         let request: NSFetchRequest<RecipeStored> = RecipeStored.fetchRequest()
         do {
-            let response = try viewContext.fetch(request)
+            let response = try AppDelegate.viewContext.fetch(request)
             
             for recipe in response {
-                viewContext.delete(recipe)
+                AppDelegate.viewContext.delete(recipe)
             }
-            try? viewContext.save()
+            try? AppDelegate.viewContext.save()
             
         } catch {
             print("Error while deleting")
@@ -104,7 +104,7 @@ class RecipeCoreDataManager {
         }
     }
     
-    private func convertFromUsableToCoreData(recipeToConvert: Recipe) -> RecipeStored {
+    static private func convertFromUsableToCoreData(recipeToConvert: Recipe) -> RecipeStored {
         let recipeConverted = RecipeStored(context: AppDelegate.viewContext)
         
         //let name = recipeToConvert.name

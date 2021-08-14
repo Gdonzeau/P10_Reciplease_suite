@@ -82,7 +82,7 @@ class RecipeChoosenViewController: UIViewController {
         if isRecipeNotAlreadyRegistred() == true {
             favoriteOrNot.setImage(UIImage(systemName: "heart.fill"), for: .normal)
             if let recipeUrl = recipeChoosen.url, let recipeImageUrl = recipeChoosen.imageURL {
-            recipeCoreDataManager.saveRecipe(name: recipeChoosen.name, person: recipeChoosen.numberOfPeople, totalTime: recipeChoosen.duration, url: recipeUrl, imageUrl: recipeImageUrl, ingredients: recipeChoosen.ingredientsNeeded)
+                RecipeCoreDataManager.saveRecipe(name: recipeChoosen.name, person: recipeChoosen.numberOfPeople, totalTime: recipeChoosen.duration, url: recipeUrl, imageUrl: recipeImageUrl, ingredients: recipeChoosen.ingredientsNeeded)
             }
             //savingRecipe(recipeToSave: recipeChoosen)
             /*
@@ -106,7 +106,7 @@ class RecipeChoosenViewController: UIViewController {
             
         } else {
             favoriteOrNot.setImage(UIImage(systemName: "heart"), for: .normal)
-            recipeCoreDataManager.deleteRecipe(recipeToDelete: recipeChoosen)
+            RecipeCoreDataManager.deleteRecipe(recipeToDelete: recipeChoosen)
             //deleteRecipeFromCoreData()
         }
     }
