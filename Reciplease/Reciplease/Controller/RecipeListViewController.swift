@@ -11,10 +11,14 @@ import UIKit
 class RecipeListViewController: UIViewController {
     
     var ingredientsUsed = ""
-    var parameters: Parameters = .favorites // By default
+    //var parameters: Parameters = .favorites // By default
+    var parameters = ""
     var favoriteRecipes = [Recipe]() // To store recipes from Core Data
     var downloadedRecipes = [Recipe]()
     let recipeCoreDataManager = RecipeCoreDataManager()
+    var recipesHere = [Recipe]()
+    
+    var tabbarTest = MyTabBarController() // À voir...
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
@@ -31,9 +35,11 @@ class RecipeListViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        //print("Index : \(MyTabBarController.shared.selectedIndex)")
+        //print("index : \(String(describing: tabbarTest.index(ofAccessibilityElement: tabBar.index.self)))")
         imageView.isHidden = true
-        let resultat = RecipeCoreDataManager.all
-        print(resultat.count)
+        //let resultat = RecipeCoreDataManager.all
+        //print(resultat.count)
         loadingRecipes()
         toggleActivityIndicator(shown: false)
         /*
@@ -66,31 +72,44 @@ class RecipeListViewController: UIViewController {
         if segue.identifier == "segueFromCellToChoosenRecipe",
            let recipeChoosenVC = segue.destination as? RecipeChoosenViewController,
            let index = receipesTableView.indexPathForSelectedRow?.row {
-            if parameters == .search {
+            //if parameters == .search {
+          //  recipeChoosenVC.recipeChoosen = recipesHere[index]
+            
+            if Parameters.shared.state == "search" {
                 recipeChoosenVC.recipeChoosen = downloadedRecipes[index]
             } else {
                 //recipeChoosenVC.recipeChoosen = recipesStored[index]
                 recipeChoosenVC.recipeChoosen = favoriteRecipes[index]
             }
+ 
         }
     }
     private func loadingRecipes() {
-        favoriteRecipes = [Recipe]()
-        print("on a au début \(favoriteRecipes.count)")
-        downloadedRecipes = [Recipe]()
-        if parameters == .favorites {
+        //favoriteRecipes = [Recipe]()
+        //print("on a au début \(favoriteRecipes.count)")
+        //downloadedRecipes = [Recipe]()
+        //if parameters == .favorites {
+        if Parameters.shared.state == "favorites" {
+            print("On cherche dans les favoris")
             favoriteRecipes = RecipeCoreDataManager.loadRecipes()
-            print("on a maintenant \(favoriteRecipes.count)")
-        } else {
+            //print("on a maintenant \(favoriteRecipes.count)")
+        } else if Parameters.shared.state == "search"{
            print("Recherche API")
             searchForRecipes(ingredients: ingredientsUsed)
+        } else {
+            print("Что-то не так")
         }
     }
     private func whichImage() {
-        if parameters == .search {
+        //if parameters == .search {
+        if Parameters.shared.state == "search" {
+            print("Pas de recette")
             imageView.image = UIImage(named: "noRecipe")
-        } else {
+        } else if Parameters.shared.state == "favorites" {
+            print("Pas de favori")
             imageView.image = UIImage(named: "noFavorit")
+        } else {
+            print("Oups")
         }
     }
     private func searchForRecipes(ingredients: String) { // Receiving recipes from API
@@ -154,17 +173,20 @@ extension RecipeListViewController: UITableViewDataSource {
         return 1
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch parameters {
-        case .search:
+        switch Parameters.shared.state {
+        case "search":
+            print("Table Search")
+        //case .search:
             if downloadedRecipes.count == 0 {
                 imageView.isHidden = false
             } else {
                 imageView.isHidden = true
             }
             return downloadedRecipes.count
-        default:
+        case "favorites":
+            print("Table favoris")
             //print("Nombre de favoris : \(recipesStored.count)")
-            print("Nombre de favoris : \(favoriteRecipes.count)")
+            //print("Nombre de favoris : \(favoriteRecipes.count)")
             if favoriteRecipes.count == 0 {
             //if recipesStored.count == 0 {
                 imageView.isHidden = false
@@ -173,6 +195,9 @@ extension RecipeListViewController: UITableViewDataSource {
             }
             return favoriteRecipes.count
             //return recipesStored.count
+        default:
+            print("Ben zut")
+            return 0
         }
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -184,13 +209,16 @@ extension RecipeListViewController: UITableViewDataSource {
         }
         var recipe = Recipe(from: RecipeStored(context: AppDelegate.viewContext)) // ???
         //var recipe = Recipe(from: RecipeStored(context: recipeCoreDataManager.shared.))
-        if parameters == .search {
+        //if parameters == .search {
+        if Parameters.shared.state == "search" {
             print("On recherche")
             recipe = downloadedRecipes[indexPath.row]
-        } else {
+        } else if Parameters.shared.state == "favorites" {
             print("On charge")
             recipe = favoriteRecipes[indexPath.row]
             //recipe = recipesStored[indexPath.row]
+        } else {
+            print("Problème de chargement de table")
         }
         
         let name = recipe.name
@@ -231,7 +259,8 @@ extension RecipeListViewController: UITableViewDelegate { // To delete cells one
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             print("On efface : \(indexPath.row)")
-            if parameters == .search {
+            //if parameters == .search {
+            if Parameters.shared.state == "search" {
                 downloadedRecipes.remove(at: indexPath.row)
             } else {
                 favoriteRecipes.remove(at: indexPath.row)

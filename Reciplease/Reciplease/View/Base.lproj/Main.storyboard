@@ -14,13 +14,13 @@
         <scene sceneID="R6M-vk-xA7">
             <objects>
                 <navigationController id="eLO-nD-xTi" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Favorites" image="star.fill" catalog="system" id="yZq-Rb-aZQ"/>
+                    <tabBarItem key="tabBarItem" tag="3" title="Favorites" image="star.fill" catalog="system" id="yZq-Rb-aZQ"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="3Wk-7w-xN0">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="2aN-AQ-If6" kind="relationship" relationship="rootViewController" destinationCreationSelector="segueToFavoritList" id="ZUJ-Ir-KbL"/>
+                        <segue destination="2aN-AQ-If6" kind="relationship" relationship="rootViewController" id="ZUJ-Ir-KbL"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SSj-4z-zQh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -226,7 +226,7 @@
         <scene sceneID="CtQ-Kf-A6b">
             <objects>
                 <navigationController id="JQ0-ec-uID" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Search" image="magnifyingglass" catalog="system" id="7Ec-d4-N9V"/>
+                    <tabBarItem key="tabBarItem" tag="2" title="Search" image="magnifyingglass" catalog="system" id="7Ec-d4-N9V"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="8Nq-lX-cT6">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -398,7 +398,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kr9-fD-6RI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="100.00000000000001" y="-461.41304347826093"/>
+            <point key="canvasLocation" x="246" y="-64"/>
         </scene>
         <!--Recipe Choosen View Controller-->
         <scene sceneID="eEv-Wr-Bdy">
@@ -540,13 +540,13 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hec-RH-soI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="860.86956521739137" y="-461.41304347826093"/>
+            <point key="canvasLocation" x="1007" y="-64"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--My Tab Bar Controller-->
         <scene sceneID="070-qW-29q">
             <objects>
-                <tabBarController id="Fco-RB-QTk" sceneMemberID="viewController">
-                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="foU-mD-DRP">
+                <tabBarController id="Fco-RB-QTk" customClass="MyTabBarController" customModule="Reciplease" customModuleProvider="target" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="foU-mD-DRP" customClass="tabBar">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

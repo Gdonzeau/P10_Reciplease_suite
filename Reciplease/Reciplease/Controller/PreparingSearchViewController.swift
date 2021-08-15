@@ -15,7 +15,10 @@ class PreparingSearchViewController: UIViewController {
     // fin du test
     var ingredientsUsed = ""
     var ingredientsList = [String]()
-    var parameters: Parameters = .search
+    //var parameters: Parameters = .search
+    var parameters = "search"
+    
+    var tabbarTest = MyTabBarController() // À voir...
     
     var paraTest = "Bonjour" {
         didSet {
@@ -47,18 +50,24 @@ class PreparingSearchViewController: UIViewController {
         ingredientName.attributedPlaceholder = NSAttributedString(string: "Lemon, Cheese, Sausages,...",
                                                                   attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray])
         self.ingredientTableView.rowHeight = 40.0
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        //print("Index : \(MyTabBarController.shared.selectedIndex)")
+        //print("index : \(String(describing: tabbarTest.index(ofAccessibilityElement: tabBar.index.self)))")
+        //print("Item : \(String(describing: MyTabBarController.shared.tabBar.selectedItem))")
         ingredientTableView.reloadData()
     }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "segueToReceiptList" {
-            print("Not from favorit")
+            //print("Not from favorit")
             let recipeListVC = segue.destination as! RecipeListViewController
             recipeListVC.ingredientsUsed = ingredientsUsed
             recipeListVC.parameters = parameters
+            print("Parameters = \(parameters)")
         }
         /*
         if segue.identifier == "segueToFavoritList" {

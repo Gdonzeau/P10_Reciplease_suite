@@ -21,6 +21,8 @@ class RecipeChoosenViewController: UIViewController {
     
     let recipeCoreDataManager = RecipeCoreDataManager()
     
+    //ar tabbarTest = MyTabBarController() // À voir...
+    
     @IBOutlet weak var blogNameLabel: UILabel!
     @IBOutlet weak var imageRecipe: UIImageView!
     @IBOutlet weak var ingredientsList: UITextView!
@@ -54,6 +56,9 @@ class RecipeChoosenViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        //print("Index : \(MyTabBarController.shared.selectedIndex)")
+        //print("index : \(String(describing: tabbarTest.index(ofAccessibilityElement: tabBar.index.self)))")
         prepareInformations()
         blogNameLabel.text = recipeName
         ingredientsList.text = ingredientList
