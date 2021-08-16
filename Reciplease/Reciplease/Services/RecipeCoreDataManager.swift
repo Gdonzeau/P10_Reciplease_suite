@@ -15,21 +15,15 @@ class RecipeCoreDataManager {
     init(persistentContainer: NSPersistentContainer = (UIApplication.shared.delegate as! AppDelegate).persistentContainer) {
         self.viewContext = persistentContainer.viewContext
     }
-    static var all:[RecipeStored] {
-        let request: NSFetchRequest<RecipeStored> = RecipeStored.fetchRequest()
-        guard let recipes = try? AppDelegate.viewContext.fetch(request) else {
-            return []
-        }
-        return recipes
-    }
-    static func loadRecipes() -> [Recipe] { // throws retiré, mais à remettre
+    
+    func loadRecipes() -> [Recipe] { // throws retiré, mais à remettre
         let request: NSFetchRequest<RecipeStored> = RecipeStored.fetchRequest()
         var recipesEntities = [Recipe]()
         guard let recipesReceived = try? AppDelegate.viewContext.fetch(request) else {
             return []
         }
         for object in recipesReceived {
-           // if let name = object.name {
+           // if let name = object.name { // Ici peut-être quelque chose ?
                 let newRecipe = Recipe(from: object)
                 recipesEntities.append(newRecipe)
             //}

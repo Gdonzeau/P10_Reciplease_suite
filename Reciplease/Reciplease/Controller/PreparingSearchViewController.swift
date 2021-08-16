@@ -47,6 +47,8 @@ class PreparingSearchViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("On efface tout")
+        RecipeCoreDataManager.deleteAll()
         ingredientName.attributedPlaceholder = NSAttributedString(string: "Lemon, Cheese, Sausages,...",
                                                                   attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray])
         self.ingredientTableView.rowHeight = 40.0
