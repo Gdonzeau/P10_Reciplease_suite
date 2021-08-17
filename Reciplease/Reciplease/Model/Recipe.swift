@@ -20,8 +20,20 @@ struct Recipe {
     let url: String?
     let numberOfPeople: Float
     let duration: Float
-    let ingredientsNeeded: [String]
+    var ingredientsNeeded: [String]
     
+    init(from recipeEntity: RecipeEntity) {
+        
+        self.name = recipeEntity.name ?? "No name"
+        self.imageURL = recipeEntity.imageUrl ?? "No adress image"
+        self.url = recipeEntity.url ?? "No url"
+        self.numberOfPeople = recipeEntity.person
+        self.duration = recipeEntity.totalTime
+        self.ingredientsNeeded = []
+        self.ingredientsNeeded = convertDatasToStringArray(ingredients: recipeEntity.ingredients)
+    }
+    
+    /*
     init(from recipeEntity: RecipeStored) {
         
         self.name = recipeEntity.name ?? "No name"
@@ -30,6 +42,14 @@ struct Recipe {
         self.numberOfPeople = recipeEntity.person
         self.duration = recipeEntity.totalTime
         self.ingredientsNeeded = recipeEntity.ingredients ?? []
+    }
+ */
+    private func convertDatasToStringArray(ingredients: Data?) -> [String] {
+        guard let datas = ingredients else {
+            return []
+        }
+        let data = Data(datas)
+        return (try? JSONDecoder().decode([String].self, from: data)) ?? []
     }
 }
 

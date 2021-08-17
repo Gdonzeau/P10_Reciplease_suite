@@ -48,7 +48,7 @@ class PreparingSearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         print("On efface tout")
-        RecipeCoreDataManager.deleteAll()
+        recipeCoreDataManager.deleteAll()
         ingredientName.attributedPlaceholder = NSAttributedString(string: "Lemon, Cheese, Sausages,...",
                                                                   attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray])
         self.ingredientTableView.rowHeight = 40.0
@@ -68,7 +68,8 @@ class PreparingSearchViewController: UIViewController {
             //print("Not from favorit")
             let recipeListVC = segue.destination as! RecipeListViewController
             recipeListVC.ingredientsUsed = ingredientsUsed
-            recipeListVC.parameters = parameters
+            recipeListVC.recipeMode = .api
+           //e recipeListVC.parameters = parameters
             print("Parameters = \(parameters)")
         }
         /*

@@ -8,17 +8,75 @@
 import UIKit
 //import CoreData // Sorti des commentaires pour test
 
+enum RecipeListMode {
+    case api
+    case database
+    
+    var title: String {
+        switch self {
+        case .api:
+            return "Search"
+        case .database:
+            return "Favorites"
+        }
+    }
+    
+    //var emptyImage: UIImage
+    
+    //var emprtViewtitle: Stirng {
+}
+
+enum ViewState {
+    case loading
+    case error
+    case empty
+    case showDate
+    
+   // case error2(Error)
+   // case show(Recipe)
+}
+
 class RecipeListViewController: UIViewController {
     
-    var ingredientsUsed = ""
-    //var parameters: Parameters = .favorites // By default
-    var parameters = ""
-    var favoriteRecipes = [Recipe]() // To store recipes from Core Data
-    var downloadedRecipes = [Recipe]()
-    let recipeCoreDataManager = RecipeCoreDataManager()
-    var recipesHere = [Recipe]()
+ 
+    var recipes: [Recipe] = []
+
     
-    var tabbarTest = MyTabBarController() // À voir...
+    var recipeMode: RecipeListMode = .database
+    
+   
+    
+    var ingredientsUsed: String = ""
+    
+    var viewState: ViewState = .loading {
+        didSet {
+            resetViewState()
+            switch viewState {
+            case .loading:
+                activityIndicator.startAnimating()
+            case .error:
+                allErrors(errorMessage: "Error", errorTitle: "subtitle")
+            case .empty:
+                //stack view image / title / subtitle
+                imageView.isHidden = false
+                imageView.image = UIImage(named: "noRecipe")
+            case .showDate:
+                receipesTableView.isHidden = false
+                receipesTableView.reloadData()
+                
+          //  case .error2(let error where error.):
+            //    allErrors(errorMessage: error.title, errorTitle: <#T##String#>)
+            }
+        }
+    }
+    
+    private func resetViewState() {
+        activityIndicator.stopAnimating()
+        receipesTableView.isHidden = true
+        imageView.isHidden = true
+    }
+    
+    private let recipeCoreDataManager = RecipeCoreDataManager()
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
@@ -26,23 +84,34 @@ class RecipeListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupView()
+        
+        getRecipes()
+    }
+    
+    private func setupView() {
+        title = recipeMode.title
+        activityIndicator.hidesWhenStopped = true // possible de le faire storyboard
+       // imageView.image = UIImage(named: "noRecipe")
         imageView.isHidden = true
         toggleActivityIndicator(shown: true)
         self.receipesTableView.rowHeight = 120.0
-        whichImage()
-        //loadingRecipes()
+        //whichImage()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         //print("Index : \(MyTabBarController.shared.selectedIndex)")
         //print("index : \(String(describing: tabbarTest.index(ofAccessibilityElement: tabBar.index.self)))")
-        imageView.isHidden = true
+       // imageView.isHidden = true
         //let resultat = RecipeCoreDataManager.all
         //print(resultat.count)
-        loadingRecipes()
-        toggleActivityIndicator(shown: false)
-        /*
+//loadingRecipes()
+       //
+        
+        // toggleActivityIndicator(shown: false)
+        
+            /*
         if parameters == .search {
             searchForRecipes(ingredients: ingredientsUsed)
         } else {
@@ -65,9 +134,15 @@ class RecipeListViewController: UIViewController {
             }
         }
         */
-        receipesTableView.reloadData()
+        //receipesTableView.reloadData()
+        
+        if recipeMode == .database {
+            
+            getRecipes()
+        }
     }
     
+    /*
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "segueFromCellToChoosenRecipe",
            let recipeChoosenVC = segue.destination as? RecipeChoosenViewController,
@@ -84,6 +159,57 @@ class RecipeListViewController: UIViewController {
  
         }
     }
+    */
+    
+    private func getRecipes() {
+        switch recipeMode {
+        case .api:
+            getRecipesFromApi()
+        case .database:
+            getRecipesFromDatabase()
+        }
+    }
+    
+    private func getRecipesFromApi() {
+        viewState = .loading
+        RecipesServices.shared.getRecipes(ingredients: ingredientsUsed) { [weak self] (result) in
+            switch result {
+            case .success(let recipeResponse) where recipeResponse.recipes.isEmpty:
+                print("no result show empty")
+                self?.viewState = .empty
+            case .success(let recipeResponse):
+                self?.recipes = recipeResponse.recipes
+                //self.toggleActivityIndicator(shown: false)
+                //self.savingAnswer(recipes:recipes)
+                //self.receipesTableView.reloadData()
+                self?.viewState = .showDate
+            case .failure(let error):
+                print("Error loading recipes from API \(error.localizedDescription)")
+                self?.viewState = .error
+                // on peux remove
+                //let error = APIErrors.invalidStatusCode
+               // if let errorMessage = error.errorDescription, let errorTitle = error.failureReason {
+                //    self?.allErrors(errorMessage: errorMessage, errorTitle: errorTitle)
+               // }
+            }
+        }
+    }
+    
+    private func getRecipesFromDatabase() {
+        do {
+            recipes = try recipeCoreDataManager.loadRecipes()
+            if recipes.isEmpty {
+                viewState = .empty
+            } else {
+                viewState = .showDate
+            }
+        } catch let error {
+            print("Error loading recipes from database \(error.localizedDescription)")
+            viewState = .error
+        }
+    }
+    
+    /*
     private func loadingRecipes() {
         //favoriteRecipes = [Recipe]()
         //print("on a au début \(favoriteRecipes.count)")
@@ -91,7 +217,7 @@ class RecipeListViewController: UIViewController {
         //if parameters == .favorites {
         if Parameters.shared.state == "favorites" {
             print("On cherche dans les favoris")
-            favoriteRecipes = RecipeCoreDataManager.loadRecipes()
+            favoriteRecipes = recipeCoreDataManager.loadRecipes()
             //print("on a maintenant \(favoriteRecipes.count)")
         } else if Parameters.shared.state == "search"{
            print("Recherche API")
@@ -155,7 +281,7 @@ class RecipeListViewController: UIViewController {
         return recipeCoreData
     }
  */
-    
+    */
     private func allErrors(errorMessage: String, errorTitle: String) {
         let alertVC = UIAlertController(title: errorTitle, message: errorMessage, preferredStyle: .alert)
         alertVC.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
@@ -173,40 +299,19 @@ extension RecipeListViewController: UITableViewDataSource {
         return 1
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch Parameters.shared.state {
-        case "search":
-            print("Table Search")
-        //case .search:
-            if downloadedRecipes.count == 0 {
-                imageView.isHidden = false
-            } else {
-                imageView.isHidden = true
-            }
-            return downloadedRecipes.count
-        case "favorites":
-            print("Table favoris")
-            //print("Nombre de favoris : \(recipesStored.count)")
-            //print("Nombre de favoris : \(favoriteRecipes.count)")
-            if favoriteRecipes.count == 0 {
-            //if recipesStored.count == 0 {
-                imageView.isHidden = false
-            } else {
-                imageView.isHidden = true
-            }
-            return favoriteRecipes.count
-            //return recipesStored.count
-        default:
-            print("Ben zut")
-            return 0
-        }
+        recipes.count
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 120.0//Choose your custom row height
     }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "RecipeCell", for: indexPath) as? RecipeTableViewCell else {
             return UITableViewCell()
         }
+        cell.recipe = recipes[indexPath.row]
+        return cell
+        /*
         var recipe = Recipe(from: RecipeStored(context: AppDelegate.viewContext)) // ???
         //var recipe = Recipe(from: RecipeStored(context: recipeCoreDataManager.shared.))
         //if parameters == .search {
@@ -252,10 +357,27 @@ extension RecipeListViewController: UITableViewDataSource {
         cell.backgroundView = image
         cell.backgroundView?.contentMode = .scaleAspectFill
         return cell
+        */
     }
 }
 
 extension RecipeListViewController: UITableViewDelegate { // To delete cells one by one
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        //let sotry ...indexPath
+        //detailViewController
+        //detailVC.recipe = recipes[indexPath.row]
+       // navgation.push
+    }
+
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        // nouvelle facon
+        guard recipeMode == .database else { return nil }
+        //TODO cree l action deleteAction
+        
+        return nil
+    }
+    /*
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             print("On efface : \(indexPath.row)")
@@ -280,5 +402,6 @@ extension RecipeListViewController: UITableViewDelegate { // To delete cells one
             tableView.deleteRows(at: [indexPath], with: .bottom)
         }
     }
+ */
 }
 

@@ -14,8 +14,9 @@ class RecipeChoosenViewController: UIViewController {
     var recipeName = String()
     var ingredientList = String()
     var recipesFromCoreData = RecipeStored(context: AppDelegate.viewContext)
-    var recipeChoosen = Recipe(from: RecipeStored(context: AppDelegate.viewContext))
-    var recipeEntity = RecipeStored(context: AppDelegate.viewContext)
+    //var recipeChoosen = Recipe(from: RecipeStored(context: AppDelegate.viewContext))
+    var recipeChoosen = Recipe(from: RecipeEntity(context: AppDelegate.viewContext))
+    //var recipeEntity = RecipeEntity(context: AppDelegate.viewContext)
     
     var recipesStored = [Recipe]()
     
@@ -87,7 +88,7 @@ class RecipeChoosenViewController: UIViewController {
         if isRecipeNotAlreadyRegistred() == true {
             favoriteOrNot.setImage(UIImage(systemName: "heart.fill"), for: .normal)
             if let recipeUrl = recipeChoosen.url, let recipeImageUrl = recipeChoosen.imageURL {
-                RecipeCoreDataManager.saveRecipe(name: recipeChoosen.name, person: recipeChoosen.numberOfPeople, totalTime: recipeChoosen.duration, url: recipeUrl, imageUrl: recipeImageUrl, ingredients: recipeChoosen.ingredientsNeeded)
+                recipeCoreDataManager.saveRecipe(name: recipeChoosen.name, person: recipeChoosen.numberOfPeople, totalTime: recipeChoosen.duration, url: recipeUrl, imageUrl: recipeImageUrl, ingredients: recipeChoosen.ingredientsNeeded)
             }
             //savingRecipe(recipeToSave: recipeChoosen)
             /*
@@ -111,7 +112,7 @@ class RecipeChoosenViewController: UIViewController {
             
         } else {
             favoriteOrNot.setImage(UIImage(systemName: "heart"), for: .normal)
-            RecipeCoreDataManager.deleteRecipe(recipeToDelete: recipeChoosen)
+            recipeCoreDataManager.deleteRecipe(recipeToDelete: recipeChoosen)
             //deleteRecipeFromCoreData()
         }
     }
@@ -143,7 +144,8 @@ class RecipeChoosenViewController: UIViewController {
         }
     }
     
-    private func createRecipeObject(object:RecipeStored) -> Recipe {
+    //private func createRecipeObject(object:RecipeStored) -> Recipe {
+    private func createRecipeObject(object:RecipeEntity) -> Recipe {
         let recipe = Recipe(from: object)
         return recipe
     }

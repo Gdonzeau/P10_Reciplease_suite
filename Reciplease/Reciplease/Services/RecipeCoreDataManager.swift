@@ -16,41 +16,64 @@ class RecipeCoreDataManager {
         self.viewContext = persistentContainer.viewContext
     }
     
-    func loadRecipes() -> [Recipe] { // throws retiré, mais à remettre
-        let request: NSFetchRequest<RecipeStored> = RecipeStored.fetchRequest()
-        var recipesEntities = [Recipe]()
+    func loadRecipes() throws -> [Recipe] { // throws retiré, mais à remettre
+        //let request: NSFetchRequest<RecipeStored> = RecipeStored.fetchRequest()
+        let request: NSFetchRequest<RecipeEntity> = RecipeEntity.fetchRequest()
+        let essai = RecipeEntity()
+       // let essai2 = essai.ingredients
+        /*
+        var recipes = [Recipe]()
         guard let recipesReceived = try? AppDelegate.viewContext.fetch(request) else {
             return []
         }
         for object in recipesReceived {
            // if let name = object.name { // Ici peut-être quelque chose ?
                 let newRecipe = Recipe(from: object)
-                recipesEntities.append(newRecipe)
+                recipes.append(newRecipe)
             //}
         }
-        return recipesEntities
+        return recipes
         //let request: NSFetchRequest<RecipeEntity>
-        /*
+        */
+        //var recipesStored: [RecipeStored]
+        var recipesStored: [RecipeEntity]
         do {
-            recipesEntities = try viewContext.fetch(request)
-            print("Nous avons \(recipesEntities.count)")
+            recipesStored = try viewContext.fetch(request)
+            //print("Nous avons \(recipesStored.count)")
+            print("Nous avons \(recipesStored.count)")
             
-        } catch let myError {
-            throw myError
-        }
- */
+        } catch { throw error }
+
         /*
          let convertedArray = recipesEntities.map { (recipeEntity) -> Recipe in
          return Recipe(from: recipeEntity)
          }
          return convertedArray
          */
-        //return recipesEntities.map { Recipe(from: $0) }
+        return recipesStored.map { Recipe(from: $0) }
         
     }
     
-    static func saveRecipe(name: String, person: Float, totalTime: Float, url: String, imageUrl: String, ingredients: [String]) {
+    func saveRecipe(name: String, person: Float, totalTime: Float, url: String, imageUrl: String, ingredients: [String]) {
         print("Saving")
+        let recipeToSave = RecipeEntity(context: AppDelegate.viewContext)
+        recipeToSave.name = name
+        recipeToSave.person = person
+        recipeToSave.totalTime = totalTime
+        recipeToSave.url = url
+        recipeToSave.imageUrl = imageUrl
+        
+        // saving an array [String] to a Core Data (Binary Data) type
+        // user is an instance of the User entity class
+        do {
+            recipeToSave.ingredients = try NSKeyedArchiver.archivedData(withRootObject: ingredients, requiringSecureCoding: true)
+        } catch {
+          print("failed to archive array with error: \(error)")
+        }
+        //recipeToSave.ingredients = ingredients
+        try? AppDelegate.viewContext.save()
+        
+        /*
         let recipeToSave = RecipeStored(context: AppDelegate.viewContext)
         recipeToSave.name = name
         recipeToSave.person = person
@@ -59,9 +82,10 @@ class RecipeCoreDataManager {
         recipeToSave.imageUrl = imageUrl
         recipeToSave.ingredients = ingredients
         try? AppDelegate.viewContext.save()
+ */
     }
     
-    static func deleteRecipe(recipeToDelete: Recipe) {
+    func deleteRecipe(recipeToDelete: Recipe) {
         let request: NSFetchRequest<RecipeStored> = RecipeStored.fetchRequest()
         let recipeCoreDataToDelete = convertFromUsableToCoreData(recipeToConvert: recipeToDelete)
         do {
@@ -82,7 +106,7 @@ class RecipeCoreDataManager {
         //try? viewContext.save()
     }
     // On ne touche pas... Et on n'utilise pas
-    static func deleteAll() {
+    func deleteAll() {
         let request: NSFetchRequest<RecipeStored> = RecipeStored.fetchRequest()
         do {
             let response = try AppDelegate.viewContext.fetch(request)
@@ -98,6 +122,38 @@ class RecipeCoreDataManager {
         }
     }
     
+    private func convertFromUsableToCoreData(recipeToConvert: Recipe) -> RecipeEntity {
+        let recipeConverted = RecipeEntity(context: AppDelegate.viewContext)
+        
+        //let name = recipeToConvert.name
+        
+        recipeConverted.name = recipeToConvert.name
+        recipeConverted.imageUrl = recipeToConvert.imageURL
+        recipeConverted.url = recipeToConvert.url
+        recipeConverted.person = recipeToConvert.numberOfPeople
+        recipeConverted.totalTime = recipeToConvert.duration
+        
+        do {
+            recipeConverted.ingredients = try NSKeyedArchiver.archivedData(withRootObject: recipeToConvert.ingredientsNeeded, requiringSecureCoding: true)
+        } catch {
+          print("failed to archive array with error: \(error)")
+        }
+        //let hobbies = recipeToConvert.ingredientsNeeded {
+        /*
+          do {
+            if let hobbiesArr = try NSKeyedUnarchiver.unarchivedObject(ofClass: NSArray.self, from: recipeToConvert.ingredientsNeeded) as? [String] {
+              dump(hobbiesArr)
+            }
+          } catch {
+            print("could not unarchive array: \(error)")
+          }
+        */
+        //}
+        
+        //recipeConverted.ingredients = recipeToConvert.ingredientsNeeded
+        return recipeConverted
+    }
+    /*
     static private func convertFromUsableToCoreData(recipeToConvert: Recipe) -> RecipeStored {
         let recipeConverted = RecipeStored(context: AppDelegate.viewContext)
         
@@ -111,5 +167,5 @@ class RecipeCoreDataManager {
         recipeConverted.ingredients = recipeToConvert.ingredientsNeeded
         return recipeConverted
     }
-    
+    */
 }

@@ -18,33 +18,43 @@ class RecipeTableViewCell: UITableViewCell {
     
     
      //Ajouter didSet
-    /*
-    var recipe: RecipeType {
+    
+    var recipe: Recipe? {
         didSet {
-            
+            if let timeToPrepare = recipe?.duration, let name = recipe?.name, let person = recipe?.numberOfPeople {
+            configure(timeToPrepare: String(timeToPrepare), name: name, person: person)
+            }
+            var image = recipe?.imageURL
+            /*
             if let image = recipe.imageUrl {
                 
                 if let url = URL(string: image) {
                // imageBackgroundCell.load(url: url)
                 }
             }
+            */
             
-            recipeName.text = recipe.name
+            recipeName.text = recipe?.name
             //recipeName.font(.custom("OpenSans-Bold", size: 34))
-            timing.text = String(recipe.totalTime)
+            //timing.text = String(recipe.totalTime)
         }
     }
-    */
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         addShadow()
         
         // Initialization code
     }
+    /*
+    private func configure() {
+        // copier coller plus bas
+    }
+    */
     private func addShadow() {
         // Pas d'ombre finalement
     }
-    func configure(timeToPrepare: String, name: String, person: Float) {
+    private func configure(timeToPrepare: String, name: String, person: Float) {
         let interval: TimeInterval = Double(timeToPrepare) ?? 0
         
         let formatter = DateComponentsFormatter()
