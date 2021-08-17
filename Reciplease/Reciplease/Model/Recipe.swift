@@ -29,7 +29,7 @@ struct Recipe {
         self.url = recipeEntity.url ?? "No url"
         self.numberOfPeople = recipeEntity.person
         self.duration = recipeEntity.totalTime
-        self.ingredientsNeeded = []
+        self.ingredientsNeeded = [] // Pas content si je mets seulement la ligne en dessous.
         self.ingredientsNeeded = convertDatasToStringArray(ingredients: recipeEntity.ingredients)
     }
     

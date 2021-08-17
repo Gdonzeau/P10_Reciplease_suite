@@ -57,30 +57,19 @@ class PreparingSearchViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        //print("Index : \(MyTabBarController.shared.selectedIndex)")
-        //print("index : \(String(describing: tabbarTest.index(ofAccessibilityElement: tabBar.index.self)))")
-        //print("Item : \(String(describing: MyTabBarController.shared.tabBar.selectedItem))")
         ingredientTableView.reloadData()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "segueToReceiptList" {
-            //print("Not from favorit")
             let recipeListVC = segue.destination as! RecipeListViewController
             recipeListVC.ingredientsUsed = ingredientsUsed
             recipeListVC.recipeMode = .api
            //e recipeListVC.parameters = parameters
             print("Parameters = \(parameters)")
         }
-        /*
-        if segue.identifier == "segueToFavoritList" {
-            print("From favorit")
-            let recipeListVC = segue.destination as! RecipeListViewController
-            parameters = .favorites
-            recipeListVC.parameters = parameters
-        }
-        */
     }
+    
     private func deleteIngredientTableView() {
         ingredientsUsed = ""
         for _ in 0 ..< ingredientsList.count {
@@ -129,7 +118,6 @@ extension PreparingSearchViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        //return IngredientService.shared.ingredients.count
         return ingredientsList.count
     }
     

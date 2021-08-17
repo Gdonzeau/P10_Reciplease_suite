@@ -6,7 +6,6 @@
 //
 
 import UIKit
-//import CoreData // Sorti des commentaires pour test
 
 enum RecipeListMode {
     case api
@@ -20,7 +19,6 @@ enum RecipeListMode {
             return "Favorites"
         }
     }
-    
     //var emptyImage: UIImage
     
     //var emprtViewtitle: Stirng {
@@ -31,20 +29,15 @@ enum ViewState {
     case error
     case empty
     case showDate
-    
    // case error2(Error)
    // case show(Recipe)
 }
 
 class RecipeListViewController: UIViewController {
     
- 
     var recipes: [Recipe] = []
 
-    
     var recipeMode: RecipeListMode = .database
-    
-   
     
     var ingredientsUsed: String = ""
     
