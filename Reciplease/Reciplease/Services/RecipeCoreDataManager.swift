@@ -55,15 +55,22 @@ class RecipeCoreDataManager {
     func saveRecipe(name: String, person: Float, totalTime: Float, url: String, imageUrl: String, ingredients: [String]) {
         print("Saving")
         let recipeToSave = RecipeEntity(context: AppDelegate.viewContext)
+        print("Model to save created.")
         recipeToSave.name = name
+        print("Name is \(String(describing: recipeToSave.name))")
         recipeToSave.person = person
+        print("Nb of pers. is \(String(describing: recipeToSave.person))")
         recipeToSave.totalTime = totalTime
+        print("Time is \(String(describing: recipeToSave.totalTime))")
         recipeToSave.url = url
+        print("Url is \(String(describing: recipeToSave.url))")
         recipeToSave.imageUrl = imageUrl
+        print("Image's url is \(String(describing: recipeToSave.imageUrl))")
         
         // saving an array [String] to a Core Data (Binary Data) type
         do {
             recipeToSave.ingredients = try NSKeyedArchiver.archivedData(withRootObject: ingredients, requiringSecureCoding: true)
+            print("Ingredients are \(String(describing: recipeToSave.ingredients))")
         } catch {
           print("failed to archive array with error: \(error)")
         }
@@ -71,7 +78,7 @@ class RecipeCoreDataManager {
     }
     
     func deleteRecipe(recipeToDelete: Recipe) {
-        let request: NSFetchRequest<RecipeStored> = RecipeStored.fetchRequest()
+        let request: NSFetchRequest<RecipeEntity> = RecipeEntity.fetchRequest()
         let recipeCoreDataToDelete = convertFromUsableToCoreData(recipeToConvert: recipeToDelete)
         do {
             let response = try AppDelegate.viewContext.fetch(request)
@@ -99,6 +106,18 @@ class RecipeCoreDataManager {
             
         } catch {
             print("Error while deleting")
+            return
+        }
+    }
+    
+    func howMany() {
+        let request: NSFetchRequest<RecipeEntity> = RecipeEntity.fetchRequest()
+        do {
+            let response = try AppDelegate.viewContext.fetch(request)
+            print("Nous avons \(response.count) entités en mémoire")
+            
+        } catch {
+            print("Error while reading")
             return
         }
     }

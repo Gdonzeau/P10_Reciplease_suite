@@ -15,6 +15,7 @@ class RecipeTableViewCell: UITableViewCell {
     @IBOutlet weak var howManyPerson: UILabel!
     @IBOutlet weak var SVHowManyPerson: UIStackView!
     @IBOutlet weak var informations: InfoView!
+    @IBOutlet weak var information2: InfoView!
     
     
      //Ajouter didSet
@@ -39,6 +40,7 @@ class RecipeTableViewCell: UITableViewCell {
             //timing.text = String(recipe.totalTime)
         }
     }
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()

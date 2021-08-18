@@ -344,6 +344,11 @@
                                                         <outlet property="name" destination="Sob-qR-q3a" id="53z-Qf-kYp"/>
                                                     </connections>
                                                 </view>
+                                                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vxt-wp-yXi">
+                                                    <rect key="frame" x="82" y="16" width="123" height="67"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="backgroundColor" systemColor="systemGreenColor"/>
+                                                </view>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="xUf-fa-qoD" firstAttribute="top" secondItem="4P2-4h-CJN" secondAttribute="bottom" id="L0u-du-JAU"/>
@@ -357,6 +362,7 @@
                                             <outlet property="SVHowManyPerson" destination="2Kf-yB-FEk" id="dLH-Ve-eNh"/>
                                             <outlet property="SVTiming" destination="b3J-gB-4zr" id="Ggb-VR-5VJ"/>
                                             <outlet property="howManyPerson" destination="7sv-bK-T2A" id="bjM-GD-Ei2"/>
+                                            <outlet property="information2" destination="Vxt-wp-yXi" id="9KZ-5l-li6"/>
                                             <outlet property="informations" destination="4P2-4h-CJN" id="sVK-QP-DO2"/>
                                             <outlet property="recipeName" destination="xUf-fa-qoD" id="b4Q-ZF-ITi"/>
                                             <outlet property="timing" destination="C9N-gK-yXX" id="Wzg-Q3-iOM"/>
@@ -398,7 +404,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kr9-fD-6RI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="246" y="-64"/>
+            <point key="canvasLocation" x="244.92753623188409" y="-64.402173913043484"/>
         </scene>
         <!--Recipe Choosen View Controller-->
         <scene sceneID="eEv-Wr-Bdy">
@@ -577,6 +583,9 @@
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGreenColor">
+            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemOrangeColor">
             <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

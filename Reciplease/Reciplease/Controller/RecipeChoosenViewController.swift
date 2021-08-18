@@ -41,17 +41,7 @@ class RecipeChoosenViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        isRecipeNotFavorite(answer: isRecipeNotAlreadyRegistred())
-        favoriteOrNot.contentVerticalAlignment = .fill
-        favoriteOrNot.contentHorizontalAlignment = .fill
-        // Pourquoi y avait-il ces lignes ci-dessous ?
-        /*
-        do {
-        recipesStored = try recipeCoreDataManager.loadRecipes() // On charge les données du CoreData
-        } catch {
-            print("Erreur de chargement")
-        }
-        */
+        setupView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -82,11 +72,18 @@ class RecipeChoosenViewController: UIViewController {
         }
         
     }
+    func setupView() {
+        isRecipeNotFavorite(answer: isRecipeNotAlreadyRegistred())
+        favoriteOrNot.contentVerticalAlignment = .fill
+        favoriteOrNot.contentHorizontalAlignment = .fill
+    }
     private func saveOrDelete() {
         if isRecipeNotAlreadyRegistred() == true {
             favoriteOrNot.setImage(UIImage(systemName: "heart.fill"), for: .normal)
             if let recipeUrl = recipeChoosen.url, let recipeImageUrl = recipeChoosen.imageURL {
+                print("Let's save.")
                 recipeCoreDataManager.saveRecipe(name: recipeChoosen.name, person: recipeChoosen.numberOfPeople, totalTime: recipeChoosen.duration, url: recipeUrl, imageUrl: recipeImageUrl, ingredients: recipeChoosen.ingredientsNeeded)
+                
             }
             
             //savingRecipe(recipeToSave: recipeChoosen)
@@ -111,6 +108,7 @@ class RecipeChoosenViewController: UIViewController {
             
         } else {
             favoriteOrNot.setImage(UIImage(systemName: "heart"), for: .normal)
+            print("Let's delete.")
             recipeCoreDataManager.deleteRecipe(recipeToDelete: recipeChoosen)
             //deleteRecipeFromCoreData()
         }
