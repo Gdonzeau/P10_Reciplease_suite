@@ -9,13 +9,9 @@ import UIKit
 //import CoreData
 
 class PreparingSearchViewController: UIViewController {
-    // Pour le test
     let recipeCoreDataManager = RecipeCoreDataManager()
-    //var entitiesPresent = [EntityTest]()
-    // fin du test
     var ingredientsUsed = ""
     var ingredientsList = [String]()
-    //var parameters: Parameters = .search
     var parameters = "search"
     
     var tabbarTest = MyTabBarController() // À voir...
@@ -47,8 +43,8 @@ class PreparingSearchViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("On efface tout")
-        recipeCoreDataManager.deleteAll()
+        //print("On efface tout")
+        //recipeCoreDataManager.deleteAll()
         ingredientName.attributedPlaceholder = NSAttributedString(string: "Lemon, Cheese, Sausages,...",
                                                                   attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray])
         self.ingredientTableView.rowHeight = 40.0

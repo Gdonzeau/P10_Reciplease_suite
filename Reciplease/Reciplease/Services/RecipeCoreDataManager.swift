@@ -88,10 +88,10 @@ class RecipeCoreDataManager {
     }
     // On ne touche pas... Et on n'utilise pas
     func deleteAll() {
-        let request: NSFetchRequest<RecipeStored> = RecipeStored.fetchRequest()
+        let request: NSFetchRequest<RecipeEntity> = RecipeEntity.fetchRequest()
         do {
             let response = try AppDelegate.viewContext.fetch(request)
-            
+            print("Nous avons \(response.count) entités en mémoire")
             for recipe in response {
                 AppDelegate.viewContext.delete(recipe)
             }

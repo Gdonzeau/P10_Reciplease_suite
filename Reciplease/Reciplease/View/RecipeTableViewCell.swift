@@ -21,10 +21,10 @@ class RecipeTableViewCell: UITableViewCell {
     
     var recipe: Recipe? {
         didSet {
-            if let timeToPrepare = recipe?.duration, let name = recipe?.name, let person = recipe?.numberOfPeople {
-            configure(timeToPrepare: String(timeToPrepare), name: name, person: person)
+            if let timeToPrepare = recipe?.duration, let name = recipe?.name, let person = recipe?.numberOfPeople, let image = recipe?.imageURL {
+            configure(timeToPrepare: String(timeToPrepare), name: name, person: person, image: image)
             }
-            var image = recipe?.imageURL
+            
             /*
             if let image = recipe.imageUrl {
                 
@@ -34,7 +34,7 @@ class RecipeTableViewCell: UITableViewCell {
             }
             */
             
-            recipeName.text = recipe?.name
+            //recipeName.text = recipe?.name
             //recipeName.font(.custom("OpenSans-Bold", size: 34))
             //timing.text = String(recipe.totalTime)
         }
@@ -54,7 +54,15 @@ class RecipeTableViewCell: UITableViewCell {
     private func addShadow() {
         // Pas d'ombre finalement
     }
-    private func configure(timeToPrepare: String, name: String, person: Float) {
+    private func configure(timeToPrepare: String, name: String, person: Float, image: String) {
+        let backGroundImage = UIImageView()
+        guard let urlImage = URL(string: image) else {
+            return
+        }
+        backGroundImage.load(url: urlImage)
+        backgroundView = backGroundImage
+        backgroundView?.contentMode = .scaleAspectFill
+        
         let interval: TimeInterval = Double(timeToPrepare) ?? 0
         
         let formatter = DateComponentsFormatter()
@@ -99,3 +107,20 @@ class RecipeTableViewCell: UITableViewCell {
 extension RecipeTableViewCell: NSSecureCoding {
     static var supportsSecureCoding = true
 }
+/*
+extension UIImageView { // Publishing the image
+    func load(url: URL) {
+        DispatchQueue.global().async { [weak self] in
+            guard let data = try? Data(contentsOf: url) else {
+                return
+            }
+            guard let image = UIImage(data:data) else {
+                return
+            }
+            DispatchQueue.main.async {
+                self?.image = image
+            }
+        }
+    }
+}
+*/

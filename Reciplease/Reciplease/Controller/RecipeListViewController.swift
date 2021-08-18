@@ -21,7 +21,7 @@ enum RecipeListMode {
     }
     //var emptyImage: UIImage
     
-    //var emprtViewtitle: Stirng {
+    //var emptyViewtitle: String {
 }
 
 enum ViewState {
@@ -135,24 +135,15 @@ class RecipeListViewController: UIViewController {
         }
     }
     
-    /*
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "segueFromCellToChoosenRecipe",
            let recipeChoosenVC = segue.destination as? RecipeChoosenViewController,
            let index = receipesTableView.indexPathForSelectedRow?.row {
-            //if parameters == .search {
-          //  recipeChoosenVC.recipeChoosen = recipesHere[index]
-            
-            if Parameters.shared.state == "search" {
-                recipeChoosenVC.recipeChoosen = downloadedRecipes[index]
-            } else {
-                //recipeChoosenVC.recipeChoosen = recipesStored[index]
-                recipeChoosenVC.recipeChoosen = favoriteRecipes[index]
-            }
- 
+            recipeChoosenVC.recipeChoosen = recipes[index]
         }
     }
-    */
+    
     
     private func getRecipes() {
         switch recipeMode {
@@ -172,9 +163,6 @@ class RecipeListViewController: UIViewController {
                 self?.viewState = .empty
             case .success(let recipeResponse):
                 self?.recipes = recipeResponse.recipes
-                //self.toggleActivityIndicator(shown: false)
-                //self.savingAnswer(recipes:recipes)
-                //self.receipesTableView.reloadData()
                 self?.viewState = .showDate
             case .failure(let error):
                 print("Error loading recipes from API \(error.localizedDescription)")
