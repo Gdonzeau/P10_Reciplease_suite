@@ -69,6 +69,7 @@ class RecipeChoosenViewController: UIViewController {
         isRecipeNotFavorite(answer: isRecipeNotAlreadyRegistred())
         favoriteOrNot.contentVerticalAlignment = .fill
         favoriteOrNot.contentHorizontalAlignment = .fill
+        favoriteOrNot.tintColor = .red
     }
     private func saveOrDelete() {
         guard let recipeHere = recipe else {

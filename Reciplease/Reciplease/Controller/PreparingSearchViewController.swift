@@ -14,7 +14,7 @@ class PreparingSearchViewController: UIViewController {
     var ingredientsList = [String]()
     //var parameters = "search"
     
-    var tabbarTest = MyTabBarController() // À voir...
+    //var tabbarTest = MyTabBarController() // À voir...
     
     var paraTest = "Bonjour" {
         didSet {
