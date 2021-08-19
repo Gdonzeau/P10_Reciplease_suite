@@ -9,10 +9,10 @@ import Foundation
 import CoreData
 
 extension RecipeEntity {
-    /*
+    
     //@NSManaged public var ingredients: Data?
     @NSManaged public var ingredient: String
-
+    
     var ingredientArray : [String] {
         get {
             let data = Data(ingredient.utf8)
@@ -26,5 +26,5 @@ extension RecipeEntity {
             ingredient = string
         }
     }
-    */
+    
 }

@@ -12,7 +12,7 @@ class PreparingSearchViewController: UIViewController {
     let recipeCoreDataManager = RecipeCoreDataManager()
     var ingredientsUsed = ""
     var ingredientsList = [String]()
-    var parameters = "search"
+    //var parameters = "search"
     
     var tabbarTest = MyTabBarController() // À voir...
     
@@ -43,7 +43,6 @@ class PreparingSearchViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //print("On efface tout")
         recipeCoreDataManager.howMany()
         //recipeCoreDataManager.deleteAll()
         recipeCoreDataManager.howMany()
@@ -63,8 +62,6 @@ class PreparingSearchViewController: UIViewController {
             let recipeListVC = segue.destination as! RecipeListViewController
             recipeListVC.ingredientsUsed = ingredientsUsed
             recipeListVC.recipeMode = .api
-           //e recipeListVC.parameters = parameters
-            print("Parameters = \(parameters)")
         }
     }
     

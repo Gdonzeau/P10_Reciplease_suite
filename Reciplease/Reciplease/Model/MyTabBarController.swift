@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+/*
 class MyTabBarController: UITabBarController, UITabBarControllerDelegate {
     static var shared = MyTabBarController()
     
@@ -16,7 +16,7 @@ class MyTabBarController: UITabBarController, UITabBarControllerDelegate {
         self.selectedIndex = 0
         //print("Item : \(String(describing: TabBarController.shared.tabBar.selectedItem))")
     }
-    
+    /*
     // UITabBarDelegate
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         print("Selected item : \(String(describing: item.title))")
@@ -38,6 +38,7 @@ class MyTabBarController: UITabBarController, UITabBarControllerDelegate {
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
         //print("Selected view controller : \(viewController)")
     }
+    */
 }
-
+*/
 

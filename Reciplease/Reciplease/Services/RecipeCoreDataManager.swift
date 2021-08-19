@@ -16,32 +16,14 @@ class RecipeCoreDataManager {
         self.viewContext = persistentContainer.viewContext
     }
     
-    func loadRecipes() throws -> [Recipe] { // throws retiré, mais à remettre
+    func loadRecipes() throws -> [Recipe] {
         let request: NSFetchRequest<RecipeEntity> = RecipeEntity.fetchRequest()
-        
-        /*
-        var recipes = [Recipe]()
-        guard let recipesReceived = try? AppDelegate.viewContext.fetch(request) else {
-            return []
-        }
-        for object in recipesReceived {
-           // if let name = object.name { // Ici peut-être quelque chose ?
-                let newRecipe = Recipe(from: object)
-                recipes.append(newRecipe)
-            //}
-        }
-        return recipes
-        //let request: NSFetchRequest<RecipeEntity>
-        */
-        //var recipesStored: [RecipeStored]
         var recipesStored: [RecipeEntity]
         do {
             recipesStored = try viewContext.fetch(request)
-            //print("Nous avons \(recipesStored.count)")
             print("Nous avons \(recipesStored.count)")
             
         } catch { throw error }
-
         /*
          let convertedArray = recipesEntities.map { (recipeEntity) -> Recipe in
          return Recipe(from: recipeEntity)
@@ -52,24 +34,25 @@ class RecipeCoreDataManager {
         
     }
     
-    func saveRecipe(name: String, person: Float, totalTime: Float, url: String, imageUrl: String, ingredients: [String]) {
+    func saveRecipe(recipe: Recipe) {
+        self.howMany()
         print("Saving")
         let recipeToSave = RecipeEntity(context: AppDelegate.viewContext)
         print("Model to save created.")
-        recipeToSave.name = name
+        recipeToSave.name = recipe.name
         print("Name is \(String(describing: recipeToSave.name))")
-        recipeToSave.person = person
+        recipeToSave.person = recipe.numberOfPeople
         print("Nb of pers. is \(String(describing: recipeToSave.person))")
-        recipeToSave.totalTime = totalTime
+        recipeToSave.totalTime = recipe.duration
         print("Time is \(String(describing: recipeToSave.totalTime))")
-        recipeToSave.url = url
+        recipeToSave.url = recipe.url
         print("Url is \(String(describing: recipeToSave.url))")
-        recipeToSave.imageUrl = imageUrl
+        recipeToSave.imageUrl = recipe.imageURL
         print("Image's url is \(String(describing: recipeToSave.imageUrl))")
         
         // saving an array [String] to a Core Data (Binary Data) type
         do {
-            recipeToSave.ingredients = try NSKeyedArchiver.archivedData(withRootObject: ingredients, requiringSecureCoding: true)
+            recipeToSave.ingredients = try NSKeyedArchiver.archivedData(withRootObject: recipe.ingredientsNeeded, requiringSecureCoding: true)
             print("Ingredients are \(String(describing: recipeToSave.ingredients))")
         } catch {
           print("failed to archive array with error: \(error)")
@@ -83,11 +66,14 @@ class RecipeCoreDataManager {
         do {
             let response = try AppDelegate.viewContext.fetch(request)
             for recipe in response {
-                if recipeCoreDataToDelete == recipe {
+                if recipeCoreDataToDelete.name == recipe.name {
+                    print("\(String(describing: recipeCoreDataToDelete.name)) est pareil que \(String(describing: recipe.name))")
                 AppDelegate.viewContext.delete(recipe)
-                    try? AppDelegate.viewContext.save()
+                } else {
+                    print("\(String(describing: recipeCoreDataToDelete.name)) est différent de \(String(describing: recipe.name))")
                 }
             }
+            try? AppDelegate.viewContext.save()
         } catch {
             print("Error while deleting")
             return
@@ -130,12 +116,27 @@ class RecipeCoreDataManager {
         recipeConverted.url = recipeToConvert.url
         recipeConverted.person = recipeToConvert.numberOfPeople
         recipeConverted.totalTime = recipeToConvert.duration
-        
+        /*
         do {
             recipeConverted.ingredients = try NSKeyedArchiver.archivedData(withRootObject: recipeToConvert.ingredientsNeeded, requiringSecureCoding: true)
         } catch {
           print("failed to archive array with error: \(error)")
         }
+        */
+        let jsonData = try? JSONSerialization.data(withJSONObject: recipeToConvert.ingredientsNeeded, options: JSONSerialization.WritingOptions.prettyPrinted)
+        recipeConverted.ingredients = jsonData
+        /*
+        let data = JSONSerialization.dataWithJSONObject(recipeToConvert.ingredientsNeeded, options: nil, error: nil)
+        recipeConverted.ingredients = data
+        recipeConverted.ingredients = Data?(recipeToConvert.ingredientsNeeded.utf8)
+        do {
+            if let ingredients = try JSONDecoder().decode(Data, from: recipeToConvert.ingredientsNeeded) {
+                recipeConverted.ingredients = ingredients
+            }
+        } catch {
+            print("failed to archive array with error: \(error)")
+        }
+        */
         //let hobbies = recipeToConvert.ingredientsNeeded {
         /*
           do {

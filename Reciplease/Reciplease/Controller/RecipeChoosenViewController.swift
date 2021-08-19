@@ -6,21 +6,15 @@
 //
 
 import UIKit
-//import CoreData
-//import WebKit
 
 class RecipeChoosenViewController: UIViewController {
     
     var recipeName = String()
     var ingredientList = String()
-    var recipesFromCoreData = RecipeEntity(context: AppDelegate.viewContext)
-    var recipeChoosen = Recipe(from: RecipeEntity(context: AppDelegate.viewContext))
-    
+    var recipe: Recipe?
     var recipesStored = [Recipe]()
     
     let recipeCoreDataManager = RecipeCoreDataManager()
-    
-    //ar tabbarTest = MyTabBarController() // À voir...
     
     @IBOutlet weak var blogNameLabel: UILabel!
     @IBOutlet weak var imageRecipe: UIImageView!
@@ -46,14 +40,14 @@ class RecipeChoosenViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        //print("Index : \(MyTabBarController.shared.selectedIndex)")
-        //print("index : \(String(describing: tabbarTest.index(ofAccessibilityElement: tabBar.index.self)))")
         prepareInformations()
         blogNameLabel.text = recipeName
         ingredientsList.text = ingredientList
         var urlImage = ""
-        // Remplacer par des if pour des valeurs par défaut ?
-        if let imageUrl = recipeChoosen.imageURL {
+        guard let recipeHere = recipe else {
+            return
+        }
+        if let imageUrl = recipeHere.imageURL {
             urlImage = imageUrl
         } else {
             let error = APIErrors.noImage
@@ -70,7 +64,6 @@ class RecipeChoosenViewController: UIViewController {
             }
             imageRecipe.image = UIImage(named: "imageDefault") // No image, so Default image
         }
-        
     }
     func setupView() {
         isRecipeNotFavorite(answer: isRecipeNotAlreadyRegistred())
@@ -78,43 +71,24 @@ class RecipeChoosenViewController: UIViewController {
         favoriteOrNot.contentHorizontalAlignment = .fill
     }
     private func saveOrDelete() {
+        guard let recipeHere = recipe else {
+            return
+        }
         if isRecipeNotAlreadyRegistred() == true {
             favoriteOrNot.setImage(UIImage(systemName: "heart.fill"), for: .normal)
-            if let recipeUrl = recipeChoosen.url, let recipeImageUrl = recipeChoosen.imageURL {
                 print("Let's save.")
-                recipeCoreDataManager.saveRecipe(name: recipeChoosen.name, person: recipeChoosen.numberOfPeople, totalTime: recipeChoosen.duration, url: recipeUrl, imageUrl: recipeImageUrl, ingredients: recipeChoosen.ingredientsNeeded)
-                
-            }
-            
-            //savingRecipe(recipeToSave: recipeChoosen)
-            /*
-            let recipeEntity = RecipeStored(context: AppDelegate.viewContext)
-            recipeEntity.name = recipeChoosen.name
-            
-            recipeEntity.imageUrl = recipeChoosen.imageURL
-            recipeEntity.url = recipeChoosen.url
-            recipeEntity.person = recipeChoosen.numberOfPeople
-            recipeEntity.totalTime = recipeChoosen.duration
-            recipeEntity.ingredients = recipeChoosen.ingredientsNeeded
-            */
-            /*
-            do {
-                try? AppDelegate.viewContext.save()
-            } //catch { // À traiter plus tard
-            //  print("Oh une erreur.")
-            // }
-            */
-            
-            
+                recipeCoreDataManager.saveRecipe(recipe: recipeHere)
         } else {
             favoriteOrNot.setImage(UIImage(systemName: "heart"), for: .normal)
             print("Let's delete.")
-            recipeCoreDataManager.deleteRecipe(recipeToDelete: recipeChoosen)
-            //deleteRecipeFromCoreData()
+            recipeCoreDataManager.deleteRecipe(recipeToDelete: recipeHere)
         }
     }
     private func openUrl() {
-        if let url = recipeChoosen.url {
+        guard let recipeHere = recipe else {
+            return
+        }
+        if let url = recipeHere.url {
             guard let urlAdress = URL(string: url) else {
                 return
             }
@@ -129,90 +103,46 @@ class RecipeChoosenViewController: UIViewController {
     }
     
     private func prepareInformations() {
-        recipeName = recipeChoosen.name
+        guard let recipeHere = recipe else {
+            return
+        }
+        recipeName = recipeHere.name
         presentIngredients()
     }
     
     private func presentIngredients() {
-        for index in 0 ..< recipeChoosen.ingredientsNeeded.count {
+        guard let recipeHere = recipe else {
+            return
+        }
+        for index in 0 ..< recipeHere.ingredientsNeeded.count {
             ingredientList += "- "
-            ingredientList += recipeChoosen.ingredientsNeeded[index]
+            ingredientList += recipeHere.ingredientsNeeded[index]
             ingredientList += "\n"
         }
     }
     
-    //private func createRecipeObject(object:RecipeStored) -> Recipe {
     private func createRecipeObject(object:RecipeEntity) -> Recipe {
         let recipe = Recipe(from: object)
         return recipe
     }
     
     private func isRecipeNotAlreadyRegistred()-> Bool {
-        //if recipesFromCoreData.loadRecipes().count == 0 { // If there is no recipe in favorite
-        // if RecipeStored.all.count == 0 {
+        guard let recipeHere = recipe else {
+            return true
+        }
+        if let recipes = try? recipeCoreDataManager.loadRecipes() {
+            recipesStored = recipes
+        }
         if recipesStored.count == 0 {
             return true
         }
-        //for object in recipesFromCoreData.loadRecipes() {
-        //for object in RecipeStored.all {
-        for object in recipesStored {
-            if object == recipeChoosen { // is the recipe on the View already favorit ?
-                return false
-            }
+        if recipesStored.contains(recipeHere) {
+            return false
         }
+        
         return true
     }
-    /*
-    private func savingRecipe(recipeToSave: Recipe) {
-        recipeCoreDataManager.saveRecipe(recipeToSave: recipeToSave)
-        //let recipeEntity = RecipeStored(context: AppDelegate.viewContext) //Appel du CoreDate RecipeService
-        //let recipe = convertFromUsableToCoreData(recipeToSave: recipeToSave)
-        /*
-        recipeEntity.name = recipeToSave.name
-        
-        recipeEntity.imageUrl = recipeToSave.imageURL
-        recipeEntity.url = recipeToSave.url
-        recipeEntity.person = recipeToSave.numberOfPeople
-        recipeEntity.totalTime = recipeToSave.duration
-        recipeEntity.ingredients = recipeToSave.ingredientsNeeded
-        
-        do {
-            try? AppDelegate.viewContext.save()
-        } //catch { // À traiter plus tard
-        //  print("Oh une erreur.")
-        // }
-        //recipeEntity.saveRecipe()
- */
-    }
-    */
-    /*
-    private func convertFromUsableToCoreData(recipeToSave: Recipe) -> RecipeStored {
-        let recipeToStore = RecipeStored(context: AppDelegate.viewContext)
-        recipeToStore.name = recipeToSave.name
-        recipeToStore.imageUrl = recipeToSave.imageURL
-        recipeToStore.url = recipeToSave.url
-        recipeToStore.person = recipeToSave.numberOfPeople
-        recipeToStore.totalTime = recipeToSave.duration
-        recipeToStore.ingredients = recipeToSave.ingredientsNeeded
-        return recipeToStore
-    }
-    */
-    /*
-    private func deleteRecipeFromCoreData() {
-        // for object in recipesFromCoreData.loadRecipes() {
-        //for object in RecipeStored.all {
-        for object in recipesStored {
-            if object == recipeChoosen {
-                print("Trouvé, on efface")
-                recipeCoreDataManager.deleteRecipe(recipeToDelete: object)
-                try? AppDelegate.viewContext.save()
-                return
-            } else {
-                print("Absent de la base de données") // At each step where it is not the  right recipe
-            }
-        }
-    }
-    */
+    
     private func isRecipeNotFavorite(answer : Bool) {
         if answer == false {
             favoriteOrNot.setImage(UIImage(systemName: "heart.fill"), for: .normal)

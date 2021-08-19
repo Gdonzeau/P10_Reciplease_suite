@@ -14,8 +14,10 @@ enum Parameter {
     case favorites
 }
 */
+/*
 struct Parameters {
     static var shared = Parameters()
     //var state = Parameter.search
     var state = "search"
 }
+*/
