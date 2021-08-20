@@ -56,15 +56,14 @@ class RecipeCoreDataManager {
     
     func deleteRecipe(recipeToDelete: Recipe) {
         let request: NSFetchRequest<RecipeEntity> = RecipeEntity.fetchRequest()
-        let recipeCoreDataToDelete = convertFromUsableToCoreData(recipeToConvert: recipeToDelete)
         do {
             let response = try AppDelegate.viewContext.fetch(request)
             for recipe in response {
-                if recipeCoreDataToDelete.name == recipe.name {
-                    print("\(String(describing: recipeCoreDataToDelete.name)) est pareil que \(String(describing: recipe.name))")
-                AppDelegate.viewContext.delete(recipe)
+                if recipeToDelete == recipe { // Equatable adapted to compare different types
+                    print("\(String(describing: recipeToDelete.name)) est pareil que \(String(describing: recipe.name))")
+                    AppDelegate.viewContext.delete(recipe)
                 } else {
-                    print("\(String(describing: recipeCoreDataToDelete.name)) est différent de \(String(describing: recipe.name))")
+                    print("\(String(describing: recipeToDelete.name)) est différent de \(String(describing: recipe.name))")
                 }
             }
             try? AppDelegate.viewContext.save()
@@ -73,7 +72,10 @@ class RecipeCoreDataManager {
             return
         }
     }
-    // On ne touche pas... Et on n'utilise pas
+    
+    // MARK: - Just while programming
+    
+    /// Will erase all entities in memory
     func deleteAll() {
         let request: NSFetchRequest<RecipeEntity> = RecipeEntity.fetchRequest()
         do {
@@ -89,7 +91,7 @@ class RecipeCoreDataManager {
             return
         }
     }
-    
+    /// Will return how many entities are in memory at this moment
     func howMany() {
         let request: NSFetchRequest<RecipeEntity> = RecipeEntity.fetchRequest()
         do {
@@ -100,48 +102,5 @@ class RecipeCoreDataManager {
             print("Error while reading")
             return
         }
-    }
-    
-    private func convertFromUsableToCoreData(recipeToConvert: Recipe) -> RecipeEntity {
-        let recipeConverted = RecipeEntity(context: AppDelegate.viewContext)
-        
-        recipeConverted.name = recipeToConvert.name
-        recipeConverted.imageUrl = recipeToConvert.imageURL
-        recipeConverted.url = recipeToConvert.url
-        recipeConverted.person = recipeToConvert.numberOfPeople
-        recipeConverted.totalTime = recipeToConvert.duration
-        /*
-        do {
-            recipeConverted.ingredients = try NSKeyedArchiver.archivedData(withRootObject: recipeToConvert.ingredientsNeeded, requiringSecureCoding: true)
-        } catch {
-          print("failed to archive array with error: \(error)")
-        }
-        */
-        let jsonData = try? JSONSerialization.data(withJSONObject: recipeToConvert.ingredientsNeeded, options: JSONSerialization.WritingOptions.prettyPrinted)
-        recipeConverted.ingredients = jsonData
-        /*
-        let data = JSONSerialization.dataWithJSONObject(recipeToConvert.ingredientsNeeded, options: nil, error: nil)
-        recipeConverted.ingredients = data
-        recipeConverted.ingredients = Data?(recipeToConvert.ingredientsNeeded.utf8)
-        do {
-            if let ingredients = try JSONDecoder().decode(Data, from: recipeToConvert.ingredientsNeeded) {
-                recipeConverted.ingredients = ingredients
-            }
-        } catch {
-            print("failed to archive array with error: \(error)")
-        }
-        */
-        //let hobbies = recipeToConvert.ingredientsNeeded {
-        /*
-          do {
-            if let hobbiesArr = try NSKeyedUnarchiver.unarchivedObject(ofClass: NSArray.self, from: recipeToConvert.ingredientsNeeded) as? [String] {
-              dump(hobbiesArr)
-            }
-          } catch {
-            print("could not unarchive array: \(error)")
-          }
-        */
-        
-        return recipeConverted
     }
 }

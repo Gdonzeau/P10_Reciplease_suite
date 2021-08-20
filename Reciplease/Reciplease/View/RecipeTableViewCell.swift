@@ -105,24 +105,9 @@ class RecipeTableViewCell: UITableViewCell {
         SVHowManyPerson.backgroundColor = UIColor(displayP3Red: 0.2, green: 0.2, blue: 0.2, alpha: 0.5)
     }
 }
+/*
 // Because of : 'NSKeyedUnarchiveFromData' should not be used to for un-archiving and will be removed in a future release
 extension RecipeTableViewCell: NSSecureCoding {
     static var supportsSecureCoding = true
-}
-/*
-extension UIImageView { // Publishing the image
-    func load(url: URL) {
-        DispatchQueue.global().async { [weak self] in
-            guard let data = try? Data(contentsOf: url) else {
-                return
-            }
-            guard let image = UIImage(data:data) else {
-                return
-            }
-            DispatchQueue.main.async {
-                self?.image = image
-            }
-        }
-    }
 }
 */

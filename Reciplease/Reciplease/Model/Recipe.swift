@@ -82,7 +82,7 @@ struct MyObject: Decodable {
 }
 
 extension Recipe: Equatable {
-    static func == (lhs: Recipe, rhs: Recipe) -> Bool {
-        return lhs.name == rhs.name && lhs.url == rhs.url // if var(de type Recipe) == var(
+    static func == (lhs: Recipe, rhs: RecipeEntity) -> Bool {
+        return lhs.name == rhs.name && lhs.url == rhs.url
     }
 }
