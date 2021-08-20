@@ -34,6 +34,7 @@ enum ViewState {
 }
 
 class RecipeListViewController: UIViewController {
+    //var recipeChoosenViewController = RecipeChoosenViewController() // Comme ça ?
     
     var recipes: [Recipe] = []
 
@@ -164,9 +165,11 @@ class RecipeListViewController: UIViewController {
 }
 
 extension RecipeListViewController: UITableViewDataSource {
-    func numberOfSections(in tableView: UITableView) -> Int {
+    /*
+    func numberOfSections(in tableView: UITableView) -> Int { // Pas nécessaire (1 par défaut)
         return 1
     }
+    */
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         recipes.count
     }
@@ -188,18 +191,60 @@ extension RecipeListViewController: UITableViewDataSource {
 extension RecipeListViewController: UITableViewDelegate { // To delete cells one by one
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("Test touche")
         //let sotry ...indexPath
         //detailViewController
+        //recipeChoosenViewController.recipe = recipes[indexPath.row]
+        //recipeChoosenVC.recipe = recipes[indexPath.row]
         //detailVC.recipe = recipes[indexPath.row]
-       // navgation.push
+       // navigation.push
     }
-
+/*
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         // nouvelle facon
+        print("Test glisse")
         guard recipeMode == .database else { return nil }
         //TODO cree l action deleteAction
+        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { (action, view, handler) in
+                //YOUR_CODE_HERE
+            }
+            deleteAction.backgroundColor = .red
+            let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
+            configuration.performsFirstActionWithFullSwipe = false
+            return configuration
         
+        
+        
+        //recipeCoreDataManager.deleteRecipe(recipeToDelete: recipes[indexPath.row])
         return nil
     }
+    */
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+            let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { _, _, complete in
+                self.recipes.remove(at: indexPath.row)
+                self.recipeCoreDataManager.deleteRecipe(recipeToDelete: self.recipes[indexPath.row])
+                complete(true)
+            }
+            
+            deleteAction.backgroundColor = .red
+            
+            let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
+            configuration.performsFirstActionWithFullSwipe = true
+            return configuration
+        }
+        
+        func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+            return true
+        }
+        
+    private func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UIContextualAction]? {
+            let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { _, _,_  in
+                self.recipes.remove(at: indexPath.row)
+                //self.tableView.deleteRows(at: [indexPath], with: .automatic)
+            }
+            deleteAction.backgroundColor = .red
+            return [deleteAction]
+        }
+        
 }
 

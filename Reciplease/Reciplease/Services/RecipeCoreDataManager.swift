@@ -49,14 +49,8 @@ class RecipeCoreDataManager {
         print("Url is \(String(describing: recipeToSave.url))")
         recipeToSave.imageUrl = recipe.imageURL
         print("Image's url is \(String(describing: recipeToSave.imageUrl))")
+        recipeToSave.ingredients = try? JSONEncoder().encode(recipe.ingredientsNeeded)
         
-        // saving an array [String] to a Core Data (Binary Data) type
-        do {
-            recipeToSave.ingredients = try NSKeyedArchiver.archivedData(withRootObject: recipe.ingredientsNeeded, requiringSecureCoding: true)
-            print("Ingredients are \(String(describing: recipeToSave.ingredients))")
-        } catch {
-          print("failed to archive array with error: \(error)")
-        }
         try? AppDelegate.viewContext.save()
     }
     
