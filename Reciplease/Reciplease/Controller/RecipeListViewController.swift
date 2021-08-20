@@ -19,25 +19,44 @@ enum RecipeListMode {
             return "Favorites"
         }
     }
-    //var emptyImage: UIImage
-    
-    //var emptyViewtitle: String {
+    var emptyImage: UIImage {
+        var image = UIImage()
+        switch self {
+        case .api:
+            if let imageReturned = UIImage(named: "noRecipe") {
+                image = imageReturned
+            }
+        case .database:
+            if let imageReturned = UIImage(named: "noFavorit") {
+                image = imageReturned
+            }
+        }
+        return image
+        //var emptyView
+    }
+        var subtitle: String {
+            switch self {
+            case .api:
+                return "No Recipe"
+            case .database:
+                return "No Favorite"
+            }
+    }
 }
-
 enum ViewState {
     case loading
     case error
     case empty
-    case showDate
-   // case error2(Error)
-   // case show(Recipe)
+    case showData
+    // case error2(Error)
+    // case show(Recipe)
 }
 
 class RecipeListViewController: UIViewController {
     //var recipeChoosenViewController = RecipeChoosenViewController() // Comme ça ?
     
     var recipes: [Recipe] = []
-
+    
     var recipeMode: RecipeListMode = .database
     
     var ingredientsUsed: String = ""
@@ -52,13 +71,15 @@ class RecipeListViewController: UIViewController {
                 allErrors(errorMessage: "Error", errorTitle: "subtitle")
             case .empty:
                 //stack view image / title / subtitle
+                //subtitle.isHidden = false
                 imageView.isHidden = false
-                imageView.image = UIImage(named: "noRecipe")
-            case .showDate:
+                //imageView.image = UIImage(named: "noRecipe")
+                //imageView.image = recipeMode.emptyImage
+            case .showData:
                 receipesTableView.isHidden = false
                 receipesTableView.reloadData()
                 
-          //  case .error2(let error where error.):
+            //  case .error2(let error where error.):
             //    allErrors(errorMessage: error.title, errorTitle: <#T##String#>)
             }
         }
@@ -67,11 +88,13 @@ class RecipeListViewController: UIViewController {
     private func resetViewState() {
         activityIndicator.stopAnimating()
         receipesTableView.isHidden = true
+        subtitle.isHidden = false
         imageView.isHidden = true
     }
     
     private let recipeCoreDataManager = RecipeCoreDataManager()
     
+    @IBOutlet weak var subtitle: UILabel!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var receipesTableView: UITableView!
@@ -85,8 +108,11 @@ class RecipeListViewController: UIViewController {
     
     private func setupView() {
         title = recipeMode.title
+        imageView.image = recipeMode.emptyImage
+        subtitle.text = recipeMode.subtitle
         activityIndicator.hidesWhenStopped = true // possible de le faire storyboard
         imageView.isHidden = true
+        subtitle.isHidden = true
         toggleActivityIndicator(shown: true)
         self.receipesTableView.rowHeight = 120.0
     }
@@ -125,15 +151,15 @@ class RecipeListViewController: UIViewController {
                 self?.viewState = .empty
             case .success(let recipeResponse):
                 self?.recipes = recipeResponse.recipes
-                self?.viewState = .showDate
+                self?.viewState = .showData
             case .failure(let error):
                 print("Error loading recipes from API \(error.localizedDescription)")
                 self?.viewState = .error
-                // on peux remove
-                //let error = APIErrors.invalidStatusCode
-               // if let errorMessage = error.errorDescription, let errorTitle = error.failureReason {
-                //    self?.allErrors(errorMessage: errorMessage, errorTitle: errorTitle)
-               // }
+            // on peux remove
+            //let error = APIErrors.invalidStatusCode
+            // if let errorMessage = error.errorDescription, let errorTitle = error.failureReason {
+            //    self?.allErrors(errorMessage: errorMessage, errorTitle: errorTitle)
+            // }
             }
         }
     }
@@ -144,7 +170,7 @@ class RecipeListViewController: UIViewController {
             if recipes.isEmpty {
                 viewState = .empty
             } else {
-                viewState = .showDate
+                viewState = .showData
             }
         } catch let error {
             print("Error loading recipes from database \(error.localizedDescription)")
@@ -166,10 +192,10 @@ class RecipeListViewController: UIViewController {
 
 extension RecipeListViewController: UITableViewDataSource {
     /*
-    func numberOfSections(in tableView: UITableView) -> Int { // Pas nécessaire (1 par défaut)
-        return 1
-    }
-    */
+     func numberOfSections(in tableView: UITableView) -> Int { // Pas nécessaire (1 par défaut)
+     return 1
+     }
+     */
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         recipes.count
     }
@@ -197,54 +223,54 @@ extension RecipeListViewController: UITableViewDelegate { // To delete cells one
         //recipeChoosenViewController.recipe = recipes[indexPath.row]
         //recipeChoosenVC.recipe = recipes[indexPath.row]
         //detailVC.recipe = recipes[indexPath.row]
-       // navigation.push
+        // navigation.push
     }
-/*
+    /*
+     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+     // nouvelle facon
+     print("Test glisse")
+     guard recipeMode == .database else { return nil }
+     //TODO cree l action deleteAction
+     let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { (action, view, handler) in
+     //YOUR_CODE_HERE
+     }
+     deleteAction.backgroundColor = .red
+     let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
+     configuration.performsFirstActionWithFullSwipe = false
+     return configuration
+     
+     
+     
+     //recipeCoreDataManager.deleteRecipe(recipeToDelete: recipes[indexPath.row])
+     return nil
+     }
+     */
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        // nouvelle facon
-        print("Test glisse")
-        guard recipeMode == .database else { return nil }
-        //TODO cree l action deleteAction
-        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { (action, view, handler) in
-                //YOUR_CODE_HERE
-            }
-            deleteAction.backgroundColor = .red
-            let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
-            configuration.performsFirstActionWithFullSwipe = false
-            return configuration
-        
-        
-        
-        //recipeCoreDataManager.deleteRecipe(recipeToDelete: recipes[indexPath.row])
-        return nil
-    }
-    */
-    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-            let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { _, _, complete in
-                self.recipes.remove(at: indexPath.row)
-                self.recipeCoreDataManager.deleteRecipe(recipeToDelete: self.recipes[indexPath.row])
-                complete(true)
-            }
-            
-            deleteAction.backgroundColor = .red
-            
-            let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
-            configuration.performsFirstActionWithFullSwipe = true
-            return configuration
+        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { _, _, complete in
+            self.recipes.remove(at: indexPath.row)
+            self.recipeCoreDataManager.deleteRecipe(recipeToDelete: self.recipes[indexPath.row])
+            complete(true)
         }
         
-        func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-            return true
-        }
+        deleteAction.backgroundColor = .red
         
+        let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
+        configuration.performsFirstActionWithFullSwipe = true
+        return configuration
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
     private func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UIContextualAction]? {
-            let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { _, _,_  in
-                self.recipes.remove(at: indexPath.row)
-                //self.tableView.deleteRows(at: [indexPath], with: .automatic)
-            }
-            deleteAction.backgroundColor = .red
-            return [deleteAction]
+        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { _, _,_  in
+            self.recipes.remove(at: indexPath.row)
+            //self.tableView.deleteRows(at: [indexPath], with: .automatic)
         }
-        
+        deleteAction.backgroundColor = .red
+        return [deleteAction]
+    }
+    
 }
 

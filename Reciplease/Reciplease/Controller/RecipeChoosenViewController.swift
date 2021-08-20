@@ -77,11 +77,9 @@ class RecipeChoosenViewController: UIViewController {
         }
         if isRecipeNotAlreadyRegistred() == true {
             favoriteOrNot.setImage(UIImage(systemName: "heart.fill"), for: .normal)
-                print("Let's save.")
-                recipeCoreDataManager.saveRecipe(recipe: recipeHere)
+            recipeCoreDataManager.saveRecipe(recipe: recipeHere)
         } else {
             favoriteOrNot.setImage(UIImage(systemName: "heart"), for: .normal)
-            print("Let's delete.")
             recipeCoreDataManager.deleteRecipe(recipeToDelete: recipeHere)
         }
     }

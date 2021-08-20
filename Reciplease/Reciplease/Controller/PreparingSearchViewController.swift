@@ -133,7 +133,7 @@ extension PreparingSearchViewController: UITextFieldDelegate { // To dismiss key
 extension PreparingSearchViewController: UITableViewDelegate { // To delete cells one by one
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            print("On efface : \(indexPath.row)")
+            //print("On efface : \(indexPath.row)")
             ingredientsList.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .bottom)
             ingredientsUsed = ""
