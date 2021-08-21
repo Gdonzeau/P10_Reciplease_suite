@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SafariServices
 
 class RecipeChoosenViewController: UIViewController {
     
@@ -35,6 +36,7 @@ class RecipeChoosenViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        overrideUserInterfaceStyle = .dark
         setupView()
     }
     
@@ -87,18 +89,17 @@ class RecipeChoosenViewController: UIViewController {
         guard let recipeHere = recipe else {
             return
         }
-        if let url = recipeHere.url {
-            guard let urlAdress = URL(string: url) else {
-                return
-            }
-            UIApplication.shared.open(urlAdress)
-        } else {
-            let error = APIErrors.noUrl
-            if let errorMessage = error.errorDescription, let errorTitle = error.failureReason {
-                allErrors(errorMessage: errorMessage, errorTitle: errorTitle)
-            }
-            print("no url") // Ajouter un message d'erreur
+        
+        if let urlString = recipeHere.url, let url = URL(string: urlString) {
+            let config = SFSafariViewController.Configuration()
+            config.entersReaderIfAvailable = true
+            let vc = SFSafariViewController(url: url, configuration: config)
+            //vc.modalPresentationStyle = .popover
+            vc.modalPresentationStyle = .fullScreen
+            vc.modalTransitionStyle = .coverVertical
+            present(vc, animated: true)
         }
+        
     }
     
     private func prepareInformations() {

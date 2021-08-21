@@ -19,6 +19,7 @@ enum RecipeListMode {
             return "Favorites"
         }
     }
+    
     var emptyImage: UIImage {
         var image = UIImage()
         switch self {
@@ -32,15 +33,15 @@ enum RecipeListMode {
             }
         }
         return image
-        //var emptyView
     }
-        var subtitle: String {
-            switch self {
-            case .api:
-                return "No Recipe"
-            case .database:
-                return "No Favorite"
-            }
+    
+    var subtitle: String {
+        switch self {
+        case .api:
+            return "No Recipe"
+        case .database:
+            return "No Favorite"
+        }
     }
 }
 enum ViewState {
@@ -71,10 +72,8 @@ class RecipeListViewController: UIViewController {
                 allErrors(errorMessage: "Error", errorTitle: "subtitle")
             case .empty:
                 //stack view image / title / subtitle
-                //subtitle.isHidden = false
+                subtitle.isHidden = false
                 imageView.isHidden = false
-                //imageView.image = UIImage(named: "noRecipe")
-                //imageView.image = recipeMode.emptyImage
             case .showData:
                 receipesTableView.isHidden = false
                 receipesTableView.reloadData()
@@ -88,7 +87,7 @@ class RecipeListViewController: UIViewController {
     private func resetViewState() {
         activityIndicator.stopAnimating()
         receipesTableView.isHidden = true
-        subtitle.isHidden = false
+        subtitle.isHidden = true
         imageView.isHidden = true
     }
     
@@ -101,6 +100,7 @@ class RecipeListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        overrideUserInterfaceStyle = .dark
         setupView()
         
         getRecipes()

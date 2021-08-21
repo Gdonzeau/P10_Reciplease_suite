@@ -12,9 +12,6 @@ class PreparingSearchViewController: UIViewController {
     let recipeCoreDataManager = RecipeCoreDataManager()
     var ingredientsUsed = ""
     var ingredientsList = [String]()
-    //var parameters = "search"
-    
-    //var tabbarTest = MyTabBarController() // À voir...
     
     var paraTest = "Bonjour" {
         didSet {
@@ -43,6 +40,7 @@ class PreparingSearchViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        overrideUserInterfaceStyle = .dark
         recipeCoreDataManager.howMany()
         //recipeCoreDataManager.deleteAll()
         recipeCoreDataManager.howMany()
