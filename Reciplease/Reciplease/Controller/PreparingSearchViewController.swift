@@ -6,7 +6,6 @@
 //
 
 import UIKit
-//import CoreData
 
 class PreparingSearchViewController: UIViewController {
     let recipeCoreDataManager = RecipeCoreDataManager()

@@ -130,6 +130,7 @@ class RecipeListViewController: UIViewController {
            let recipeChoosenVC = segue.destination as? RecipeChoosenViewController,
            let index = receipesTableView.indexPathForSelectedRow?.row {
             recipeChoosenVC.recipe = recipes[index]
+           // recipeChoosenVC.infoView.recipe = recipes[index]
         }
     }
     
