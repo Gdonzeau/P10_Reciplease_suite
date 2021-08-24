@@ -4,16 +4,13 @@
 //
 //  Created by Guillaume Donzeau on 22/08/2021.
 //
-
+import XCTest
 import Foundation
-/*
+
 final class MockUrlProtocol: URLProtocol {
-    private(set) var activeTask: URLSessionTask?
     
-    private lazy var session: URLSession = {
-        let configuration: URLSessionConfiguration = URLSessionConfiguration.ephemeral // Pourquoi ephemeral ?
-        return URLSession(configuration: configuration, delegate: self, delegateQueue: nil)
-    }()
+    static var error: Error?
+    static var data: Data?
     
     override class func canInit(with request: URLRequest) -> Bool {
         return true
@@ -23,18 +20,23 @@ final class MockUrlProtocol: URLProtocol {
         return request
     }
     
-    override class func requestIsCacheEquivalent(_ a: URLRequest, to b: URLRequest) -> Bool {
-        return false
-    }
-    
     override func startLoading() {
-        activeTask = session.dataTask(with: request.urlRequest!)
-        activeTask?.cancel() // We don’t want to make a network request, we want to return our stubbed data ASAP
+        if let error = MockUrlProtocol.error {
+            client?.urlProtocol(self, didFailWithError: error)
+            client?.urlProtocolDidFinishLoading(self)
+            return
+        }
+        guard let data = MockUrlProtocol.data else {
+            XCTFail("Missing datas")
+            return
+        }
+        client?.urlProtocol(self, didLoad: data)
+        client?.urlProtocolDidFinishLoading(self)
         
     }
     
     override func stopLoading() {
-        activeTask?.cancel()
+        //activeTask?.cancel()
     }
     
 }
@@ -80,4 +82,4 @@ extension MockUrlProtocol {
         MockUrlProtocol.responseType = MockUrlProtocol.ResponseType.success(HTTPURLResponse(url: URL(string: "http://any.com")!, statusCode: code, httpVersion: nil, headerFields: nil)!)
     }
 }
-*/
+

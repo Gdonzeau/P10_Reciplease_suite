@@ -99,7 +99,7 @@ class RecipeTableViewCell: UITableViewCell {
         recipeName.backgroundColor = UIColor(displayP3Red: 0.2, green: 0.2, blue: 0.2, alpha: 0.5)
         //recipeName.font(.custom("OpenSans-Bold", size: 34))
         timing.text = " : \(time)"
-        howManyPerson.text = " : \(String(person))"
+        howManyPerson.text = " : \(String(Int(person))) pers."
         //informations.text =  "🕒 : " + time + " min. \n Pers: \(String(person))"
         SVTiming.backgroundColor = UIColor(displayP3Red: 0.2, green: 0.2, blue: 0.2, alpha: 0.5)
         SVHowManyPerson.backgroundColor = UIColor(displayP3Red: 0.2, green: 0.2, blue: 0.2, alpha: 0.5)

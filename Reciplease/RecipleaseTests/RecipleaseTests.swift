@@ -13,12 +13,18 @@ class RecipleaseTests: XCTestCase {
 
     func testGet_If_() {
         //Given
-
+        //var session = Session(session: <#T##URLSession#>, delegate: <#T##SessionDelegate#>, rootQueue: <#T##DispatchQueue#>)
+        
         // When
         
         // Then
     }
-
+    
+    func testGetApiAlamoFireIf_() {
+        let urlSession = MockUrlProtocol()
+        
+        let recipeServices = RecipesServices(session: .init(session: urlSession, delegate: <#T##SessionDelegate#>, rootQueue: <#T##DispatchQueue#>))
+    }
 }
 
 final class AuthenticationAPITest: XCTestCase {

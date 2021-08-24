@@ -399,6 +399,7 @@
                                 </prototypes>
                                 <connections>
                                     <outlet property="dataSource" destination="2aN-AQ-If6" id="c9f-iQ-Rie"/>
+                                    <outlet property="delegate" destination="2aN-AQ-If6" id="TQZ-zT-DGH"/>
                                 </connections>
                             </tableView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cKV-BC-fuf">
