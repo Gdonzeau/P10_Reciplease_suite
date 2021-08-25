@@ -30,7 +30,7 @@ class RecipesServices {
             }
     }
 }
-
+/*
 final class AuthenticationAPI {
     func getRecipes (ingredients: String, completion: @escaping (Result<RecipeResponse,AFError>)->Void) {
     //func login(username: String, password: String, completion: @escaping (DefaultDataResponse) -> Void) {
@@ -87,3 +87,4 @@ final class AuthenticationAPIBis {
             }
     }
 }
+*/

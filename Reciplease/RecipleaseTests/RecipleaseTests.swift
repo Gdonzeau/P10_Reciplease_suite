@@ -10,23 +10,44 @@ import Alamofire
 @testable import Reciplease
 
 class RecipleaseTests: XCTestCase {
-
+    var recipes: [Recipe] = []
+    
     func testGet_If_() {
         //Given
+        
+        let sessionFake = UrlSessionMock()
+        let ingredientsUsed = "Lemon"
+        let recipeService = RecipesServices(session: sessionFake)
         //var session = Session(session: <#T##URLSession#>, delegate: <#T##SessionDelegate#>, rootQueue: <#T##DispatchQueue#>)
         
         // When
-        
+        recipeService.getRecipes(ingredients: ingredientsUsed) { [weak self] (result) in
+            switch result {
+            case .success(let recipeResponse) where recipeResponse.recipes.isEmpty:
+                print("no result show empty")
+                self?.viewState = .empty
+            case .success(let recipeResponse):
+                self?.recipes = recipeResponse.recipes
+                self?.viewState = .showData
+            case .failure(let error):
+                print("Error loading recipes from API \(error.localizedDescription)")
+                self?.viewState = .error
+            // on peux remove
+            //let error = APIErrors.invalidStatusCode
+            // if let errorMessage = error.errorDescription, let errorTitle = error.failureReason {
+            //    self?.allErrors(errorMessage: errorMessage, errorTitle: errorTitle)
+            // }
+            }
+        }
         // Then
     }
     
     func testGetApiAlamoFireIf_() {
         let urlSession = MockUrlProtocol()
         
-        let recipeServices = RecipesServices(session: .init(session: urlSession, delegate: <#T##SessionDelegate#>, rootQueue: <#T##DispatchQueue#>))
     }
 }
-
+/*
 final class AuthenticationAPITest: XCTestCase {
     
     private var sut: AuthenticationAPIBis!
@@ -71,3 +92,4 @@ final class AuthenticationAPITest: XCTestCase {
         wait(for: [expectation], timeout: 3)
     }
 }
+*/
