@@ -11,22 +11,26 @@ import Alamofire
 
 class RecipleaseTests: XCTestCase {
     var recipes: [Recipe] = []
+    var viewState: ViewState = .loading
     
     func testGet_If_() {
         //Given
-        
+        print("Go")
         let sessionFake = UrlSessionMock()
         let ingredientsUsed = "Lemon"
         let recipeService = RecipesServices(session: sessionFake)
+        
         //var session = Session(session: <#T##URLSession#>, delegate: <#T##SessionDelegate#>, rootQueue: <#T##DispatchQueue#>)
         
         // When
         recipeService.getRecipes(ingredients: ingredientsUsed) { [weak self] (result) in
+            print("Analyse")
             switch result {
             case .success(let recipeResponse) where recipeResponse.recipes.isEmpty:
                 print("no result show empty")
                 self?.viewState = .empty
             case .success(let recipeResponse):
+                print("Response")
                 self?.recipes = recipeResponse.recipes
                 self?.viewState = .showData
             case .failure(let error):
@@ -39,6 +43,7 @@ class RecipleaseTests: XCTestCase {
             // }
             }
         }
+        print("On sort")
         // Then
     }
     
