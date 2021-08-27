@@ -10,7 +10,7 @@ import CoreData
 @testable import Reciplease
 
 class TestRecipeStorageManager: RecipeCoreDataManager {
-  //override init() {
+  override init() {
     super.init()
 
     // 1
