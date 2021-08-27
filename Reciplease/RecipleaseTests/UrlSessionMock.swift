@@ -9,11 +9,15 @@ import Foundation
 import Alamofire
 
 class UrlSessionMock: Session {
-    var result: Result<Data?,AFError>
+    
     var data: Data?
     var error: Error?
-    init(result: Result<Data?,AFError>) {
-        super.init()
-        self.result = result
+    var result = Result<Data,AFError>.self
+    
+    init(data: Data, error: Error) {
+        self.data = data
+        self.error = error
     }
+    
+    //override func
 }
