@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-
+/*
 class TestCoreDataStack: CoreDataStack {
   override init() {
     super.init()
@@ -35,3 +35,4 @@ class TestCoreDataStack: CoreDataStack {
     storeContainer = container
   }
 }
+*/

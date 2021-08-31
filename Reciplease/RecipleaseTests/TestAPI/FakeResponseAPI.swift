@@ -11,7 +11,7 @@ class FakeResponseAPI {
     class RecipeError: Error {}
     var error = RecipeError()
     
-    var recipeCorrectData: Data {
+    static var recipeCorrectData: Data {
         var data = Data()
         let bundle = Bundle(for: FakeResponseAPI.self)
         let url = bundle.url(forResource: "Recipes", withExtension: "json")
@@ -26,5 +26,5 @@ class FakeResponseAPI {
         return data
     }
     
-    var recipeIncorrectData = "Erreur".data(using: .utf8)
+    static var recipeIncorrectData = "Erreur".data(using: .utf8)
 }

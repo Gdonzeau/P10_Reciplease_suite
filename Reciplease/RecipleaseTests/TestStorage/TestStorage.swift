@@ -8,7 +8,7 @@
 import XCTest
 import CoreData
 @testable import Reciplease
-
+/*
 class TestRecipeStorageManager: RecipeCoreDataManager {
   override init() {
     super.init()
@@ -35,7 +35,7 @@ class TestRecipeStorageManager: RecipeCoreDataManager {
     storeContainer = container
   }
 }
-
+*/
 class TestStorage: XCTestCase {
 
     override func setUpWithError() throws {
