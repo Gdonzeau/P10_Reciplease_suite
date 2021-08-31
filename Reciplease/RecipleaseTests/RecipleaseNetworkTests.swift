@@ -43,6 +43,7 @@ class RecipleaseNetworkTests: XCTestCase {
         let expectation = XCTestExpectation(description: "recipe error")
         MockUrlProtocol.data = FakeResponseAPI.recipeIncorrectData
         //MockUrlProtocol.error = FakeResponseAPI.recipeIncorrectData as? Error
+        
         recipeService.getRecipes(ingredients: "Lemon") { (result) in
             guard case .failure(let recipeResponse) = result else {
                 XCTFail("Datas correctly returned")
