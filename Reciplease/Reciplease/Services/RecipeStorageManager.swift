@@ -11,6 +11,7 @@ import CoreData
 
 class RecipeCoreDataManager {
     private let viewContext: NSManagedObjectContext
+    public static let modelName = "Storage Recipes"
     static let shared = RecipeCoreDataManager()
     init(persistentContainer: NSPersistentContainer = (UIApplication.shared.delegate as! AppDelegate).persistentContainer) {
         self.viewContext = persistentContainer.viewContext
