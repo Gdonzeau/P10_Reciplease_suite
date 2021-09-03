@@ -54,7 +54,6 @@ enum ViewState {
 }
 
 class RecipeListViewController: UIViewController {
-    //var recipeChoosenViewController = RecipeChoosenViewController() // Comme ça ?
     
     var recipes: [Recipe] = []
     
@@ -91,7 +90,7 @@ class RecipeListViewController: UIViewController {
         imageView.isHidden = true
     }
     
-    private let recipeCoreDataManager = RecipeCoreDataManager()
+    private let recipeCoreDataManager = RecipeCoreDataManager.shared
     
     @IBOutlet weak var subtitle: UILabel!
     @IBOutlet weak var imageView: UIImageView!
@@ -159,11 +158,6 @@ class RecipeListViewController: UIViewController {
             case .failure(let error):
                 print("Error loading recipes from API \(error.localizedDescription)")
                 self?.viewState = .error
-            // on peux remove
-            //let error = APIErrors.invalidStatusCode
-            // if let errorMessage = error.errorDescription, let errorTitle = error.failureReason {
-            //    self?.allErrors(errorMessage: errorMessage, errorTitle: errorTitle)
-            // }
             }
         }
     }
@@ -230,7 +224,7 @@ extension RecipeListViewController: UITableViewDelegate { // To delete cells one
         // navigation.push
     }
     
-    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? { // Swipe action
         guard recipeMode == .database else {
             return nil
         }

@@ -12,8 +12,9 @@ import CoreData
 class RecipeCoreDataManager {
     private let viewContext: NSManagedObjectContext
     public static let modelName = "Storage Recipes"
-    static let shared = RecipeCoreDataManager()
-    init(persistentContainer: NSPersistentContainer = (UIApplication.shared.delegate as! AppDelegate).persistentContainer) {
+    static let shared = RecipeCoreDataManager(persistentContainer: AppDelegate.persistentContainer)
+    
+    init(persistentContainer: NSPersistentContainer) {
         self.viewContext = persistentContainer.viewContext
     }
     
@@ -22,39 +23,31 @@ class RecipeCoreDataManager {
         var recipesStored: [RecipeEntity]
         do {
             recipesStored = try viewContext.fetch(request)
-            
         } catch { throw error }
-        /*
-         let convertedArray = recipesEntities.map { (recipeEntity) -> Recipe in
-         return Recipe(from: recipeEntity)
-         }
-         return convertedArray
-         */
-        return recipesStored.map { Recipe(from: $0) }
         
+        return recipesStored.map { Recipe(from: $0) }
     }
     
-    func saveRecipe(recipe: Recipe) {
+    func saveRecipe(recipe: Recipe) { // ajouter throws
         self.howMany()
-        //print("Saving")
         let recipeToSave = RecipeEntity(context: AppDelegate.viewContext)
-        //print("Model to save created.")
         recipeToSave.name = recipe.name
-        //print("Name is \(String(describing: recipeToSave.name))")
         recipeToSave.person = recipe.numberOfPeople
-        //print("Nb of pers. is \(String(describing: recipeToSave.person))")
         recipeToSave.totalTime = recipe.duration
-        //print("Time is \(String(describing: recipeToSave.totalTime))")
         recipeToSave.url = recipe.url
-        //print("Url is \(String(describing: recipeToSave.url))")
         recipeToSave.imageUrl = recipe.imageURL
-        //print("Image's url is \(String(describing: recipeToSave.imageUrl))")
         recipeToSave.ingredients = try? JSONEncoder().encode(recipe.ingredientsNeeded)
         
-        try? AppDelegate.viewContext.save()
+        do {
+            try AppDelegate.viewContext.save()
+       // } catch {  throw error }
+        } catch {
+                print("Error \(error)")
+            }
+        //try? AppDelegate.viewContext.save()
     }
     
-    func deleteRecipe(recipeToDelete: Recipe) {
+    func deleteRecipe(recipeToDelete: Recipe) { // ajout throws
         let request: NSFetchRequest<RecipeEntity> = RecipeEntity.fetchRequest()
         do {
             let response = try AppDelegate.viewContext.fetch(request)

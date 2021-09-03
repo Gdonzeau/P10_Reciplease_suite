@@ -25,7 +25,7 @@ class RecipleaseNetworkTests: XCTestCase {
     }
     func testSuccess() {
         let expectation = XCTestExpectation(description: "recipe success")
-        MockUrlProtocol.data = FakeResponseAPI.recipeCorrectData
+        MockUrlProtocol.data = FakeResponse.recipeCorrectData
         recipeService.getRecipes(ingredients: "Lemon") { (result) in
             guard case .success(let recipeResponse) = result else {
                 XCTFail("Missing datas")
@@ -33,7 +33,7 @@ class RecipleaseNetworkTests: XCTestCase {
             }
             XCTAssertNotNil(recipeResponse)
             let recipe = try? XCTUnwrap(recipeResponse.recipes.first)
-            XCTAssertTrue(recipe?.name == "Lemon Icey")
+            XCTAssertEqual(recipe?.name, "Lemon Icey") // XCTAssertEqual
             expectation.fulfill()
         }
         wait(for: [expectation], timeout: 1)
@@ -41,18 +41,20 @@ class RecipleaseNetworkTests: XCTestCase {
     
     func testError() {
         let expectation = XCTestExpectation(description: "recipe error")
-        MockUrlProtocol.data = FakeResponseAPI.recipeIncorrectData
-        //MockUrlProtocol.error = FakeResponseAPI.recipeIncorrectData as? Error
+       // MockUrlProtocol.data = FakeResponse.recipeIncorrectData
+        MockUrlProtocol.error = AFError.explicitlyCancelled
         
         recipeService.getRecipes(ingredients: "Lemon") { (result) in
-            guard case .failure(let recipeResponse) = result else {
+            guard case .failure(let error) = result else {
                 XCTFail("Datas correctly returned")
                 return
             }
             
-            XCTAssertNotNil(recipeResponse)
+            XCTAssertNotNil(error)
+            /*
             let error = try? XCTUnwrap(recipeResponse.asAFError)
             XCTAssertTrue(error?.errorDescription == "Response could not be decoded because of error:\nThe data couldn’t be read because it isn’t in the correct format.")
+            */
             expectation.fulfill()
         }
         wait(for: [expectation], timeout: 1)

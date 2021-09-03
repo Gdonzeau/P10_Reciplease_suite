@@ -69,3 +69,4 @@ enum APIErrors: String, LocalizedError {
         }
     }
 }
+

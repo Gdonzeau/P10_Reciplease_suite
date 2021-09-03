@@ -25,7 +25,10 @@ class RecipeTableViewCell: UITableViewCell {
             if let timeToPrepare = recipe?.duration, let name = recipe?.name, let person = recipe?.numberOfPeople, let image = recipe?.imageURL {
             configure(timeToPrepare: String(timeToPrepare), name: name, person: person, image: image)
             }
-            
+            if let infoName = recipe?.name {
+                print(infoName)
+               // information2.name.text = infoName
+            }
             /*
             if let image = recipe.imageUrl {
                 
