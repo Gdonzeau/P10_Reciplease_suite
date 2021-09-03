@@ -29,7 +29,6 @@ class TestCoreDataStack: NSObject {
 class RecipleaseStorageTests: XCTestCase {
     var recipeCoreDataManager: RecipeCoreDataManager!
     //var recipe: Recipe?
-    
     override func setUp() {
         super.setUp()
        
@@ -48,7 +47,7 @@ class RecipleaseStorageTests: XCTestCase {
                 fatalError("Persistent container creation error: \(error), \(error.userInfo)")
             }
         }
-
+        //recipeCoreDataManager = RecipeCoreDataManager(persistentContainer: TestCoreDataStack().persistentContainer)
         recipeCoreDataManager = RecipeCoreDataManager(persistentContainer: persistentContainer)
     }
     
@@ -78,6 +77,10 @@ class RecipleaseStorageTests: XCTestCase {
         // name equal ...
     }
     
+    func testToDebugPersistentContainer() {
+        
+    }
+    
     func testDeleteRecipe() {
         // save 2 3 recettes
         // laod
@@ -85,11 +88,16 @@ class RecipleaseStorageTests: XCTestCase {
     }
     
     func testToTry() {
-        //let expectation = XCTestExpectation(description: "recipe loading success")
+        
         let context = TestCoreDataStack().persistentContainer.newBackgroundContext()
             expectation(forNotification: .NSManagedObjectContextDidSave, object: context) { _ in
                 return true
             }
+        
+        //let recipeCoreDataTest = RecipeCoreDataManager(persistentContainer: context)
+        
+        //let expectation = XCTestExpectation(description: "recipe loading success")
+        
         
         let recipes:[Recipe] = try! recipeCoreDataManager.loadRecipes()
         print(recipes.count)
@@ -120,6 +128,33 @@ class RecipleaseStorageTests: XCTestCase {
         //recipeCoreDataManager.saveRecipe(recipe: recipeOne)
         //recipeCoreDataManager.saveRecipe(recipe: recipeTwo)
         //recipeCoreDataManager.saveRecipe(recipe: recipeThree)
+    }
+    
+    func testHowMany() {
+        
+        //let context = TestCoreDataStack().persistentContainer.newBackgroundContext()
+        
+        let context = TestCoreDataStack().persistentContainer.newBackgroundContext()
+        
+        /*
+            expectation(forNotification: .NSManagedObjectContextDidSave, object: context) { _ in
+                return true
+            }
+ */
+        let request: NSFetchRequest<RecipeEntity> = RecipeEntity.fetchRequest()
+        var response: [RecipeEntity]
+        do {
+            response = try context.fetch(request)
+            //let response = try AppDelegate.viewContext.fetch(request)
+            print("Nous avons ici \(response.count) entités en mémoire")
+            
+        } catch {
+            print("Error while reading")
+            return
+        }
+        waitForExpectations(timeout: 2.0) { error in
+                XCTAssertNil(error, "Save did not occur")
+            }
     }
     
 }
