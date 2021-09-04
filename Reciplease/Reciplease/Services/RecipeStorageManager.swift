@@ -12,11 +12,26 @@ import CoreData
 class RecipeCoreDataManager {
     private let viewContext: NSManagedObjectContext
     public static let modelName = "Storage Recipes"
-    static let shared = RecipeCoreDataManager(persistentContainer: AppDelegate.persistentContainer)
     
-    init(persistentContainer: NSPersistentContainer) {
+    static let shared = RecipeCoreDataManager(persistentContainer: persistentContainer)
+    
+    //init(persistentContainer: NSPersistentContainer = (UIApplication.shared.delegate as! AppDelegate).persistentContainer) {
+    init(persistentContainer: NSPersistentContainer) { // = persistentContainer) {
         self.viewContext = persistentContainer.viewContext
     }
+    
+    lazy var persistentContainer: NSPersistentContainer = {
+        let container = NSPersistentContainer(name: "Reciplease")
+        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
+            if let error = error as NSError? {
+                
+                fatalError("Unresolved error \(error), \(error.userInfo)")
+            }
+        })
+        return container
+    }()
+    
+    
     
     func loadRecipes() throws -> [Recipe] {
         let request: NSFetchRequest<RecipeEntity> = RecipeEntity.fetchRequest()
@@ -30,7 +45,7 @@ class RecipeCoreDataManager {
     
     func saveRecipe(recipe: Recipe) { // ajouter throws
         self.howMany()
-        let recipeToSave = RecipeEntity(context: AppDelegate.viewContext)
+        let recipeToSave = RecipeEntity(context: viewContext)
         recipeToSave.name = recipe.name
         recipeToSave.person = recipe.numberOfPeople
         recipeToSave.totalTime = recipe.duration
@@ -39,7 +54,7 @@ class RecipeCoreDataManager {
         recipeToSave.ingredients = try? JSONEncoder().encode(recipe.ingredientsNeeded)
         
         do {
-            try AppDelegate.viewContext.save()
+            try viewContext.save()
        // } catch {  throw error }
         } catch {
                 print("Error \(error)")
@@ -50,16 +65,16 @@ class RecipeCoreDataManager {
     func deleteRecipe(recipeToDelete: Recipe) { // ajout throws
         let request: NSFetchRequest<RecipeEntity> = RecipeEntity.fetchRequest()
         do {
-            let response = try AppDelegate.viewContext.fetch(request)
+            let response = try viewContext.fetch(request)
             for recipe in response {
                 if recipeToDelete == recipe { // Equatable adapted to compare different types
                     //print("\(String(describing: recipeToDelete.name)) est pareil que \(String(describing: recipe.name))")
-                    AppDelegate.viewContext.delete(recipe)
+                    viewContext.delete(recipe)
                 } else {
                     //print("\(String(describing: recipeToDelete.name)) est différent de \(String(describing: recipe.name))")
                 }
             }
-            try? AppDelegate.viewContext.save()
+            try? viewContext.save()
         } catch {
             print("Error while deleting")
             return
@@ -72,12 +87,12 @@ class RecipeCoreDataManager {
     func deleteAll() {
         let request: NSFetchRequest<RecipeEntity> = RecipeEntity.fetchRequest()
         do {
-            let response = try AppDelegate.viewContext.fetch(request)
+            let response = try viewContext.fetch(request)
             //print("Nous avons \(response.count) entités en mémoire")
             for recipe in response {
-                AppDelegate.viewContext.delete(recipe)
+                viewContext.delete(recipe)
             }
-            try? AppDelegate.viewContext.save()
+            try? viewContext.save()
             
         } catch {
             print("Error while deleting")
@@ -88,7 +103,7 @@ class RecipeCoreDataManager {
     func howMany() {
         let request: NSFetchRequest<RecipeEntity> = RecipeEntity.fetchRequest()
         do {
-            let response = try AppDelegate.viewContext.fetch(request)
+            let response = try viewContext.fetch(request)
             print("Nous avons \(response.count) entités en mémoire")
             
         } catch {

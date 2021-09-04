@@ -15,7 +15,7 @@ class RecipeChoosenViewController: UIViewController {
     var recipe: Recipe?
     var recipesStored = [Recipe]()
     
-    let recipeCoreDataManager = RecipeCoreDataManager.shared
+    let recipeCoreDataManager = RecipeCoreDataManager()
     
     @IBOutlet weak var blogNameLabel: UILabel!
     @IBOutlet weak var imageRecipe: UIImageView!

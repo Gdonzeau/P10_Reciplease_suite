@@ -14,7 +14,7 @@ class TestCoreDataStack: NSObject {
     lazy var persistentContainer: NSPersistentContainer = {
         let description = NSPersistentStoreDescription()
         description.url = URL(fileURLWithPath: "/dev/null")
-        let container = NSPersistentContainer(name: "Storage Recipes")
+        let container = NSPersistentContainer(name: "Reciplease")
         container.persistentStoreDescriptions = [description]
         container.loadPersistentStores { _, error in
             if let error = error as NSError? {
@@ -39,6 +39,7 @@ class RecipleaseStorageTests: XCTestCase {
         persistentStoreDescription.shouldAddStoreAsynchronously = true
         
         let persistentContainer = NSPersistentContainer(name: "Reciplease", managedObjectModel: managedObjectModel)
+        
         persistentContainer.persistentStoreDescriptions = [persistentStoreDescription]
         persistentContainer.loadPersistentStores { (description, error) in
             precondition(description.type == NSInMemoryStoreType, "Store description is not type NSInMemoryStoreType")
@@ -131,9 +132,10 @@ class RecipleaseStorageTests: XCTestCase {
     }
     
     func testHowMany() {
-        
+        recipeCoreDataManager = RecipeCoreDataManager(persistentContainer: TestCoreDataStack().persistentContainer)
+        recipeCoreDataManager.howMany()
         //let context = TestCoreDataStack().persistentContainer.newBackgroundContext()
-        
+        /*
         let context = TestCoreDataStack().persistentContainer.newBackgroundContext()
         
         /*
@@ -149,12 +151,14 @@ class RecipleaseStorageTests: XCTestCase {
             print("Nous avons ici \(response.count) entités en mémoire")
             
         } catch {
+            
             print("Error while reading")
             return
         }
         waitForExpectations(timeout: 2.0) { error in
                 XCTAssertNil(error, "Save did not occur")
             }
+        */
     }
     
 }
