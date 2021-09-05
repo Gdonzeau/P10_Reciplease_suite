@@ -64,6 +64,7 @@ class RecipleaseStorageTests: XCTestCase {
         //do {
             //try
                 recipeCoreDataManager.saveRecipe(recipe: recipe)
+        XCTAssertTrue(recipe.name == "Lemon Icey")
        // } catch {
             
           //  XCTFail("Error saving recipes \(error.localizedDescription)")
@@ -74,11 +75,55 @@ class RecipleaseStorageTests: XCTestCase {
             XCTFail("Error loading recipes \(error.localizedDescription)")
         }
         XCTAssertFalse(loadedRecipes.isEmpty)
+        XCTAssertTrue(loadedRecipes.first?.name == "Lemon Icey")
         // loadedrecipe.first
         // name equal ...
     }
     
-    func testToDebugPersistentContainer() {
+    func testWhenDeletingOneRecipeFromFiveThenFourLeft() {
+        var loadedRecipes: [Recipe] = []
+        // Saving recipes from Recipes.json
+        for index in 0 ..< 5 {
+            let recipe = FakeResponse.recipes[index]
+            recipeCoreDataManager.saveRecipe(recipe: recipe)
+        }
+        // Loading recipes
+        XCTAssertTrue(loadedRecipes.count == 0)
+        do {
+            loadedRecipes = try recipeCoreDataManager.loadRecipes()
+        } catch {
+            XCTFail("Error loading recipes \(error.localizedDescription)")
+        }
+        
+        XCTAssertTrue(loadedRecipes.count == 5)
+        XCTAssertTrue(loadedRecipes[0].name == "Baking with Dorie: Lemon-Lemon Lemon Cream Recipe")
+        //print(loadedRecipes[0].name)
+        XCTAssertTrue(loadedRecipes[1].name == "Lemon Salt Lemon Cupcakes")
+        //print(loadedRecipes[1].name)
+        XCTAssertTrue(loadedRecipes[2].name == "Lemon Icey")
+        //print(loadedRecipes[2].name)
+        XCTAssertTrue(loadedRecipes[3].name == "Lemon Bars")
+        //print(loadedRecipes[3].name)
+        XCTAssertTrue(loadedRecipes[4].name == "Lemon Cookies")
+        
+        recipeCoreDataManager.deleteRecipe(recipeToDelete: loadedRecipes[4])
+        
+        do {
+            loadedRecipes = try recipeCoreDataManager.loadRecipes()
+        } catch {
+            XCTFail("Error loading recipes \(error.localizedDescription)")
+        }
+        
+        XCTAssertTrue(loadedRecipes.count == 4)
+        XCTAssertTrue(loadedRecipes[0].name == "Baking with Dorie: Lemon-Lemon Lemon Cream Recipe")
+        //print(loadedRecipes[0].name)
+        XCTAssertTrue(loadedRecipes[1].name == "Lemon Salt Lemon Cupcakes")
+        //print(loadedRecipes[1].name)
+        XCTAssertTrue(loadedRecipes[2].name == "Lemon Icey")
+        //print(loadedRecipes[2].name)
+        XCTAssertTrue(loadedRecipes[3].name == "Lemon Bars")
+        //print(loadedRecipes[3].name)
+        
         
     }
     
