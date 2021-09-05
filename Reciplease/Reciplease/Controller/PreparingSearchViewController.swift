@@ -8,8 +8,7 @@
 import UIKit
 
 class PreparingSearchViewController: UIViewController {
-    let persistentContainer = Reci
-    let recipeCoreDataManager = RecipeCoreDataManager(persistentContainer: <#T##NSPersistentContainer#>)
+    let recipeCoreDataManager = RecipeCoreDataManager.shared
     var ingredientsUsed = ""
     var ingredientsList = [String]()
     

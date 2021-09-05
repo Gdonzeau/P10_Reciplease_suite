@@ -90,7 +90,7 @@ class RecipeListViewController: UIViewController {
         imageView.isHidden = true
     }
     
-    private let recipeCoreDataManager = RecipeCoreDataManager(persistentContainer: <#T##NSPersistentContainer#>)
+    private let recipeCoreDataManager = RecipeCoreDataManager.shared
     
     @IBOutlet weak var subtitle: UILabel!
     @IBOutlet weak var imageView: UIImageView!
