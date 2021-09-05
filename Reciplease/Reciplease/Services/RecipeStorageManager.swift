@@ -13,13 +13,6 @@ class RecipeCoreDataManager {
     private let viewContext: NSManagedObjectContext
     public static let modelName = "Storage Recipes"
     
-    static let shared = RecipeCoreDataManager(persistentContainer: persistentContainer)
-    
-    //init(persistentContainer: NSPersistentContainer = (UIApplication.shared.delegate as! AppDelegate).persistentContainer) {
-    init(persistentContainer: NSPersistentContainer) { // = persistentContainer) {
-        self.viewContext = persistentContainer.viewContext
-    }
-    
     lazy var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "Reciplease")
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
@@ -31,7 +24,18 @@ class RecipeCoreDataManager {
         return container
     }()
     
+    //static let shared = RecipeCoreDataManager(persistentContainer: persistentContainer)
     
+    //init(persistentContainer: NSPersistentContainer = (UIApplication.shared.delegate as! AppDelegate).persistentContainer) {
+    init(persistentContainer: NSPersistentContainer) { // = persistentContainer) {
+        self.viewContext = persistentContainer.viewContext
+    }
+    /*
+    let arrowPath = UIBezierPath.bezierPathWithArrowFromPoint(startPoint: CGPoint(x:bounds.size.width/2,y:bounds.size.height/3), endPoint: CGPoint(x:bounds.size.width/2, y:bounds.size.height/3*2), tailWidth: 8, headWidth: 24, headLength: 18)
+    
+    lazy var arrowPath = UIBezierPath.bezierPathWithArrowFromPoint(startPoint: CGPoint(x: self.bounds.size.width/2,y: self.bounds.size.height/3), endPoint: CGPoint(x: self.bounds.size.width/2, y: self.bounds.size.height/3*2), tailWidth: 8, headWidth: 24, headLength: 18)
+    
+    */
     
     func loadRecipes() throws -> [Recipe] {
         let request: NSFetchRequest<RecipeEntity> = RecipeEntity.fetchRequest()
