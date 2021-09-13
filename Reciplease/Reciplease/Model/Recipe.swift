@@ -69,9 +69,6 @@ extension Recipe: Codable {
         numberOfPeople = try recipe.decode(Float.self, forKey: .numberOfPeople)
         duration = try recipe.decode(Float.self, forKey: .duration)
         ingredientsNeeded = try recipe.decode([String].self, forKey: .ingredientsNeeded)
-
-        let totalDaily = try recipe.nestedContainer(keyedBy: BlaBla.self, forKey: .totalDaily)
-        let energetic = try totalDaily.decode(MyObject.self, forKey: .ENERC_KCAL)
     }
 }
 

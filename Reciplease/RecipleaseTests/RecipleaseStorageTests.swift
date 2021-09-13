@@ -9,8 +9,9 @@ import XCTest
 import CoreData
 @testable import Reciplease
 
-
+/*
 class TestCoreDataStack: NSObject {
+    
     lazy var persistentContainer: NSPersistentContainer = {
         let description = NSPersistentStoreDescription()
         description.url = URL(fileURLWithPath: "/dev/null")
@@ -25,6 +26,7 @@ class TestCoreDataStack: NSObject {
     }()
     
 }
+*/
 
 class RecipleaseStorageTests: XCTestCase {
     var recipeCoreDataManager: RecipeCoreDataManager!
@@ -48,7 +50,6 @@ class RecipleaseStorageTests: XCTestCase {
                 fatalError("Persistent container creation error: \(error), \(error.userInfo)")
             }
         }
-        //recipeCoreDataManager = RecipeCoreDataManager(persistentContainer: TestCoreDataStack().persistentContainer)
         recipeCoreDataManager = RecipeCoreDataManager(persistentContainer: persistentContainer)
     }
     
@@ -97,13 +98,13 @@ class RecipleaseStorageTests: XCTestCase {
         
         XCTAssertTrue(loadedRecipes.count == 5)
         XCTAssertTrue(loadedRecipes[0].name == "Baking with Dorie: Lemon-Lemon Lemon Cream Recipe")
-        //print(loadedRecipes[0].name)
+        
         XCTAssertTrue(loadedRecipes[1].name == "Lemon Salt Lemon Cupcakes")
-        //print(loadedRecipes[1].name)
+        
         XCTAssertTrue(loadedRecipes[2].name == "Lemon Icey")
-        //print(loadedRecipes[2].name)
+        
         XCTAssertTrue(loadedRecipes[3].name == "Lemon Bars")
-        //print(loadedRecipes[3].name)
+        
         XCTAssertTrue(loadedRecipes[4].name == "Lemon Cookies")
         
         recipeCoreDataManager.deleteRecipe(recipeToDelete: loadedRecipes[4])
@@ -113,71 +114,62 @@ class RecipleaseStorageTests: XCTestCase {
         } catch {
             XCTFail("Error loading recipes \(error.localizedDescription)")
         }
-        
+
         XCTAssertTrue(loadedRecipes.count == 4)
+        
         XCTAssertTrue(loadedRecipes[0].name == "Baking with Dorie: Lemon-Lemon Lemon Cream Recipe")
-        //print(loadedRecipes[0].name)
+        
         XCTAssertTrue(loadedRecipes[1].name == "Lemon Salt Lemon Cupcakes")
-        //print(loadedRecipes[1].name)
+        
         XCTAssertTrue(loadedRecipes[2].name == "Lemon Icey")
-        //print(loadedRecipes[2].name)
+        
         XCTAssertTrue(loadedRecipes[3].name == "Lemon Bars")
-        //print(loadedRecipes[3].name)
-        
-        
     }
-    
-    func testDeleteRecipe() {
-        // save 2 3 recettes
-        // laod
-        // delete 
-    }
-    
-    func testToTry() {
+    /*
+    func testDeleteAll() {
+        //When
+        var loadedRecipes: [Recipe] = []
+        // Saving recipes from Recipes.json
+        for index in 0 ..< 5 {
+            let recipe = FakeResponse.recipes[index]
+            recipeCoreDataManager.saveRecipe(recipe: recipe)
+        }
+        // Loading recipes
+        XCTAssertTrue(loadedRecipes.count == 0)
+        do {
+            loadedRecipes = try recipeCoreDataManager.loadRecipes()
+        } catch {
+            XCTFail("Error loading recipes \(error.localizedDescription)")
+        }
         
-        let context = TestCoreDataStack().persistentContainer.newBackgroundContext()
-            expectation(forNotification: .NSManagedObjectContextDidSave, object: context) { _ in
-                return true
-            }
+        XCTAssertTrue(loadedRecipes.count == 5)
         
-        //let recipeCoreDataTest = RecipeCoreDataManager(persistentContainer: context)
+        XCTAssertTrue(loadedRecipes[0].name == "Baking with Dorie: Lemon-Lemon Lemon Cream Recipe")
+
+        XCTAssertTrue(loadedRecipes[1].name == "Lemon Salt Lemon Cupcakes")
+
+        XCTAssertTrue(loadedRecipes[2].name == "Lemon Icey")
+
+        XCTAssertTrue(loadedRecipes[3].name == "Lemon Bars")
+
+        XCTAssertTrue(loadedRecipes[4].name == "Lemon Cookies")
+        // Then
+        //recipeCoreDataManager.deleteAll()
         
-        //let expectation = XCTestExpectation(description: "recipe loading success")
+        do {
+            loadedRecipes = try recipeCoreDataManager.loadRecipes()
+        } catch {
+            XCTFail("Error loading recipes \(error.localizedDescription)")
+        }
         
+        XCTAssertTrue(loadedRecipes.count == 0)
         
-        let recipes:[Recipe] = try! recipeCoreDataManager.loadRecipes()
-        print(recipes.count)
-        XCTAssert(recipes.count == 0)
-        /*
-        let recipeEntityOne = RecipeEntity(context: context)
-        recipeEntityOne.name = "Chicken"
-        recipeEntityOne.imageUrl = "www.image.com"
-        recipeEntityOne.url = "www.url.com"
-        recipeEntityOne.person = 1.00
-        recipeEntityOne.totalTime = 36.0
-        recipeEntityOne.ingredients = try? JSONEncoder().encode(["Chicken","Salt"])
-        
-        try? AppDelegate.viewContext.save()
-        */
-        //let recipeOne = recipe(from: recipeEntityOne)
-        /*
-        let recipeEntityTwo = RecipeEntity()
-        recipeEntityTwo.name = "Salad Lemon"
-        let recipeTwo = Recipe(from: recipeEntityTwo)
-        
-        let recipeEntityThree = RecipeEntity()
-        recipeEntityThree.name = "Ice Cream"
-        let recipeThree = Recipe(from: recipeEntityThree)
-        */
-        
-        
-        //recipeCoreDataManager.saveRecipe(recipe: recipeOne)
-        //recipeCoreDataManager.saveRecipe(recipe: recipeTwo)
-        //recipeCoreDataManager.saveRecipe(recipe: recipeThree)
     }
     
     func testHowMany() {
-        recipeCoreDataManager = RecipeCoreDataManager(persistentContainer: TestCoreDataStack().persistentContainer)
+        recipeCoreDataManager.howMany()
+        let recipe = FakeResponse.recipes.first!
+        recipeCoreDataManager.saveRecipe(recipe: recipe)
         recipeCoreDataManager.howMany()
         //let context = TestCoreDataStack().persistentContainer.newBackgroundContext()
         /*
@@ -205,6 +197,6 @@ class RecipleaseStorageTests: XCTestCase {
             }
         */
     }
-    
+    */
 }
 

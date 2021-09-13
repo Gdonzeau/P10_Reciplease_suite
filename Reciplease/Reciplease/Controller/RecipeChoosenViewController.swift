@@ -24,8 +24,8 @@ class RecipeChoosenViewController: UIViewController {
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var favoriteOrNot: UIButton!
     @IBOutlet weak var newImageRecipe: UIView!
-    @IBOutlet weak var infoView: InfoView!
     
+    private var codeInfoView = InfoView()
     @IBAction func favoriteOrNotChange(_ sender: UIButton) {
         saveOrDelete()
     }
@@ -72,6 +72,18 @@ class RecipeChoosenViewController: UIViewController {
         favoriteOrNot.contentVerticalAlignment = .fill
         favoriteOrNot.contentHorizontalAlignment = .fill
         favoriteOrNot.tintColor = .red
+        
+        codeInfoView.recipe = recipe
+        
+        codeInfoView.translatesAutoresizingMaskIntoConstraints = false
+        codeInfoView.backgroundColor = .red
+        codeInfoView = InfoView(frame: CGRect(x: 0, y: 0, width: 200, height: 50))
+        codeInfoView.layer.zPosition = .greatestFiniteMagnitude
+        imageRecipe.addSubview(codeInfoView)
+        
+        
+        //customView = MyCustomView(frame: CGRect(x: 0, y: 0, width: 200, height: 50))
+        //self.view.addSubview(customView)
     }
     private func saveOrDelete() {
         guard let recipeHere = recipe else {

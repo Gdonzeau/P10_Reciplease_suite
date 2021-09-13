@@ -8,7 +8,8 @@
 import UIKit
 
 class InfoView: UIView {
-    @IBOutlet weak var name: UILabel!
+    
+    
     /*
     var recipe: Recipe? {
         didSet {
@@ -17,15 +18,17 @@ class InfoView: UIView {
     }
     */
     
-    var recipe: Recipe? //{
-        /*
+    var recipe: Recipe? {
+        
         didSet {
+            informationLoading()
+            print("Bouh")
             if let timeToPrepare = recipe?.duration, let person = recipe?.numberOfPeople {
+                //print("Recette : \(timeToPrepare) \(person)")
                 configureInfo(timeToPrepare: String(timeToPrepare), person: Int(person))
             }
         }
-        */
-    //}
+    }
  
     var timeToCook: String = "" {
         didSet {
@@ -47,21 +50,74 @@ class InfoView: UIView {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        backgroundColor = UIColor(displayP3Red: 0.5, green: 0.5, blue: 0.5, alpha: 0)
+        //configureInfo(timeToPrepare: timeToCook, person: person)
+        backgroundColor = UIColor(displayP3Red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
+        
     }
     
-    private func configureInfo(timeToPrepare: String, person: Int) {
+    func configureInfo(timeToPrepare: String, person: Int) {
         //let timeToPrepare = ""
         //let person = 0
         //
+        
         let preparationTime = UILabel()
         preparationTime.textAlignment = .center
         preparationTime.translatesAutoresizingMaskIntoConstraints = false //Utilise autolayout
         preparationTime.text = timeToPrepare
-        
+        //name.text = timeToPrepare
+        /*
         let howManyPerson = UILabel()
         howManyPerson.textAlignment = .center
         howManyPerson.translatesAutoresizingMaskIntoConstraints = false
         howManyPerson.text = " : \(String(person))"
+        NSLayoutConstraint.activate([
+            preparationTime.leadingAnchor.constraint(equalTo: leadingAnchor), // left side
+            preparationTime.trailingAnchor.constraint(equalToSystemSpacingAfter: trailingAnchor, multiplier: 2.0)
+        ])
+        */
+    }
+    
+    func informationLoading() {
+        
+    }
+    
+    func calculateTime() {
+        guard let timeToPrepare = recipe?.duration else {
+            //SVTiming.isHidden = true
+            return
+        }
+        //SVTiming.isHidden = false
+        let interval: TimeInterval = Double(timeToPrepare)
+        let formatter = DateComponentsFormatter()
+        formatter.unitsStyle = .brief
+        //if interval >= 60 {
+        formatter.allowedUnits = [.hour, .minute]
+        //} else {
+        //    formatter.allowedUnits = [.minute]
+        //}
+        
+        
+        var time = formatter.string(from: Double(timeToPrepare*60))
+        /*
+        if interval >= 60 {
+            time = time + " h"
+        } else {
+        time = time + " m"
+        }
+        */
+        
+        /*
+        if time == "0 m" {
+            SVTiming.isHidden = true
+        } else {
+            SVTiming.isHidden = false
+        }
+        if person == 0 {
+            SVHowManyPerson.isHidden = true
+        } else {
+            SVHowManyPerson.isHidden = false
+        }
+        */
+        
     }
 }

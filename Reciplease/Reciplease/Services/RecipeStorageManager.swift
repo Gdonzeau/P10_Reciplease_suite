@@ -13,30 +13,12 @@ class RecipeCoreDataManager {
     private let viewContext: NSManagedObjectContext
     public static let modelName = "Storage Recipes"
     
-    lazy var persistentContainer: NSPersistentContainer = {
-        let container = NSPersistentContainer(name: "Reciplease")
-        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
-            if let error = error as NSError? {
-                
-                fatalError("Unresolved error \(error), \(error.userInfo)")
-            }
-        })
-        return container
-    }()
-    
-    //static let shared = RecipeCoreDataManager(persistentContainer: persistentContainer)
     static let shared = RecipeCoreDataManager()
     
-    
     init(persistentContainer: NSPersistentContainer = (UIApplication.shared.delegate as! AppDelegate).persistentContainer) {
-    //init(persistentContainer: NSPersistentContainer) { // = persistentContainer) {
         self.viewContext = persistentContainer.viewContext
     }
-    
-    
-    
-    
-    
+
     func loadRecipes() throws -> [Recipe] {
         let request: NSFetchRequest<RecipeEntity> = RecipeEntity.fetchRequest()
         var recipesStored: [RecipeEntity]
@@ -48,7 +30,6 @@ class RecipeCoreDataManager {
     }
     
     func saveRecipe(recipe: Recipe) { // ajouter throws
-        self.howMany()
         let recipeToSave = RecipeEntity(context: viewContext)
         recipeToSave.name = recipe.name
         recipeToSave.person = recipe.numberOfPeople
@@ -60,10 +41,7 @@ class RecipeCoreDataManager {
         do {
             try viewContext.save()
        // } catch {  throw error }
-        } catch {
-                print("Error \(error)")
-            }
-        //try? AppDelegate.viewContext.save()
+        } catch { print("Error \(error)") }
     }
     
     func deleteRecipe(recipeToDelete: Recipe) { // ajout throws
@@ -72,47 +50,12 @@ class RecipeCoreDataManager {
             let response = try viewContext.fetch(request)
             for recipe in response {
                 if recipeToDelete == recipe { // Equatable adapted to compare different types
-                    //print("\(String(describing: recipeToDelete.name)) est pareil que \(String(describing: recipe.name))")
                     viewContext.delete(recipe)
-                } else {
+                }// else {
                     //print("\(String(describing: recipeToDelete.name)) est différent de \(String(describing: recipe.name))")
-                }
+              //  }
             }
-            try? viewContext.save()
-        } catch {
-            print("Error while deleting")
-            return
-        }
-    }
-    
-    // MARK: - Just while programming
-    
-    /// Will erase all entities in memory
-    func deleteAll() {
-        let request: NSFetchRequest<RecipeEntity> = RecipeEntity.fetchRequest()
-        do {
-            let response = try viewContext.fetch(request)
-            //print("Nous avons \(response.count) entités en mémoire")
-            for recipe in response {
-                viewContext.delete(recipe)
-            }
-            try? viewContext.save()
-            
-        } catch {
-            print("Error while deleting")
-            return
-        }
-    }
-    /// Will return how many entities are in memory at this moment
-    func howMany() {
-        let request: NSFetchRequest<RecipeEntity> = RecipeEntity.fetchRequest()
-        do {
-            let response = try viewContext.fetch(request)
-            print("Nous avons \(response.count) entités en mémoire")
-            
-        } catch {
-            print("Error while reading")
-            return
-        }
+            try viewContext.save()
+        } catch { print("Error while deleting") }
     }
 }

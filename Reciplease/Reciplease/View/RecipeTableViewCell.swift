@@ -8,6 +8,8 @@
 import UIKit
 
 class RecipeTableViewCell: UITableViewCell {
+    
+    private var codeInfoView = InfoView()
 
     @IBOutlet weak var recipeName: UILabel!
     @IBOutlet weak var timing: UILabel!
@@ -15,12 +17,13 @@ class RecipeTableViewCell: UITableViewCell {
     @IBOutlet weak var howManyPerson: UILabel!
     @IBOutlet weak var SVHowManyPerson: UIStackView!
     @IBOutlet weak var informations: InfoView!
-    @IBOutlet weak var information2: InfoView!
+    
     
     
      //Ajouter didSet
-    
+    //setUpInfoView()
     var recipe: Recipe? {
+        
         didSet {
             if let timeToPrepare = recipe?.duration, let name = recipe?.name, let person = recipe?.numberOfPeople, let image = recipe?.imageURL {
             configure(timeToPrepare: String(timeToPrepare), name: name, person: person, image: image)
@@ -29,6 +32,7 @@ class RecipeTableViewCell: UITableViewCell {
                 print(infoName)
                // information2.name.text = infoName
             }
+            setUpInfoView()
             /*
             if let image = recipe.imageUrl {
                 
@@ -48,6 +52,7 @@ class RecipeTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         addShadow()
+        //setUpInfoView()
         
         // Initialization code
     }
@@ -59,6 +64,17 @@ class RecipeTableViewCell: UITableViewCell {
     private func addShadow() {
         // Pas d'ombre finalement
     }
+    
+    private func setUpInfoView() {
+        codeInfoView.translatesAutoresizingMaskIntoConstraints = false
+        codeInfoView.backgroundColor = .red
+        codeInfoView = InfoView(frame: CGRect(x: 0, y: 0, width: 200, height: 50))
+        codeInfoView.configureInfo(timeToPrepare: "Hello", person: 0)
+        self.addSubview(codeInfoView)
+        
+        
+        
+    }
     private func configure(timeToPrepare: String, name: String, person: Float, image: String) {
         let backGroundImage = UIImageView()
         guard let urlImage = URL(string: image) else {
@@ -68,17 +84,19 @@ class RecipeTableViewCell: UITableViewCell {
         backgroundView = backGroundImage
         backgroundView?.contentMode = .scaleAspectFill
         
+        
         let interval: TimeInterval = Double(timeToPrepare) ?? 0
         
         let formatter = DateComponentsFormatter()
-        formatter.unitsStyle = .positional
-        if interval >= 60 {
+        formatter.unitsStyle = .brief
+        //if interval >= 60 {
         formatter.allowedUnits = [.hour, .minute]
-        } else {
-            formatter.allowedUnits = [.minute]
-        }
+        //} else {
+        //    formatter.allowedUnits = [.minute]
+        //}
         
-        guard var time = formatter.string(from: interval*60) else {
+        /*
+        guard var time = formatter.string(from: Double(timeToPrepare*60)) else {
             return
         }
         if interval >= 60 {
@@ -86,8 +104,9 @@ class RecipeTableViewCell: UITableViewCell {
         } else {
         time = time + " m"
         }
-        
-        if timeToPrepare == "-" {
+        */
+        /*
+        if time == "0 m" {
             SVTiming.isHidden = true
         } else {
             SVTiming.isHidden = false
@@ -97,13 +116,15 @@ class RecipeTableViewCell: UITableViewCell {
         } else {
             SVHowManyPerson.isHidden = false
         }
-        
+        */
         recipeName.text = "  " + name
         recipeName.backgroundColor = UIColor(displayP3Red: 0.2, green: 0.2, blue: 0.2, alpha: 0.5)
         //recipeName.font(.custom("OpenSans-Bold", size: 34))
         timing.text = " : \(time)"
         howManyPerson.text = " : \(String(Int(person))) pers."
-        //informations.text =  "🕒 : " + time + " min. \n Pers: \(String(person))"
+        
+        //information2.name.text = " : \(String(Int(person))) pers."
+        
         SVTiming.backgroundColor = UIColor(displayP3Red: 0.2, green: 0.2, blue: 0.2, alpha: 0.5)
         SVHowManyPerson.backgroundColor = UIColor(displayP3Red: 0.2, green: 0.2, blue: 0.2, alpha: 0.5)
     }

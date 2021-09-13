@@ -117,6 +117,7 @@ class RecipeListViewController: UIViewController {
         subtitle.isHidden = true
         toggleActivityIndicator(shown: true)
         self.receipesTableView.rowHeight = 120.0
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {

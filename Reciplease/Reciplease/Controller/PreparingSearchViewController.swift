@@ -40,9 +40,7 @@ class PreparingSearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         overrideUserInterfaceStyle = .dark
-        recipeCoreDataManager.howMany()
-        //recipeCoreDataManager.deleteAll()
-        recipeCoreDataManager.howMany()
+        
         ingredientName.attributedPlaceholder = NSAttributedString(string: "Lemon, Cheese, Sausages,...",
                                                                   attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray])
         self.ingredientTableView.rowHeight = 40.0
@@ -130,7 +128,6 @@ extension PreparingSearchViewController: UITextFieldDelegate { // To dismiss key
 extension PreparingSearchViewController: UITableViewDelegate { // To delete cells one by one
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            //print("On efface : \(indexPath.row)")
             ingredientsList.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .bottom)
             ingredientsUsed = ""
