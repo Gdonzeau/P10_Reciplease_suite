@@ -8,16 +8,33 @@
 import UIKit
 
 class InfoView: UIView {
+    var name = String()
     
-    
-    /*
-    var recipe: Recipe? {
-        didSet {
-            configureView()
-        }
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        //self.backgroundColor = .white
+        
+        setupView()
+        //setupConstraints()
+        //setupLikeButtonConstraints()
     }
-    */
     
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        //fatalError("init(coder:) has not been implemented")
+    }
+    
+    func setupView() {
+        self.addSubview(title)
+    }
+ 
+    let title: UILabel = {
+        let title = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 31))
+        let text = "Bonjour"
+        title.text = text
+        return title
+    }()
+    /*
     var recipe: Recipe? {
         
         didSet {
@@ -120,4 +137,5 @@ class InfoView: UIView {
         */
         
     }
+ */
 }

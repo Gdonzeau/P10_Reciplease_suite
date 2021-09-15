@@ -19,7 +19,6 @@ class RecipeTableViewCell: UITableViewCell {
     @IBOutlet weak var informations: InfoView!
     
     
-    
      //Ajouter didSet
     //setUpInfoView()
     var recipe: Recipe? {
@@ -30,9 +29,11 @@ class RecipeTableViewCell: UITableViewCell {
             }
             if let infoName = recipe?.name {
                 print(infoName)
+                codeInfoView.name = infoName
+                codeInfoView.title.text = infoName
                // information2.name.text = infoName
             }
-            setUpInfoView()
+            //setUpInfoView()
             /*
             if let image = recipe.imageUrl {
                 
@@ -69,7 +70,7 @@ class RecipeTableViewCell: UITableViewCell {
         codeInfoView.translatesAutoresizingMaskIntoConstraints = false
         codeInfoView.backgroundColor = .red
         codeInfoView = InfoView(frame: CGRect(x: 0, y: 0, width: 200, height: 50))
-        codeInfoView.configureInfo(timeToPrepare: "Hello", person: 0)
+        //codeInfoView.configureInfo(timeToPrepare: "Hello", person: 0)
         self.addSubview(codeInfoView)
         
         
@@ -84,6 +85,7 @@ class RecipeTableViewCell: UITableViewCell {
         backgroundView = backGroundImage
         backgroundView?.contentMode = .scaleAspectFill
         
+        setUpInfoView()
         
         let interval: TimeInterval = Double(timeToPrepare) ?? 0
         

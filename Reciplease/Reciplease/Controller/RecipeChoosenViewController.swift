@@ -68,18 +68,20 @@ class RecipeChoosenViewController: UIViewController {
         }
     }
     func setupView() {
+        print("Go")
         isRecipeNotFavorite(answer: isRecipeNotAlreadyRegistred())
         favoriteOrNot.contentVerticalAlignment = .fill
         favoriteOrNot.contentHorizontalAlignment = .fill
         favoriteOrNot.tintColor = .red
         
-        codeInfoView.recipe = recipe
+        //codeInfoView.recipe = recipe
         
         codeInfoView.translatesAutoresizingMaskIntoConstraints = false
         codeInfoView.backgroundColor = .red
-        codeInfoView = InfoView(frame: CGRect(x: 0, y: 0, width: 200, height: 50))
+        codeInfoView = InfoView(frame: CGRect(x: 100, y: 100, width: 200, height: 50))
         codeInfoView.layer.zPosition = .greatestFiniteMagnitude
         imageRecipe.addSubview(codeInfoView)
+        imageRecipe.bringSubviewToFront(codeInfoView)
         
         
         //customView = MyCustomView(frame: CGRect(x: 0, y: 0, width: 200, height: 50))
