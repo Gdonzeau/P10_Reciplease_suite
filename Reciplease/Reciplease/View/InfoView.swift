@@ -12,10 +12,9 @@ class InfoView: UIView {
     var timeToPrepare = String()
     
     override init(frame: CGRect) {
-        //var timeToPrepare: String
         super.init(frame: frame)
         //self.backgroundColor = .white
-        configureInfoView(timeToPrepare: timeToPrepare)
+        
         setupView()
         
         //setupConstraints()
@@ -37,23 +36,22 @@ class InfoView: UIView {
         title.text = text
         return title
     }()
-    
-    func configureInfoView(timeToPrepare: String) {
+    /*
+    func configureInfoView() {
         let formatter = DateComponentsFormatter()
         formatter.unitsStyle = .brief
         
         formatter.allowedUnits = [.hour, .minute]
-        print(timeToPrepare)
+        
         guard let timeForPrepare = Double(timeToPrepare) else {
             return
         }
-        print(timeForPrepare)
         guard let time = formatter.string(from: Double(timeForPrepare)*60) else {
             return
         }
-        print(time)
         title.text = time
     }
+    */
     /*
      var recipe: Recipe? {
      

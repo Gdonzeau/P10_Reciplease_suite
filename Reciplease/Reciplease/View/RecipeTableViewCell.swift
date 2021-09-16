@@ -87,11 +87,11 @@ class RecipeTableViewCell: UITableViewCell {
         
         setUpInfoView()
         
-        //let interval: TimeInterval = Double(timeToPrepare) ?? 0
-        /*
+        let interval: TimeInterval = Double(timeToPrepare) ?? 0
+        
         let formatter = DateComponentsFormatter()
         formatter.unitsStyle = .brief
-        
+        //if interval >= 60 {
         formatter.allowedUnits = [.hour, .minute]
         
         guard let timeForPrepare = Double(timeToPrepare) else {
@@ -100,7 +100,7 @@ class RecipeTableViewCell: UITableViewCell {
         guard let time = formatter.string(from: Double(timeForPrepare)*60) else {
             return
         }
-        */
+        
         /*
         if interval >= 60 {
             time = time + " h"
@@ -120,8 +120,8 @@ class RecipeTableViewCell: UITableViewCell {
             SVHowManyPerson.isHidden = false
         }
         */
-        print("envoi : \(timeToPrepare)")
-        codeInfoView.timeToPrepare = String(timeToPrepare)
+        
+        codeInfoView.title.text = String(time)
         recipeName.text = "  " + name
         recipeName.backgroundColor = UIColor(displayP3Red: 0.2, green: 0.2, blue: 0.2, alpha: 0.5)
         //recipeName.font(.custom("OpenSans-Bold", size: 34))
