@@ -9,14 +9,15 @@ import UIKit
 
 class RecipeTableViewCell: UITableViewCell {
     
-    private var codeInfoView = InfoView()
+    private var codeInfoTimeView = InfoTimeView()
+    private var codeInfoPersonView = InfoPersonView()
 
     @IBOutlet weak var recipeName: UILabel!
     @IBOutlet weak var timing: UILabel!
     @IBOutlet weak var SVTiming: UIStackView!
     @IBOutlet weak var howManyPerson: UILabel!
     @IBOutlet weak var SVHowManyPerson: UIStackView!
-    @IBOutlet weak var informations: InfoView!
+    @IBOutlet weak var informations: InfoTimeView!
     
     
      //Ajouter didSet
@@ -67,11 +68,10 @@ class RecipeTableViewCell: UITableViewCell {
     }
     
     private func setUpInfoView() {
-        codeInfoView.translatesAutoresizingMaskIntoConstraints = false
-        codeInfoView.backgroundColor = .red
-        codeInfoView = InfoView(frame: CGRect(x: 0, y: 0, width: 200, height: 50))
-        //codeInfoView.configureInfo(timeToPrepare: "Hello", person: 0)
-        self.addSubview(codeInfoView)
+        codeInfoTimeView.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(codeInfoTimeView)
+        self.addSubview(codeInfoPersonView)
+        
         
         
         
@@ -87,8 +87,6 @@ class RecipeTableViewCell: UITableViewCell {
         
         setUpInfoView()
         
-        let interval: TimeInterval = Double(timeToPrepare) ?? 0
-        
         let formatter = DateComponentsFormatter()
         formatter.unitsStyle = .brief
         //if interval >= 60 {
@@ -101,27 +99,22 @@ class RecipeTableViewCell: UITableViewCell {
             return
         }
         
-        /*
-        if interval >= 60 {
-            time = time + " h"
+        if time == "0min" {
+            codeInfoTimeView.isHidden = true
         } else {
-        time = time + " m"
-        }
-        */
-        /*
-        if time == "0 m" {
-            SVTiming.isHidden = true
-        } else {
-            SVTiming.isHidden = false
+            codeInfoTimeView.isHidden = false
         }
         if person == 0 {
-            SVHowManyPerson.isHidden = true
+            codeInfoPersonView.isHidden = true
         } else {
-            SVHowManyPerson.isHidden = false
+            codeInfoPersonView.isHidden = false
         }
-        */
+        print("Envoi : \(time)")
         
-        codeInfoView.title.text = String(time)
+        
+        
+        codeInfoTimeView.title.text = " : \(String(time))"
+        codeInfoPersonView.title.text = " : \(String(Int(person))) pers."
         recipeName.text = "  " + name
         recipeName.backgroundColor = UIColor(displayP3Red: 0.2, green: 0.2, blue: 0.2, alpha: 0.5)
         //recipeName.font(.custom("OpenSans-Bold", size: 34))

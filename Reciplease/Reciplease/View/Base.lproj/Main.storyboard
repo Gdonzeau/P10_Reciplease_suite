@@ -270,7 +270,7 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4P2-4h-CJN" customClass="InfoView" customModule="Reciplease" customModuleProvider="target">
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4P2-4h-CJN" customClass="InfoTimeView" customModule="Reciplease" customModuleProvider="target">
                                                     <rect key="frame" x="293" y="39" width="121" height="52"/>
                                                     <subviews>
                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Off-hT-psY">

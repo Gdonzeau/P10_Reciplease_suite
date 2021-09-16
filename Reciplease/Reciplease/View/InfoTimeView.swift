@@ -7,13 +7,13 @@
 
 import UIKit
 
-class InfoView: UIView {
-    var name = String()
+class InfoTimeView: UIView {
+    
     var timeToPrepare = String()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        //self.backgroundColor = .white
+        self.backgroundColor = .white
         
         setupView()
         
@@ -28,30 +28,60 @@ class InfoView: UIView {
     
     func setupView() {
         self.addSubview(title)
+        self.addSubview(symbol)
     }
     
     let title: UILabel = {
-        let title = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 31))
-        let text = "Bonjour"
-        title.text = text
+        let title = UILabel(frame: CGRect(x: 20, y: 0, width: 100, height: 31))
+        
+        var text = "" {
+            didSet {
+                title.text = text
+            }
+        }
+        
         return title
     }()
+    
+    let symbol: UIView = {
+        
+        let image = UIView(frame: CGRect(x: 0, y: 0, width: 31, height: 31))
+        image.largeContentImage = UIImage(systemName: "clock")
+        image.backgroundColor = .white
+        return image
+    }()
     /*
-    func configureInfoView() {
-        let formatter = DateComponentsFormatter()
-        formatter.unitsStyle = .brief
-        
-        formatter.allowedUnits = [.hour, .minute]
-        
-        guard let timeForPrepare = Double(timeToPrepare) else {
-            return
-        }
-        guard let time = formatter.string(from: Double(timeForPrepare)*60) else {
-            return
-        }
-        title.text = time
-    }
-    */
+     let imageClock = UIImage(systemName: "clock")
+     
+     let homeSymbolConfiguration = UIImage.SymbolConfiguration(pointSize: 55, weight: .black)
+     let homeImage = UIImage(systemName: "house", withConfiguration: homeSymbolConfiguration)
+     let width = homeImage?.size.width
+     let height = homeImage?.size.height
+     let homeButton = UIButton(frame: CGRect(x: 100, y: 100, width: width!, height: height!))
+     homeButton.tintColor = UIColor.gray
+     homeButton.setImage(homeImage, for: .normal)
+     var home = UIImage()
+     if let homeImage2 = homeImage {
+     home = homeImage2
+     }
+     */
+    //view.addSubview(homeButton)
+    /*
+     func configureInfoView() {
+     let formatter = DateComponentsFormatter()
+     formatter.unitsStyle = .brief
+     
+     formatter.allowedUnits = [.hour, .minute]
+     
+     guard let timeForPrepare = Double(timeToPrepare) else {
+     return
+     }
+     guard let time = formatter.string(from: Double(timeForPrepare)*60) else {
+     return
+     }
+     title.text = time
+     }
+     */
     /*
      var recipe: Recipe? {
      

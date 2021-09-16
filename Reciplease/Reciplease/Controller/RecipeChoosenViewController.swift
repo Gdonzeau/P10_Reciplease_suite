@@ -25,7 +25,7 @@ class RecipeChoosenViewController: UIViewController {
     @IBOutlet weak var favoriteOrNot: UIButton!
     @IBOutlet weak var newImageRecipe: UIView!
     
-    private var codeInfoView = InfoView()
+    private var codeInfoView = InfoTimeView()
     @IBAction func favoriteOrNotChange(_ sender: UIButton) {
         saveOrDelete()
     }
@@ -78,7 +78,7 @@ class RecipeChoosenViewController: UIViewController {
         
         codeInfoView.translatesAutoresizingMaskIntoConstraints = false
         codeInfoView.backgroundColor = .red
-        codeInfoView = InfoView(frame: CGRect(x: 100, y: 100, width: 200, height: 50))
+        codeInfoView = InfoTimeView(frame: CGRect(x: 100, y: 100, width: 200, height: 50))
         codeInfoView.layer.zPosition = .greatestFiniteMagnitude
         imageRecipe.addSubview(codeInfoView)
         imageRecipe.bringSubviewToFront(codeInfoView)
