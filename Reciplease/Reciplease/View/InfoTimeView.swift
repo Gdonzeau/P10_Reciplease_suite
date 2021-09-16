@@ -18,17 +18,16 @@ class InfoTimeView: UIView {
         setupView()
         
         //setupConstraints()
-        //setupLikeButtonConstraints()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        //fatalError("init(coder:) has not been implemented")
     }
     
     func setupView() {
         self.addSubview(title)
-        self.addSubview(symbol)
+        self.addSubview(symbolTime)
+        //self.addSubview(symbolTest)
     }
     
     let title: UILabel = {
@@ -39,32 +38,38 @@ class InfoTimeView: UIView {
                 title.text = text
             }
         }
-        
         return title
     }()
-    
-    let symbol: UIView = {
-        
-        let image = UIView(frame: CGRect(x: 0, y: 0, width: 31, height: 31))
-        image.largeContentImage = UIImage(systemName: "clock")
-        image.backgroundColor = .white
+    /*
+    let stackView: UIStackView = {
+       let stack = UIStackView(frame: CGRect(x: 0, y: 0, width: 40, height: 31))
+        stack.backgroundColor = UIColor(displayP3Red: 0.1, green: 0.1, blue: 0.1, alpha: 0.5)
+    return stack
+    }()
+    */
+    let symbolTime: UIImageView = {
+        let imageToAdd = UIImage(systemName: "clock")
+        var image = UIImageView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+        image = UIImageView(image: imageToAdd)
+        image.contentMode = .scaleAspectFit
+        let imageSymbolConfiguration = UIImage.SymbolConfiguration(pointSize: 100, weight: .black)
+        image.tintColor = UIColor.white
+
         return image
     }()
-    /*
+    
+    let symbolTest: UIButton = {
      let imageClock = UIImage(systemName: "clock")
      
-     let homeSymbolConfiguration = UIImage.SymbolConfiguration(pointSize: 55, weight: .black)
-     let homeImage = UIImage(systemName: "house", withConfiguration: homeSymbolConfiguration)
+     let homeSymbolConfiguration = UIImage.SymbolConfiguration(pointSize: 31, weight: .black)
+     let homeImage = UIImage(systemName: "clock", withConfiguration: homeSymbolConfiguration)
      let width = homeImage?.size.width
      let height = homeImage?.size.height
-     let homeButton = UIButton(frame: CGRect(x: 100, y: 100, width: width!, height: height!))
+     let homeButton = UIButton(frame: CGRect(x: 20, y: 20, width: width!, height: height!))
      homeButton.tintColor = UIColor.gray
      homeButton.setImage(homeImage, for: .normal)
-     var home = UIImage()
-     if let homeImage2 = homeImage {
-     home = homeImage2
-     }
-     */
+        return homeButton
+    }()
     //view.addSubview(homeButton)
     /*
      func configureInfoView() {

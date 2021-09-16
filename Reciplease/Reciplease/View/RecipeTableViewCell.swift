@@ -9,8 +9,9 @@ import UIKit
 
 class RecipeTableViewCell: UITableViewCell {
     
-    private var codeInfoTimeView = InfoTimeView()
-    private var codeInfoPersonView = InfoPersonView()
+    //private var codeInfoTimeView = InfoTimeView()
+    //private var codeInfoPersonView = InfoPersonView()
+    private var stackViewInfo = StackViewInfo()
 
     @IBOutlet weak var recipeName: UILabel!
     @IBOutlet weak var timing: UILabel!
@@ -68,9 +69,12 @@ class RecipeTableViewCell: UITableViewCell {
     }
     
     private func setUpInfoView() {
-        codeInfoTimeView.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(codeInfoTimeView)
-        self.addSubview(codeInfoPersonView)
+        //codeInfoTimeView.translatesAutoresizingMaskIntoConstraints = false
+        stackViewInfo.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(stackViewInfo)
+        stackViewInfo.frame(forAlignmentRect: CGRect(x: 50, y: 0, width: 30, height: 30))
+        //stackViewInfo.addSubview(codeInfoTimeView)
+        //stackViewInfo.addSubview(codeInfoPersonView)
         
         
         
@@ -100,21 +104,23 @@ class RecipeTableViewCell: UITableViewCell {
         }
         
         if time == "0min" {
-            codeInfoTimeView.isHidden = true
+            stackViewInfo.codeInfoTimeView.isHidden = true
         } else {
-            codeInfoTimeView.isHidden = false
+            stackViewInfo.codeInfoTimeView.isHidden = false
         }
         if person == 0 {
-            codeInfoPersonView.isHidden = true
+            stackViewInfo.codeInfoPersonView.isHidden = true
         } else {
-            codeInfoPersonView.isHidden = false
+            stackViewInfo.codeInfoPersonView.isHidden = false
         }
         print("Envoi : \(time)")
         
         
         
-        codeInfoTimeView.title.text = " : \(String(time))"
-        codeInfoPersonView.title.text = " : \(String(Int(person))) pers."
+        stackViewInfo.codeInfoTimeView.title.text = " : \(String(time))"
+        stackViewInfo.codeInfoPersonView.title.text = " : \(String(Int(person))) pers."
+        
+        
         recipeName.text = "  " + name
         recipeName.backgroundColor = UIColor(displayP3Red: 0.2, green: 0.2, blue: 0.2, alpha: 0.5)
         //recipeName.font(.custom("OpenSans-Bold", size: 34))
