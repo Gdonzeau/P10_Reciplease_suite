@@ -17,7 +17,7 @@ class InfoTimeView: UIView {
         
         setupView()
         
-        //setupConstraints()
+        setupConstraints()
     }
     
     required init?(coder: NSCoder) {
@@ -27,12 +27,13 @@ class InfoTimeView: UIView {
     func setupView() {
         self.addSubview(title)
         self.addSubview(symbolTime)
+        backgroundColor = .white
         //self.addSubview(symbolTest)
     }
     
     let title: UILabel = {
-        let title = UILabel(frame: CGRect(x: 20, y: 0, width: 100, height: 31))
-        
+        let title = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 31))
+        //let title2 = UILabel()
         var text = "" {
             didSet {
                 title.text = text
@@ -48,18 +49,24 @@ class InfoTimeView: UIView {
     }()
     */
     let symbolTime: UIImageView = {
-        let imageToAdd = UIImage(systemName: "clock")
-        var image = UIImageView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+        let imageSymbolConfiguration = UIImage.SymbolConfiguration(pointSize: 21, weight:.light)
+        let imageToAdd = UIImage(systemName: "clock", withConfiguration: imageSymbolConfiguration)
+        let width = imageToAdd?.size.width
+        let height = imageToAdd?.size.height
+        
+        var image = UIImageView(frame: CGRect(x: 0, y: 0, width: width!, height: height!))
         image = UIImageView(image: imageToAdd)
-        image.contentMode = .scaleAspectFit
-        let imageSymbolConfiguration = UIImage.SymbolConfiguration(pointSize: 100, weight: .black)
         image.tintColor = UIColor.white
 
         return image
     }()
     
+    func setupConstraints() {
+        
+    }
+    /*
     let symbolTest: UIButton = {
-     let imageClock = UIImage(systemName: "clock")
+     //let imageClock = UIImage(systemName: "clock")//
      
      let homeSymbolConfiguration = UIImage.SymbolConfiguration(pointSize: 31, weight: .black)
      let homeImage = UIImage(systemName: "clock", withConfiguration: homeSymbolConfiguration)
@@ -70,6 +77,8 @@ class InfoTimeView: UIView {
      homeButton.setImage(homeImage, for: .normal)
         return homeButton
     }()
+ */
+    
     //view.addSubview(homeButton)
     /*
      func configureInfoView() {

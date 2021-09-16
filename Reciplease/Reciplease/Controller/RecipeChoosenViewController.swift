@@ -24,8 +24,8 @@ class RecipeChoosenViewController: UIViewController {
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var favoriteOrNot: UIButton!
     @IBOutlet weak var newImageRecipe: UIView!
-    
-    private var codeInfoView = InfoTimeView()
+    private var stackViewInfo = StackViewInfo()
+    //private var codeInfoView = InfoTimeView()
     @IBAction func favoriteOrNotChange(_ sender: UIButton) {
         saveOrDelete()
     }
@@ -76,12 +76,12 @@ class RecipeChoosenViewController: UIViewController {
         
         //codeInfoView.recipe = recipe
         
-        codeInfoView.translatesAutoresizingMaskIntoConstraints = false
-        codeInfoView.backgroundColor = .red
-        codeInfoView = InfoTimeView(frame: CGRect(x: 100, y: 100, width: 200, height: 50))
-        codeInfoView.layer.zPosition = .greatestFiniteMagnitude
-        imageRecipe.addSubview(codeInfoView)
-        imageRecipe.bringSubviewToFront(codeInfoView)
+        stackViewInfo.translatesAutoresizingMaskIntoConstraints = false
+        stackViewInfo = StackViewInfo(frame: CGRect(x: 100, y: 100, width: 200, height: 50))
+        //stackViewInfo.layer.zPosition = .greatestFiniteMagnitude
+        imageRecipe.addSubview(stackViewInfo)
+        //imageRecipe.bringSubviewToFront(codeInfoView)
+        prepareInfo()
         
         
         //customView = MyCustomView(frame: CGRect(x: 0, y: 0, width: 200, height: 50))
@@ -115,7 +115,40 @@ class RecipeChoosenViewController: UIViewController {
         }
         
     }
-    
+    private func prepareInfo() {
+        guard let timePreparation = recipe?.duration else {
+            return
+        }
+        guard let person = recipe?.numberOfPeople else {
+            return
+        }
+        
+        let timeToPrepare = String(timePreparation)
+        let formatter = DateComponentsFormatter()
+        formatter.unitsStyle = .brief
+        //if interval >= 60 {
+        formatter.allowedUnits = [.hour, .minute]
+        
+        guard let timeForPrepare = Double(timeToPrepare) else {
+            return
+        }
+        guard let time = formatter.string(from: Double(timeForPrepare)*60) else {
+            return
+        }
+        
+        if time == "0min" {
+            stackViewInfo.codeInfoTimeView.isHidden = true
+        } else {
+            stackViewInfo.codeInfoTimeView.isHidden = false
+        }
+        if person == 0 {
+            stackViewInfo.codeInfoPersonView.isHidden = true
+        } else {
+            stackViewInfo.codeInfoPersonView.isHidden = false
+        }
+        stackViewInfo.codeInfoTimeView.title.text = " : \(time)"
+        stackViewInfo.codeInfoPersonView.title.text = " : \(String(Int(person))) pers."
+    }
     private func prepareInformations() {
         guard let recipeHere = recipe else {
             return

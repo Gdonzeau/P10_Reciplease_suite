@@ -115,9 +115,28 @@ class RecipeTableViewCell: UITableViewCell {
         }
         print("Envoi : \(time)")
         
+        /*
+        let imageSymbolConfiguration = UIImage.SymbolConfiguration(pointSize: 21, weight:.light)
+        let imageToAdd = UIImage(systemName: "clock", withConfiguration: imageSymbolConfiguration)
+        */
+        /*
+        let attachment = NSTextAttachment()
+        attachment.image = UIImage(systemName: "xmark.circle")
+
+        let imageString = NSMutableAttributedString(attachment: attachment)
+        let textString = NSAttributedString(string: "Please try again")
+        imageString.append(textString)
+ */
+/*
+        let label = UILabel()
+        label.attributedText = imageString
+        label.sizeToFit()
+  */
         
         
-        stackViewInfo.codeInfoTimeView.title.text = " : \(String(time))"
+        //stackViewInfo.codeInfoTimeView.title.attributedText = textString
+        //stackViewInfo.codeInfoTimeView.title.sizeToFit()
+        stackViewInfo.codeInfoTimeView.title.text = " : \(time)"
         stackViewInfo.codeInfoPersonView.title.text = " : \(String(Int(person))) pers."
         
         

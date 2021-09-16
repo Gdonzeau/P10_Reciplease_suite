@@ -13,7 +13,7 @@ class StackViewInfo: UIStackView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = .white
+        self.backgroundColor = .orange
         setupView()
         
         //setupView()
