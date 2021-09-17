@@ -33,13 +33,14 @@ class InfoTimeView: UIView {
     
     let title: UILabel = {
         let title = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 31))
-        //let title2 = UILabel()
+        let title2 = UILabel()
+        title2.translatesAutoresizingMaskIntoConstraints = false
         var text = "" {
             didSet {
-                title.text = text
+                title2.text = text
             }
         }
-        return title
+        return title2
     }()
     /*
     let stackView: UIStackView = {
@@ -54,7 +55,9 @@ class InfoTimeView: UIView {
         let width = imageToAdd?.size.width
         let height = imageToAdd?.size.height
         
-        var image = UIImageView(frame: CGRect(x: 0, y: 0, width: width!, height: height!))
+        //var image = UIImageView(frame: CGRect(x: 0, y: 0, width: width!, height: height!))
+        var image = UIImageView()
+        image.translatesAutoresizingMaskIntoConstraints = false
         image = UIImageView(image: imageToAdd)
         image.tintColor = UIColor.white
 
@@ -62,8 +65,54 @@ class InfoTimeView: UIView {
     }()
     
     func setupConstraints() {
-        
+        let constraints = [
+            /*
+            //symbolTime.topAnchor.constraint(equalTo: superview!.topAnchor),
+            //symbolTime.leadingAnchor.constraint(equalTo: superview!.leadingAnchor),
+            symbolTime.heightAnchor.constraint(equalToConstant: 31),
+            symbolTime.widthAnchor.constraint(equalToConstant: 31),
+            
+            //title.topAnchor.constraint(equalTo: superview!.topAnchor),
+            title.leadingAnchor.constraint(equalTo: symbolTime.rightAnchor, constant: -10),
+            title.heightAnchor.constraint(equalToConstant: 31),
+            title.widthAnchor.constraint(equalToConstant: 120)
+            */
+            
+            title.topAnchor.constraint(equalTo: symbolTime.topAnchor),
+            title.leftAnchor.constraint(equalTo: symbolTime.leftAnchor, constant: -40),
+            title.bottomAnchor.constraint(equalTo: symbolTime.bottomAnchor),
+            title.rightAnchor.constraint(equalTo: symbolTime.rightAnchor, constant: 40)
+            
+            
+            
+            
+        ]
+        NSLayoutConstraint.activate(constraints)
     }
+    
+    
+    /*
+    func setupContraintsTest() {
+        let constraints = [
+            view.centerXAnchor.constraint(equalTo: superview.centerXAnchor),
+            view.centerYAnchor.constraint(equalTo: superview.centerYAnchor),
+            view.widthAnchor.constraint(equalToConstant: 100),
+            view.heightAnchor.constraint(equalTo: view.widthAnchor)
+        ]
+        NSLayoutConstraint.activate(constraints)
+        
+        let constraints2 = [
+            innerSquare.topAnchor.constraint(equalTo: outerSquare.topAnchor),
+            innerSquare.leftAnchor.constraint(equalTo: outerSquare.leftAnchor, constant: 40),
+            outerSquare.bottomAnchor.constraint(equalTo: innerSquare.bottomAnchor),
+            outerSquare.rightAnchor.constraint(equalTo: innerSquare.rightAnchor, constant: 40)
+        ]
+
+        NSLayoutConstraint.activate(constraints2)
+    }
+    */
+    
+    
     /*
     let symbolTest: UIButton = {
      //let imageClock = UIImage(systemName: "clock")//

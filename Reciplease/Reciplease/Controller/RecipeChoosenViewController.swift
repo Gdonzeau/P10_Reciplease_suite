@@ -122,7 +122,7 @@ class RecipeChoosenViewController: UIViewController {
         guard let person = recipe?.numberOfPeople else {
             return
         }
-        
+        // Right format for time
         let timeToPrepare = String(timePreparation)
         let formatter = DateComponentsFormatter()
         formatter.unitsStyle = .brief
