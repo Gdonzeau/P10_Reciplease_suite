@@ -24,7 +24,12 @@ class RecipeChoosenViewController: UIViewController {
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var favoriteOrNot: UIButton!
     @IBOutlet weak var newImageRecipe: UIView!
-    private var stackViewInfo = StackViewInfo()
+    
+    private var stackViewInfo: StackViewInfo = {
+        let view = StackViewInfo()
+        view.codeInfoPersonView.person = "3"
+        return view
+    }()
     //private var codeInfoView = InfoTimeView()
     @IBAction func favoriteOrNotChange(_ sender: UIButton) {
         saveOrDelete()

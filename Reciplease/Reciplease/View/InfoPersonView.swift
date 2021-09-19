@@ -13,32 +13,52 @@ class InfoPersonView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = .white
+        self.translatesAutoresizingMaskIntoConstraints = false
         
         setupView()
-        
-        //setupConstraints()
-        //setupLikeButtonConstraints()
+        setupContraints()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        //fatalError("init(coder:) has not been implemented")
     }
     
     func setupView() {
         self.addSubview(title)
+        self.addSubview(symbolPerson)
+        self.backgroundColor = .darkGray
     }
     
     let title: UILabel = {
-        let title = UILabel(frame: CGRect(x: 0, y: 32, width: 100, height: 31))
-        
-        var text = "" {
-            didSet {
-                title.text = text
-            }
-        }
-        
+        let title = UILabel()
+        title.translatesAutoresizingMaskIntoConstraints = false
+        title.text = ""
         return title
     }()
+    
+    let symbolPerson: UIImageView = {
+        let imageSymbolConfiguration = UIImage.SymbolConfiguration(pointSize: 21, weight:.light)
+        let imageToAdd = UIImage(systemName: "person", withConfiguration: imageSymbolConfiguration)
+        let width = imageToAdd?.size.width
+        let height = imageToAdd?.size.height
+        
+        var image = UIImageView()
+        image.translatesAutoresizingMaskIntoConstraints = false
+        image = UIImageView(image: imageToAdd)
+        image.tintColor = UIColor.white
+
+        return image
+    }()
+    
+    func setupContraints() {
+        symbolPerson.topAnchor.constraint(equalTo: self.topAnchor, constant: 0).isActive = true
+        symbolPerson.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 0).isActive = true
+        symbolPerson.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0).isActive = true
+        symbolPerson.trailingAnchor.constraint(equalTo: title.leadingAnchor, constant: 0).isActive = true
+        
+        title.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
+        title.leadingAnchor.constraint(equalTo: symbolPerson.trailingAnchor, constant: 0).isActive = true
+        title.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0).isActive = true
+        title.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 0).isActive = true
+    }
 }

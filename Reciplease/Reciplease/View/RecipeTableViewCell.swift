@@ -29,54 +29,21 @@ class RecipeTableViewCell: UITableViewCell {
             if let timeToPrepare = recipe?.duration, let name = recipe?.name, let person = recipe?.numberOfPeople, let image = recipe?.imageURL {
             configure(timeToPrepare: String(timeToPrepare), name: name, person: person, image: image)
             }
-            if let infoName = recipe?.name {
-                print(infoName)
-                
-                
-               // information2.name.text = infoName
-            }
-            //setUpInfoView()
-            /*
-            if let image = recipe.imageUrl {
-                
-                if let url = URL(string: image) {
-               // imageBackgroundCell.load(url: url)
-                }
-            }
-            */
-            
-            //recipeName.text = recipe?.name
-            //recipeName.font(.custom("OpenSans-Bold", size: 34))
-            //timing.text = String(recipe.totalTime)
         }
     }
     
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        addShadow()
-        //setUpInfoView()
-        
-        // Initialization code
-    }
-    /*
-    private func configure() {
-        // copier coller plus bas
-    }
-    */
-    private func addShadow() {
-        // Pas d'ombre finalement
     }
     
-    private func setUpInfoView() {
-        //codeInfoTimeView.translatesAutoresizingMaskIntoConstraints = false
-        stackViewInfo.translatesAutoresizingMaskIntoConstraints = false
+    private func setupInfoView() {
         self.addSubview(stackViewInfo)
-        stackViewInfo.frame(forAlignmentRect: CGRect(x: 50, y: 0, width: 30, height: 30))
-        //stackViewInfo.addSubview(codeInfoTimeView)
-        //stackViewInfo.addSubview(codeInfoPersonView)
-        
-        
+    }
+    
+    private func setupConstraintsInfoView() {
+        stackViewInfo.topAnchor.constraint(equalTo: self.topAnchor, constant: 0).isActive = true
+        stackViewInfo.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 0).isActive = true
         
         
     }
@@ -89,7 +56,8 @@ class RecipeTableViewCell: UITableViewCell {
         backgroundView = backGroundImage
         backgroundView?.contentMode = .scaleAspectFill
         
-        setUpInfoView()
+        setupInfoView()
+        setupConstraintsInfoView()
         
         let formatter = DateComponentsFormatter()
         formatter.unitsStyle = .brief
@@ -115,27 +83,6 @@ class RecipeTableViewCell: UITableViewCell {
         }
         print("Envoi : \(time)")
         
-        /*
-        let imageSymbolConfiguration = UIImage.SymbolConfiguration(pointSize: 21, weight:.light)
-        let imageToAdd = UIImage(systemName: "clock", withConfiguration: imageSymbolConfiguration)
-        */
-        /*
-        let attachment = NSTextAttachment()
-        attachment.image = UIImage(systemName: "xmark.circle")
-
-        let imageString = NSMutableAttributedString(attachment: attachment)
-        let textString = NSAttributedString(string: "Please try again")
-        imageString.append(textString)
- */
-/*
-        let label = UILabel()
-        label.attributedText = imageString
-        label.sizeToFit()
-  */
-        
-        
-        //stackViewInfo.codeInfoTimeView.title.attributedText = textString
-        //stackViewInfo.codeInfoTimeView.title.sizeToFit()
         stackViewInfo.codeInfoTimeView.title.text = " : \(time)"
         stackViewInfo.codeInfoPersonView.title.text = " : \(String(Int(person))) pers."
         
