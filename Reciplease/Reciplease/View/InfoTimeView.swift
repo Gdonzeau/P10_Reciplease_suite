@@ -23,14 +23,14 @@ class InfoTimeView: UIView {
         super.init(coder: coder)
     }
     
-    let title: UILabel = {
+    let title: UILabel = { // Recipe's time to prepare
         let title = UILabel()
         title.translatesAutoresizingMaskIntoConstraints = false
-        title.text = "Bonjour"
+        title.text = ""
         return title
     }()
     
-    let symbolTime: UIImageView = {
+    let symbolTime: UIImageView = { // The symbol "Clock" from Apple
         let imageSymbolConfiguration = UIImage.SymbolConfiguration(pointSize: 21, weight:.light)
         let imageToAdd = UIImage(systemName: "clock", withConfiguration: imageSymbolConfiguration)
         let width = imageToAdd?.size.width
@@ -47,7 +47,6 @@ class InfoTimeView: UIView {
     func setupView() {
         self.addSubview(title)
         self.addSubview(symbolTime)
-        //self.backgroundColor = .darkGray
         self.backgroundColor = UIColor(displayP3Red: 0.2, green: 0.2, blue: 0.2, alpha: 0.5)
     }
     

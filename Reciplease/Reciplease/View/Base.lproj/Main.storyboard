@@ -289,10 +289,9 @@
                                 </connections>
                             </tableView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cKV-BC-fuf">
-                                <rect key="frame" x="57" y="526" width="300" height="50"/>
+                                <rect key="frame" x="50" y="526" width="314" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="5LU-vX-QsZ"/>
-                                    <constraint firstAttribute="width" constant="300" id="eLV-uM-ih9"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="26"/>
                                 <nil key="textColor"/>
@@ -311,10 +310,11 @@
                         <constraints>
                             <constraint firstItem="H1y-9H-jaE" firstAttribute="trailing" secondItem="ETt-k4-Ph6" secondAttribute="trailing" id="4yP-My-1vg"/>
                             <constraint firstItem="ETt-k4-Ph6" firstAttribute="leading" secondItem="H1y-9H-jaE" secondAttribute="leading" id="BYb-h4-lgH"/>
+                            <constraint firstItem="H1y-9H-jaE" firstAttribute="trailing" secondItem="cKV-BC-fuf" secondAttribute="trailing" constant="50" id="D1v-gY-TPc"/>
                             <constraint firstItem="ETt-k4-Ph6" firstAttribute="top" secondItem="H1y-9H-jaE" secondAttribute="top" id="DIG-dA-cRJ"/>
                             <constraint firstItem="gLh-2C-F1P" firstAttribute="centerY" secondItem="Gpc-0C-Vfz" secondAttribute="centerY" id="HOr-wW-DKP"/>
-                            <constraint firstItem="cKV-BC-fuf" firstAttribute="centerX" secondItem="Gpc-0C-Vfz" secondAttribute="centerX" id="QxL-t3-zwB"/>
                             <constraint firstItem="ETt-k4-Ph6" firstAttribute="bottom" secondItem="H1y-9H-jaE" secondAttribute="bottom" id="Raz-zk-K6k"/>
+                            <constraint firstItem="cKV-BC-fuf" firstAttribute="leading" secondItem="H1y-9H-jaE" secondAttribute="leading" constant="50" id="XeL-eR-0JY"/>
                             <constraint firstItem="cKV-BC-fuf" firstAttribute="top" secondItem="gLh-2C-F1P" secondAttribute="bottom" constant="8" symbolic="YES" id="ajn-lo-bhC"/>
                             <constraint firstItem="gLh-2C-F1P" firstAttribute="centerX" secondItem="Gpc-0C-Vfz" secondAttribute="centerX" id="apO-Xq-bdk"/>
                             <constraint firstItem="7q4-cA-S1h" firstAttribute="centerX" secondItem="Gpc-0C-Vfz" secondAttribute="centerX" id="gwb-xF-oyE"/>

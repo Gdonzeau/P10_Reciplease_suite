@@ -240,7 +240,7 @@ extension RecipeListViewController: UITableViewDelegate { // To delete cells one
             // print avant l'error (utilise pour les grosses boîtes)
         }
         
-        // deleteAction.backgroundColor = .red // Red par défaut pour le destructive
+         deleteAction.backgroundColor = .orange // Red par défaut pour le destructive
         
         let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
         //configuration.performsFirstActionWithFullSwipe = true // Ajouter alert controller

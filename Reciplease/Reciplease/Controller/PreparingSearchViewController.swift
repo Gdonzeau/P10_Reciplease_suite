@@ -12,7 +12,7 @@ class PreparingSearchViewController: UIViewController {
     var ingredientsUsed = ""
     var ingredientsList = [String]()
     
-    var paraTest = "Bonjour" {
+    var paraTest = "Search Recipes" {
         didSet {
             searchButton.setTitle(paraTest, for: .normal)
         }
@@ -25,7 +25,7 @@ class PreparingSearchViewController: UIViewController {
     @IBAction func addIngredientButton(_ sender: UIButton) {
         ingredientName.resignFirstResponder()
         addIngredient()
-        paraTest = "Привет"
+        //paraTest = "Привет"
     }
     @IBAction func searchRecipesButton(_ sender: UIButton) {
         gettingIngredients()
@@ -68,6 +68,13 @@ class PreparingSearchViewController: UIViewController {
         ingredientTableView.reloadData()
     }
     private func addIngredient() {
+        guard ingredientName.text != "" else {
+            let error = APIErrors.nothingIsWritten
+            if let errorMessage = error.errorDescription, let errorTitle = error.failureReason {
+                allErrors(errorMessage: errorMessage, errorTitle: errorTitle)
+            }
+            return
+        }
         guard var ingredientAdded = ingredientName.text else {
             return
         }

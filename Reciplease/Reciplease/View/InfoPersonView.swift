@@ -23,13 +23,6 @@ class InfoPersonView: UIView {
         super.init(coder: coder)
     }
     
-    func setupView() {
-        self.addSubview(title)
-        self.addSubview(symbolPerson)
-        //self.backgroundColor = .darkGray
-        self.backgroundColor = UIColor(displayP3Red: 0.2, green: 0.2, blue: 0.2, alpha: 0.5)
-    }
-    
     let title: UILabel = {
         let title = UILabel()
         title.translatesAutoresizingMaskIntoConstraints = false
@@ -37,7 +30,7 @@ class InfoPersonView: UIView {
         return title
     }()
     
-    let symbolPerson: UIImageView = {
+    let symbolPerson: UIImageView = { // Add symbol "Person" from Apple
         let imageSymbolConfiguration = UIImage.SymbolConfiguration(pointSize: 21, weight:.light)
         let imageToAdd = UIImage(systemName: "person", withConfiguration: imageSymbolConfiguration)
         let width = imageToAdd?.size.width
@@ -50,6 +43,12 @@ class InfoPersonView: UIView {
 
         return image
     }()
+    
+    func setupView() {
+        self.addSubview(title)
+        self.addSubview(symbolPerson)
+        self.backgroundColor = UIColor(displayP3Red: 0.2, green: 0.2, blue: 0.2, alpha: 0.5)
+    }
     
     func setupContraints() {
         symbolPerson.topAnchor.constraint(equalTo: self.topAnchor, constant: 0).isActive = true

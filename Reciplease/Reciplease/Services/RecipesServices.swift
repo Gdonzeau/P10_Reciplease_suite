@@ -20,7 +20,7 @@ class RecipesServices {
         
         let parameters = ["app_id": Keys.id.rawValue,
                           "app_key":Keys.key.rawValue,
-                          "from":"1", // À tester... et à passer ensuite en Config si ça marche
+                          "from":"0",
                           "to": String(Settings.quantityOfAnswers),
                           "q": ingredients]
         session.request(adressUrl, parameters: parameters)

@@ -27,7 +27,7 @@ class RecipeChoosenViewController: UIViewController {
     
     private var stackViewInfo: StackViewInfo = {
         let view = StackViewInfo()
-        view.codeInfoPersonView.person = "3"
+        view.codeInfoPersonView.person = ""
         return view
     }()
     //private var codeInfoView = InfoTimeView()
@@ -72,26 +72,23 @@ class RecipeChoosenViewController: UIViewController {
             imageRecipe.image = UIImage(named: "imageDefault") // No image, so Default image
         }
     }
-    func setupView() {
+    private func setupView() {
         print("Go")
         isRecipeNotFavorite(answer: isRecipeNotAlreadyRegistred())
         favoriteOrNot.contentVerticalAlignment = .fill
         favoriteOrNot.contentHorizontalAlignment = .fill
         favoriteOrNot.tintColor = .red
         
-        //codeInfoView.recipe = recipe
-        
         stackViewInfo.translatesAutoresizingMaskIntoConstraints = false
-        stackViewInfo = StackViewInfo(frame: CGRect(x: 100, y: 100, width: 200, height: 50))
-        //stackViewInfo.layer.zPosition = .greatestFiniteMagnitude
+        
         imageRecipe.addSubview(stackViewInfo)
-        //imageRecipe.bringSubviewToFront(codeInfoView)
         prepareInfo()
-        
-        
-        //customView = MyCustomView(frame: CGRect(x: 0, y: 0, width: 200, height: 50))
-        //self.view.addSubview(customView)
     }
+    private func setConstraints() {
+        stackViewInfo.leadingAnchor.constraint(equalTo: imageRecipe.leadingAnchor, constant: 10).isActive = true
+        stackViewInfo.topAnchor.constraint(equalTo: imageRecipe.topAnchor, constant: 10).isActive = true
+    }
+    
     private func saveOrDelete() {
         guard let recipeHere = recipe else {
             return
@@ -127,7 +124,7 @@ class RecipeChoosenViewController: UIViewController {
         guard let person = recipe?.numberOfPeople else {
             return
         }
-        // Right format for time
+        // Convert time into adapted format
         let timeToPrepare = String(timePreparation)
         let formatter = DateComponentsFormatter()
         formatter.unitsStyle = .brief
@@ -141,6 +138,7 @@ class RecipeChoosenViewController: UIViewController {
             return
         }
         
+        // If time or person = 0, no need to show these infos
         if time == "0min" {
             stackViewInfo.codeInfoTimeView.isHidden = true
         } else {
@@ -151,6 +149,7 @@ class RecipeChoosenViewController: UIViewController {
         } else {
             stackViewInfo.codeInfoPersonView.isHidden = false
         }
+        // Sendind infos by dependance injection
         stackViewInfo.codeInfoTimeView.title.text = " : \(time) "
         stackViewInfo.codeInfoPersonView.title.text = " : \(String(Int(person))) pers. "
     }
