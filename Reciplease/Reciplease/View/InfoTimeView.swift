@@ -47,7 +47,8 @@ class InfoTimeView: UIView {
     func setupView() {
         self.addSubview(title)
         self.addSubview(symbolTime)
-        self.backgroundColor = .darkGray
+        //self.backgroundColor = .darkGray
+        self.backgroundColor = UIColor(displayP3Red: 0.2, green: 0.2, blue: 0.2, alpha: 0.5)
     }
     
     func setupConstraints() { // Contraintes pour symbolTime et title

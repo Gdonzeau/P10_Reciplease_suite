@@ -23,7 +23,7 @@ class StackViewInfo: UIStackView {
     }
     
     func setupView() {
-        backgroundColor = .orange
+        //backgroundColor = .orange
         self.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(codeInfoTimeView)
         self.addSubview(codeInfoPersonView)
@@ -31,6 +31,10 @@ class StackViewInfo: UIStackView {
     func subViewsConstraints() {
         codeInfoTimeView.topAnchor.constraint(equalTo: self.topAnchor, constant: 0).isActive  = true
         codeInfoTimeView.bottomAnchor.constraint(equalTo: codeInfoPersonView.topAnchor, constant: 0).isActive = true
+        
+        codeInfoTimeView.widthAnchor.constraint(equalTo: codeInfoPersonView.widthAnchor).isActive = true
+        codeInfoPersonView.widthAnchor.constraint(equalTo: codeInfoTimeView.widthAnchor).isActive = true
+            
         
         codeInfoPersonView.topAnchor.constraint(equalTo: codeInfoTimeView.bottomAnchor, constant: 0).isActive = true
         codeInfoPersonView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0).isActive = true

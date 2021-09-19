@@ -26,7 +26,8 @@ class InfoPersonView: UIView {
     func setupView() {
         self.addSubview(title)
         self.addSubview(symbolPerson)
-        self.backgroundColor = .darkGray
+        //self.backgroundColor = .darkGray
+        self.backgroundColor = UIColor(displayP3Red: 0.2, green: 0.2, blue: 0.2, alpha: 0.5)
     }
     
     let title: UILabel = {

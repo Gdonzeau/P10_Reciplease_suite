@@ -9,20 +9,10 @@ import UIKit
 
 class RecipeTableViewCell: UITableViewCell {
     
-    //private var codeInfoTimeView = InfoTimeView()
-    //private var codeInfoPersonView = InfoPersonView()
     private var stackViewInfo = StackViewInfo()
 
     @IBOutlet weak var recipeName: UILabel!
-    @IBOutlet weak var timing: UILabel!
-    @IBOutlet weak var SVTiming: UIStackView!
-    @IBOutlet weak var howManyPerson: UILabel!
-    @IBOutlet weak var SVHowManyPerson: UIStackView!
-    @IBOutlet weak var informations: InfoTimeView!
     
-    
-     //Ajouter didSet
-    //setUpInfoView()
     var recipe: Recipe? {
         
         didSet {
@@ -42,9 +32,12 @@ class RecipeTableViewCell: UITableViewCell {
     }
     
     private func setupConstraintsInfoView() {
-        stackViewInfo.topAnchor.constraint(equalTo: self.topAnchor, constant: 0).isActive = true
+        //stackViewInfo.topAnchor.constraint(equalTo: self.topAnchor, constant: 0).isActive = true
         stackViewInfo.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 0).isActive = true
         
+        stackViewInfo.bottomAnchor.constraint(equalTo: recipeName.topAnchor, constant: 0).isActive = true
+        //stackViewInfo.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -10).isActive = true
+        //self.trailingAnchor.constraint(equalTo: stackViewInfo.trailingAnchor, constant: 0).isActive = true
         
     }
     private func configure(timeToPrepare: String, name: String, person: Float, image: String) {
@@ -83,20 +76,20 @@ class RecipeTableViewCell: UITableViewCell {
         }
         print("Envoi : \(time)")
         
-        stackViewInfo.codeInfoTimeView.title.text = " : \(time)"
-        stackViewInfo.codeInfoPersonView.title.text = " : \(String(Int(person))) pers."
+        stackViewInfo.codeInfoTimeView.title.text = " : \(time) "
+        stackViewInfo.codeInfoPersonView.title.text = " : \(String(Int(person))) pers. "
         
         
         recipeName.text = "  " + name
         recipeName.backgroundColor = UIColor(displayP3Red: 0.2, green: 0.2, blue: 0.2, alpha: 0.5)
         //recipeName.font(.custom("OpenSans-Bold", size: 34))
-        timing.text = " : \(time)"
-        howManyPerson.text = " : \(String(Int(person))) pers."
+        //timing.text = " : \(time)"
+        //howManyPerson.text = " : \(String(Int(person))) pers."
         
         //information2.name.text = " : \(String(Int(person))) pers."
         
-        SVTiming.backgroundColor = UIColor(displayP3Red: 0.2, green: 0.2, blue: 0.2, alpha: 0.5)
-        SVHowManyPerson.backgroundColor = UIColor(displayP3Red: 0.2, green: 0.2, blue: 0.2, alpha: 0.5)
+        //SVTiming.backgroundColor = UIColor(displayP3Red: 0.2, green: 0.2, blue: 0.2, alpha: 0.5)
+        //SVHowManyPerson.backgroundColor = UIColor(displayP3Red: 0.2, green: 0.2, blue: 0.2, alpha: 0.5)
     }
 }
 /*

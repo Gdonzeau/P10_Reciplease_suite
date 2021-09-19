@@ -151,8 +151,8 @@ class RecipeChoosenViewController: UIViewController {
         } else {
             stackViewInfo.codeInfoPersonView.isHidden = false
         }
-        stackViewInfo.codeInfoTimeView.title.text = " : \(time)"
-        stackViewInfo.codeInfoPersonView.title.text = " : \(String(Int(person))) pers."
+        stackViewInfo.codeInfoTimeView.title.text = " : \(time) "
+        stackViewInfo.codeInfoPersonView.title.text = " : \(String(Int(person))) pers. "
     }
     private func prepareInformations() {
         guard let recipeHere = recipe else {
