@@ -7,6 +7,7 @@
 
 import Foundation
 // Different potential errors
+//AppErrors
 enum APIErrors: String, LocalizedError {
     
     case noData = "No data"

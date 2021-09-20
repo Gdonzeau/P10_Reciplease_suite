@@ -25,16 +25,36 @@ class RecipeChoosenViewController: UIViewController {
     @IBOutlet weak var favoriteOrNot: UIButton!
     @IBOutlet weak var newImageRecipe: UIView!
     
-    private var stackViewInfo: StackViewInfo = {
-        let view = StackViewInfo()
-        view.codeInfoPersonView.person = ""
-        return view
-    }()
+    private var stackViewInfo = StackViewInfo()
+    //private var stackViewInfo: StackViewInfo = {
+    //    let view = StackViewInfo()
+    //    view.codeInfoPersonView.person = ""
+//return view
+   /// }()
     //private var codeInfoView = InfoTimeView()
-    @IBAction func favoriteOrNotChange(_ sender: UIButton) {
-        saveOrDelete()
+    @IBAction func changeFavoriteStatus(_ sender: UIButton) {
+        print("Youpi")
+        try? saveOrDelete()
+        /*
+        do {
+            
+        try saveOrDelete()
+        } catch {
+            print("Error")
+            allErrors(errorMessage: "Error", errorTitle: "subtitle")
+        }
+        */
     }
-    
+    /*
+    @IBAction func favoriteOrNotChange(_ sender: UIButton) throws {
+        do {
+        try saveOrDelete()
+        } catch {
+            print("Error")
+            allErrors(errorMessage: "Error", errorTitle: "subtitle")
+        }
+    }
+    */
     @IBAction func getDirectionsButtonAction(_ sender: UIButton) {
         openUrl()
     }
@@ -43,6 +63,7 @@ class RecipeChoosenViewController: UIViewController {
         super.viewDidLoad()
         overrideUserInterfaceStyle = .dark
         setupView()
+        setConstraints()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -79,26 +100,44 @@ class RecipeChoosenViewController: UIViewController {
         favoriteOrNot.contentHorizontalAlignment = .fill
         favoriteOrNot.tintColor = .red
         
+        stackViewInfo.duration = recipe?.duration
+        stackViewInfo.persons = recipe?.numberOfPeople
         stackViewInfo.translatesAutoresizingMaskIntoConstraints = false
         
         imageRecipe.addSubview(stackViewInfo)
-        prepareInfo()
     }
     private func setConstraints() {
-        stackViewInfo.leadingAnchor.constraint(equalTo: imageRecipe.leadingAnchor, constant: 10).isActive = true
-        stackViewInfo.topAnchor.constraint(equalTo: imageRecipe.topAnchor, constant: 10).isActive = true
+        NSLayoutConstraint.activate([
+            stackViewInfo.topAnchor.constraint(equalToSystemSpacingBelow: imageRecipe.topAnchor, multiplier: 1.5),
+            //.constraint(equalToSystemSpacingAfter: imageRecipe.leadingAnchor, multiplier: 1.5),
+            imageRecipe.trailingAnchor.constraint(equalToSystemSpacingAfter: stackViewInfo.trailingAnchor, multiplier: 1.5),
+           // stackViewInfo.leadingAnchor.constraint(equalTo: imageRecipe.leadingAnchor, constant: 10),
+           // stackViewInfo.topAnchor.constraint(equalTo: imageRecipe.topAnchor, constant: 10)
+        ])
     }
-    
-    private func saveOrDelete() {
+    private func machin() throws {
+        
+    }
+    private func saveOrDelete() throws {
         guard let recipeHere = recipe else {
             return
         }
         if isRecipeNotAlreadyRegistred() == true {
             favoriteOrNot.setImage(UIImage(systemName: "heart.fill"), for: .normal)
-            recipeCoreDataManager.saveRecipe(recipe: recipeHere)
+            do {
+            try recipeCoreDataManager.saveRecipe(recipe: recipeHere)
+            } catch {
+                print("Error while saving")
+                allErrors(errorMessage: "Error", errorTitle: "subtitle")
+            }
         } else {
             favoriteOrNot.setImage(UIImage(systemName: "heart"), for: .normal)
-            recipeCoreDataManager.deleteRecipe(recipeToDelete: recipeHere)
+            do {
+            try recipeCoreDataManager.deleteRecipe(recipeToDelete: recipeHere)
+            } catch {
+                print("Error while deleting")
+                allErrors(errorMessage: "Error", errorTitle: "subtitle")
+            }
         }
     }
     private func openUrl() {
@@ -117,6 +156,7 @@ class RecipeChoosenViewController: UIViewController {
         }
         
     }
+    /*
     private func prepareInfo() {
         guard let timePreparation = recipe?.duration else {
             return
@@ -153,6 +193,7 @@ class RecipeChoosenViewController: UIViewController {
         stackViewInfo.codeInfoTimeView.title.text = " : \(time) "
         stackViewInfo.codeInfoPersonView.title.text = " : \(String(Int(person))) pers. "
     }
+ */
     private func prepareInformations() {
         guard let recipeHere = recipe else {
             return
@@ -224,3 +265,44 @@ extension UIImageView { // Publishing the image
         }
     }
 }
+
+/*
+ // Start
+ private var isFavorite = false
+ 
+ private func recipeIsInFAvorites() -> Bool {
+     guard let recipes = try? recipeCoreDataManager.loadRecipes(),
+           let recipe = recipe else { return false }
+     return recipes.contains(recipe)
+ }
+ 
+ private func setupFavoriteButton() {
+     navigationItem.rightBarButtonItem = UIBarButtonItem(
+         image: UIImage(systemName: isFavorite ? "heart.fill" : "heart"),
+         style: .plain,
+         target: self,
+         action: #selector(favoriteTapped))
+ }
+ 
+ @objc
+ private func favoriteTapped() {
+     guard let recipe = recipe else { return }
+     if isFavorite {
+         do {
+             try recipeCoreDataManager.saveRecipe(recipe: recipe)
+         } catch {
+             print("Error while saving")
+             allErrors(errorMessage: "Error", errorTitle: "subtitle")
+         }
+     } else {
+         do {
+             try recipeCoreDataManager.deleteRecipe(recipeToDelete: recipe)
+         } catch {
+             print("Error while deleting")
+             allErrors(errorMessage: "Error", errorTitle: "subtitle")
+         }
+     }
+     isFavorite.toggle()
+     setupFavoriteButton()
+ }
+ */

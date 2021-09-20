@@ -16,6 +16,8 @@ class RecipeTableViewCell: UITableViewCell {
     var recipe: Recipe? {
         
         didSet {
+            configure()
+            
             if let timeToPrepare = recipe?.duration, let name = recipe?.name, let person = recipe?.numberOfPeople, let image = recipe?.imageURL {
             configure(timeToPrepare: String(timeToPrepare), name: name, person: person, image: image)
             }
@@ -24,6 +26,9 @@ class RecipeTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+    }
+    private func configure() {
+        stackViewInfo.duration = recipe?.duration
     }
     
     private func configure(timeToPrepare: String, name: String, person: Float, image: String) {
@@ -38,6 +43,10 @@ class RecipeTableViewCell: UITableViewCell {
         setupInfoView()
         setupConstraintsInfoView()
         
+        stackViewInfo.duration = recipe?.duration
+        stackViewInfo.persons = recipe?.numberOfPeople
+        
+        /*
         // Convert time into adapted format
         let formatter = DateComponentsFormatter()
         formatter.unitsStyle = .brief
@@ -65,7 +74,7 @@ class RecipeTableViewCell: UITableViewCell {
         stackViewInfo.codeInfoTimeView.title.text = " : \(time) "
         stackViewInfo.codeInfoPersonView.title.text = " : \(String(Int(person))) pers. "
         
-        
+        */
         recipeName.text = "  " + name
         recipeName.backgroundColor = UIColor(displayP3Red: 0.2, green: 0.2, blue: 0.2, alpha: 0.5)
     }

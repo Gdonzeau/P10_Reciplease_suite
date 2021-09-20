@@ -207,7 +207,6 @@ extension RecipeListViewController: UITableViewDataSource {
             return UITableViewCell()
         }
         cell.recipe = recipes[indexPath.row]
-        //cell.information2.recipe = recipes[indexPath.row]
         return cell
         
     }
@@ -216,7 +215,8 @@ extension RecipeListViewController: UITableViewDataSource {
 extension RecipeListViewController: UITableViewDelegate { // To delete cells one by one
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("Test touche")
+        tableView.deselectRow(at: indexPath, animated: true)
+        print("Test touche") //uncomment this and comemnt prepareforsegue
         //let sotry ...indexPath
         //detailViewController
         //recipeChoosenViewController.recipe = recipes[indexPath.row]
@@ -224,23 +224,33 @@ extension RecipeListViewController: UITableViewDelegate { // To delete cells one
         //detailVC.recipe = recipes[indexPath.row]
         // navigation.push
     }
-    
-    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? { // Swipe action
+    // *** VERIFIER
+    private func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) throws -> UISwipeActionsConfiguration? { // Swipe action
         guard recipeMode == .database else {
             return nil
         }
-        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { _, _, complete in
+        
+        let deleteAction = UIContextualAction(
+            style: .destructive, title: "Delete") { _, _, completionHandler in
             //self.recipes.remove(at: indexPath.row)// Do catch à ajouter
-            self.recipeCoreDataManager.deleteRecipe(recipeToDelete: self.recipes[indexPath.row])
-            DispatchQueue.main.async {
-                self.getRecipesFromDatabase()
+            let recipeToDelete = self.recipes[indexPath.row]
+            
+            do {
+                try self.recipeCoreDataManager.deleteRecipe(recipeToDelete: recipeToDelete)
+                DispatchQueue.main.async {
+                    self.getRecipesFromDatabase()
+                }
+                completionHandler(true)
+            } catch {
+                print("Error while deleting")
+                completionHandler(false)
+                self.allErrors(errorMessage: "Error", errorTitle: "subtitle") // better message
             }
-            complete(true)
             //Catch completion = false, Alert : pas pu supprimer la recette
             // print avant l'error (utilise pour les grosses boîtes)
         }
         
-         deleteAction.backgroundColor = .orange // Red par défaut pour le destructive
+       // deleteAction.backgroundColor = .orange // Red par défaut pour le destructive
         
         let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
         //configuration.performsFirstActionWithFullSwipe = true // Ajouter alert controller

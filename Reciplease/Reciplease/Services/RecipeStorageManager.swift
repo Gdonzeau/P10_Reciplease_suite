@@ -29,7 +29,7 @@ class RecipeCoreDataManager {
         return recipesStored.map { Recipe(from: $0) }
     }
     
-    func saveRecipe(recipe: Recipe) {//throws { // ajouter throws
+    func saveRecipe(recipe: Recipe) throws { // ajouter throws
         let recipeToSave = RecipeEntity(context: viewContext)
         recipeToSave.name = recipe.name
         recipeToSave.person = recipe.numberOfPeople
@@ -41,10 +41,10 @@ class RecipeCoreDataManager {
         do {
             try viewContext.save()
        // } catch {  throw error }
-        } catch { print("Error \(error)") }//; throw error }
+        } catch { print("Error \(error)") ; throw error }
     }
     
-    func deleteRecipe(recipeToDelete: Recipe) {//throws { // ajout throws
+    func deleteRecipe(recipeToDelete: Recipe) throws { // ajout throws
         let request: NSFetchRequest<RecipeEntity> = RecipeEntity.fetchRequest()
         do {
             let response = try viewContext.fetch(request)
@@ -54,6 +54,6 @@ class RecipeCoreDataManager {
                 }
             }
             try viewContext.save()
-        } catch { print("Error while deleting") }//; throw error } // Pas sûr
+        } catch { print("Error while deleting : \(error)") ; throw error } // Pas sûr
     }
 }
