@@ -78,7 +78,7 @@ class InfoView: UIView {
         
     }
     
-    /*
+    
     func setupConstraints() { // Contraintes pour symbolTime et title
         symbolTime.topAnchor.constraint(equalTo: self.topAnchor, constant: 0).isActive = true
         symbolTime.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 0).isActive = true
@@ -90,6 +90,6 @@ class InfoView: UIView {
         title.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0).isActive = true
         title.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 0).isActive = true
     }
- */
+ 
 }
 

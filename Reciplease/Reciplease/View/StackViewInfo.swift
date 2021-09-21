@@ -11,13 +11,14 @@ class StackViewInfo: UIStackView {
     
     var duration: Float? {
         didSet {
-            guard let duration = duration, duration != 0 else {
+            
+            guard let duration = duration, duration != 0.0 else {
                 codeInfoTimeView.isHidden = true
                 return
             }
             
             codeInfoTimeView.image = UIImage(systemName: "clock")
-            codeInfoPersonView.title = dateComponentsFormatter.string(from: Double(duration * 60))
+            codeInfoTimeView.title = dateComponentsFormatter.string(from: Double(duration * 60))
         }
     }
     
@@ -26,27 +27,24 @@ class StackViewInfo: UIStackView {
             guard let persons = persons else { return }
             
             codeInfoPersonView.image = UIImage(systemName: "person")
-            codeInfoPersonView.title = "\(persons) pers"
+            codeInfoPersonView.title = "\(persons) pers. "
         }
     }
 
-    private let codeInfoTimeView = InfoTimeView()
-    private let codeInfoPersonView = InfoTimeView()
-    
-    //private let codeInfoPersonView = InfoPersonView()
+    private let codeInfoTimeView = InfoView()
+    private let codeInfoPersonView = InfoView()
     
     private var dateComponentsFormatter: DateComponentsFormatter {
-        let dtc = DateComponentsFormatter()
-        dtc.unitsStyle = .brief
-        dtc.allowedUnits = [.hour, .minute]
-        return dtc
+        let timeToConvert = DateComponentsFormatter()
+        timeToConvert.unitsStyle = .brief
+        timeToConvert.allowedUnits = [.hour, .minute]
+        return timeToConvert
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         setupView()
-       // subViewsConstraints()
     }
     
     required init(coder: NSCoder) {
@@ -64,6 +62,7 @@ class StackViewInfo: UIStackView {
         
     }
     //TODELETE
+    /*
     func subViewsConstraints() {
         codeInfoTimeView.topAnchor.constraint(equalTo: topAnchor, constant: 0).isActive  = true
         codeInfoTimeView.bottomAnchor.constraint(equalTo: codeInfoPersonView.topAnchor, constant: 0).isActive = true
@@ -75,4 +74,5 @@ class StackViewInfo: UIStackView {
         codeInfoPersonView.topAnchor.constraint(equalTo: codeInfoTimeView.bottomAnchor, constant: 0).isActive = true
         codeInfoPersonView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0).isActive = true
     }
+ */
 }

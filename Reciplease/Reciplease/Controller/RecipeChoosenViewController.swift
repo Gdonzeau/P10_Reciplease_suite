@@ -26,16 +26,10 @@ class RecipeChoosenViewController: UIViewController {
     @IBOutlet weak var newImageRecipe: UIView!
     
     private var stackViewInfo = StackViewInfo()
-    //private var stackViewInfo: StackViewInfo = {
-    //    let view = StackViewInfo()
-    //    view.codeInfoPersonView.person = ""
-//return view
-   /// }()
-    //private var codeInfoView = InfoTimeView()
+    
     @IBAction func changeFavoriteStatus(_ sender: UIButton) {
         print("Youpi")
-        try? saveOrDelete()
-        /*
+        
         do {
             
         try saveOrDelete()
@@ -43,18 +37,8 @@ class RecipeChoosenViewController: UIViewController {
             print("Error")
             allErrors(errorMessage: "Error", errorTitle: "subtitle")
         }
-        */
     }
-    /*
-    @IBAction func favoriteOrNotChange(_ sender: UIButton) throws {
-        do {
-        try saveOrDelete()
-        } catch {
-            print("Error")
-            allErrors(errorMessage: "Error", errorTitle: "subtitle")
-        }
-    }
-    */
+    
     @IBAction func getDirectionsButtonAction(_ sender: UIButton) {
         openUrl()
     }
@@ -115,9 +99,7 @@ class RecipeChoosenViewController: UIViewController {
            // stackViewInfo.topAnchor.constraint(equalTo: imageRecipe.topAnchor, constant: 10)
         ])
     }
-    private func machin() throws {
-        
-    }
+    
     private func saveOrDelete() throws {
         guard let recipeHere = recipe else {
             return

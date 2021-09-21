@@ -10,7 +10,7 @@
 		04311935269C87A50031E33E /* PreparingSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04311934269C87A50031E33E /* PreparingSearchViewController.swift */; };
 		04311949269CA9AC0031E33E /* RecipeListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04311948269CA9AB0031E33E /* RecipeListViewController.swift */; };
 		04531AA226C95BA5004C71D8 /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04531AA126C95BA4004C71D8 /* TabBar.swift */; };
-		045CD4C126B845CB00F01C34 /* InfoTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045CD4C026B845CB00F01C34 /* InfoTimeView.swift */; };
+		045CD4C126B845CB00F01C34 /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045CD4C026B845CB00F01C34 /* InfoView.swift */; };
 		046E0548269328AD00C2F91C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046E0547269328AD00C2F91C /* AppDelegate.swift */; };
 		046E054A269328AD00C2F91C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046E0549269328AD00C2F91C /* SceneDelegate.swift */; };
 		046E054F269328AD00C2F91C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 046E054D269328AD00C2F91C /* Main.storyboard */; };
@@ -30,7 +30,6 @@
 		04C83E7626D5961700821BB2 /* FakeResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C83E7526D5961700821BB2 /* FakeResponse.swift */; };
 		04C83E8B26D8E53C00821BB2 /* TestStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C83E8A26D8E53A00821BB2 /* TestStorage.swift */; };
 		04C83E9026D90D6300821BB2 /* RecipeStorageManagerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C83E8F26D90D6300821BB2 /* RecipeStorageManagerTest.swift */; };
-		04D8450026F3495C001ECBBC /* InfoPersonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D844FF26F3495C001ECBBC /* InfoPersonView.swift */; };
 		04D9386D26DE82C4005A4536 /* RecipleaseStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D9386C26DE82C4005A4536 /* RecipleaseStorageTests.swift */; };
 		04F8A603269DC67800B12445 /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F8A602269DC67800B12445 /* Recipe.swift */; };
 		04F8A60E269E49A100B12445 /* RecipeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F8A60D269E49A100B12445 /* RecipeTableViewCell.swift */; };
@@ -62,7 +61,7 @@
 		04311934269C87A50031E33E /* PreparingSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreparingSearchViewController.swift; sourceTree = "<group>"; };
 		04311948269CA9AB0031E33E /* RecipeListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeListViewController.swift; sourceTree = "<group>"; };
 		04531AA126C95BA4004C71D8 /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
-		045CD4C026B845CB00F01C34 /* InfoTimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoTimeView.swift; sourceTree = "<group>"; };
+		045CD4C026B845CB00F01C34 /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
 		046E0544269328AD00C2F91C /* Reciplease.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Reciplease.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		046E0547269328AD00C2F91C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		046E0549269328AD00C2F91C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -88,7 +87,6 @@
 		04C83E7526D5961700821BB2 /* FakeResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeResponse.swift; sourceTree = "<group>"; };
 		04C83E8A26D8E53A00821BB2 /* TestStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestStorage.swift; sourceTree = "<group>"; };
 		04C83E8F26D90D6300821BB2 /* RecipeStorageManagerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeStorageManagerTest.swift; sourceTree = "<group>"; };
-		04D844FF26F3495C001ECBBC /* InfoPersonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoPersonView.swift; sourceTree = "<group>"; };
 		04D9386C26DE82C4005A4536 /* RecipleaseStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipleaseStorageTests.swift; sourceTree = "<group>"; };
 		04F8A602269DC67800B12445 /* Recipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
 		04F8A60D269E49A100B12445 /* RecipeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeTableViewCell.swift; sourceTree = "<group>"; };
@@ -207,8 +205,7 @@
 				04F8A60D269E49A100B12445 /* RecipeTableViewCell.swift */,
 				046E054D269328AD00C2F91C /* Main.storyboard */,
 				04FD4D3E26F382DC000ADEE9 /* StackViewInfo.swift */,
-				045CD4C026B845CB00F01C34 /* InfoTimeView.swift */,
-				04D844FF26F3495C001ECBBC /* InfoPersonView.swift */,
+				045CD4C026B845CB00F01C34 /* InfoView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -529,7 +526,7 @@
 				0479239E269C5D83006E7E03 /* Config.swift in Sources */,
 				046E0552269328AD00C2F91C /* Reciplease.xcdatamodeld in Sources */,
 				046E05E82698A16100C2F91C /* RecipesServices.swift in Sources */,
-				045CD4C126B845CB00F01C34 /* InfoTimeView.swift in Sources */,
+				045CD4C126B845CB00F01C34 /* InfoView.swift in Sources */,
 				04311949269CA9AC0031E33E /* RecipeListViewController.swift in Sources */,
 				04F8A613269E4C0B00B12445 /* RecipeChoosenViewController.swift in Sources */,
 				04531AA226C95BA5004C71D8 /* TabBar.swift in Sources */,
@@ -539,7 +536,6 @@
 				046E0548269328AD00C2F91C /* AppDelegate.swift in Sources */,
 				046E05B9269501BF00C2F91C /* NetworkErrors.swift in Sources */,
 				046E054A269328AD00C2F91C /* SceneDelegate.swift in Sources */,
-				04D8450026F3495C001ECBBC /* InfoPersonView.swift in Sources */,
 				04F8A60E269E49A100B12445 /* RecipeTableViewCell.swift in Sources */,
 				04C5EC3026C28EFB007DEBB0 /* RecipeStorageManager.swift in Sources */,
 				04FD4D3F26F382DC000ADEE9 /* StackViewInfo.swift in Sources */,
