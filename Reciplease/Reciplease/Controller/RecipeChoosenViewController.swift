@@ -28,14 +28,14 @@ class RecipeChoosenViewController: UIViewController {
     private var stackViewInfo = StackViewInfo()
     
     @IBAction func changeFavoriteStatus(_ sender: UIButton) {
-        print("Youpi")
-        
         do {
-            
         try saveOrDelete()
         } catch {
-            print("Error")
-            allErrors(errorMessage: "Error", errorTitle: "subtitle")
+            print("Error CoreData")
+            let error = AppError.coreDataError
+            if let errorMessage = error.errorDescription, let errorTitle = error.failureReason {
+                allErrors(errorMessage: errorMessage, errorTitle: errorTitle)
+            }
         }
     }
     
@@ -62,7 +62,7 @@ class RecipeChoosenViewController: UIViewController {
         if let imageUrl = recipeHere.imageURL {
             urlImage = imageUrl
         } else {
-            let error = APIErrors.noImage
+            let error = AppError.noImage
             if let errorMessage = error.errorDescription, let errorTitle = error.failureReason {
                 allErrors(errorMessage: errorMessage, errorTitle: errorTitle)
             }
@@ -70,7 +70,7 @@ class RecipeChoosenViewController: UIViewController {
         if let imageUrlUnwrapped = URL(string: urlImage) {
             imageRecipe.load(url: imageUrlUnwrapped)
         } else {
-            let error = APIErrors.noImage
+            let error = AppError.noImage
             if let errorMessage = error.errorDescription, let errorTitle = error.failureReason {
                 allErrors(errorMessage: errorMessage, errorTitle: errorTitle)
             }
@@ -93,10 +93,7 @@ class RecipeChoosenViewController: UIViewController {
     private func setConstraints() {
         NSLayoutConstraint.activate([
             stackViewInfo.topAnchor.constraint(equalToSystemSpacingBelow: imageRecipe.topAnchor, multiplier: 1.5),
-            //.constraint(equalToSystemSpacingAfter: imageRecipe.leadingAnchor, multiplier: 1.5),
-            imageRecipe.trailingAnchor.constraint(equalToSystemSpacingAfter: stackViewInfo.trailingAnchor, multiplier: 1.5),
-           // stackViewInfo.leadingAnchor.constraint(equalTo: imageRecipe.leadingAnchor, constant: 10),
-           // stackViewInfo.topAnchor.constraint(equalTo: imageRecipe.topAnchor, constant: 10)
+            imageRecipe.trailingAnchor.constraint(equalToSystemSpacingAfter: stackViewInfo.trailingAnchor, multiplier: 1.5)
         ])
     }
     
@@ -110,7 +107,10 @@ class RecipeChoosenViewController: UIViewController {
             try recipeCoreDataManager.saveRecipe(recipe: recipeHere)
             } catch {
                 print("Error while saving")
-                allErrors(errorMessage: "Error", errorTitle: "subtitle")
+                let error = AppError.errorSaving
+                if let errorMessage = error.errorDescription, let errorTitle = error.failureReason {
+                    allErrors(errorMessage: errorMessage, errorTitle: errorTitle)
+                }
             }
         } else {
             favoriteOrNot.setImage(UIImage(systemName: "heart"), for: .normal)
@@ -118,7 +118,10 @@ class RecipeChoosenViewController: UIViewController {
             try recipeCoreDataManager.deleteRecipe(recipeToDelete: recipeHere)
             } catch {
                 print("Error while deleting")
-                allErrors(errorMessage: "Error", errorTitle: "subtitle")
+                let error = AppError.errorDelete
+                if let errorMessage = error.errorDescription, let errorTitle = error.failureReason {
+                    allErrors(errorMessage: errorMessage, errorTitle: errorTitle)
+                }
             }
         }
     }
@@ -135,47 +138,14 @@ class RecipeChoosenViewController: UIViewController {
             vc.modalPresentationStyle = .fullScreen
             vc.modalTransitionStyle = .coverVertical
             present(vc, animated: true)
-        }
-        
-    }
-    /*
-    private func prepareInfo() {
-        guard let timePreparation = recipe?.duration else {
-            return
-        }
-        guard let person = recipe?.numberOfPeople else {
-            return
-        }
-        // Convert time into adapted format
-        let timeToPrepare = String(timePreparation)
-        let formatter = DateComponentsFormatter()
-        formatter.unitsStyle = .brief
-        //if interval >= 60 {
-        formatter.allowedUnits = [.hour, .minute]
-        
-        guard let timeForPrepare = Double(timeToPrepare) else {
-            return
-        }
-        guard let time = formatter.string(from: Double(timeForPrepare)*60) else {
-            return
-        }
-        
-        // If time or person = 0, no need to show these infos
-        if time == "0min" {
-            stackViewInfo.codeInfoTimeView.isHidden = true
         } else {
-            stackViewInfo.codeInfoTimeView.isHidden = false
+            let error = AppError.noUrl
+            if let errorMessage = error.errorDescription, let errorTitle = error.failureReason {
+                allErrors(errorMessage: errorMessage, errorTitle: errorTitle)
+            }
         }
-        if person == 0 {
-            stackViewInfo.codeInfoPersonView.isHidden = true
-        } else {
-            stackViewInfo.codeInfoPersonView.isHidden = false
-        }
-        // Sendind infos by dependance injection
-        stackViewInfo.codeInfoTimeView.title.text = " : \(time) "
-        stackViewInfo.codeInfoPersonView.title.text = " : \(String(Int(person))) pers. "
     }
- */
+    
     private func prepareInformations() {
         guard let recipeHere = recipe else {
             return
@@ -247,44 +217,3 @@ extension UIImageView { // Publishing the image
         }
     }
 }
-
-/*
- // Start
- private var isFavorite = false
- 
- private func recipeIsInFAvorites() -> Bool {
-     guard let recipes = try? recipeCoreDataManager.loadRecipes(),
-           let recipe = recipe else { return false }
-     return recipes.contains(recipe)
- }
- 
- private func setupFavoriteButton() {
-     navigationItem.rightBarButtonItem = UIBarButtonItem(
-         image: UIImage(systemName: isFavorite ? "heart.fill" : "heart"),
-         style: .plain,
-         target: self,
-         action: #selector(favoriteTapped))
- }
- 
- @objc
- private func favoriteTapped() {
-     guard let recipe = recipe else { return }
-     if isFavorite {
-         do {
-             try recipeCoreDataManager.saveRecipe(recipe: recipe)
-         } catch {
-             print("Error while saving")
-             allErrors(errorMessage: "Error", errorTitle: "subtitle")
-         }
-     } else {
-         do {
-             try recipeCoreDataManager.deleteRecipe(recipeToDelete: recipe)
-         } catch {
-             print("Error while deleting")
-             allErrors(errorMessage: "Error", errorTitle: "subtitle")
-         }
-     }
-     isFavorite.toggle()
-     setupFavoriteButton()
- }
- */

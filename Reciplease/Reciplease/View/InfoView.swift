@@ -30,16 +30,11 @@ class InfoView: UIView {
         super.init(frame: frame)
         self.translatesAutoresizingMaskIntoConstraints = false
         setupView()
-        //setupConstraints()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
-    
-   
-    
-
     
     func setupView() {
         backgroundColor = UIColor(displayP3Red: 0.2, green: 0.2, blue: 0.2, alpha: 0.5)
@@ -48,13 +43,6 @@ class InfoView: UIView {
         titleLabel.font = UIFont.preferredFont(forTextStyle: .caption1)
         titleLabel.adjustsFontForContentSizeCategory = true
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        /*
-        let imageSymbolConfiguration = UIImage.SymbolConfiguration(pointSize: 21, weight:.light)
-        let imageToAdd = UIImage(systemName: "clock", withConfiguration: imageSymbolConfiguration)
-        let width = imageToAdd?.size.width
-        let height = imageToAdd?.size.height
-        */
        
         imageView.tintColor = .label
         imageView.contentMode = .scaleAspectFit
@@ -78,7 +66,7 @@ class InfoView: UIView {
         
     }
     
-    
+    /*
     func setupConstraints() { // Contraintes pour symbolTime et title
         symbolTime.topAnchor.constraint(equalTo: self.topAnchor, constant: 0).isActive = true
         symbolTime.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 0).isActive = true
@@ -90,6 +78,6 @@ class InfoView: UIView {
         title.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0).isActive = true
         title.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 0).isActive = true
     }
- 
+ */
 }
 

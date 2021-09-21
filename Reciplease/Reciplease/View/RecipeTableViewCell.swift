@@ -40,56 +40,15 @@ class RecipeTableViewCell: UITableViewCell {
         backgroundView = backGroundImage
         backgroundView?.contentMode = .scaleAspectFill
         
-        setupInfoView()
-        setupConstraintsInfoView()
+        addSubview(stackViewInfo)
+        
+        trailingAnchor.constraint(equalTo: stackViewInfo.trailingAnchor).isActive = true
+        stackViewInfo.topAnchor.constraint(equalTo: topAnchor).isActive = true
         
         stackViewInfo.duration = recipe?.duration
         stackViewInfo.persons = recipe?.numberOfPeople
         
-        /*
-        // Convert time into adapted format
-        let formatter = DateComponentsFormatter()
-        formatter.unitsStyle = .brief
-        formatter.allowedUnits = [.hour, .minute]
-        
-        guard let timeForPrepare = Double(timeToPrepare) else {
-            return
-        }
-        guard let time = formatter.string(from: Double(timeForPrepare)*60) else {
-            return
-        }
-        // If time or person = 0, no need to show these infos
-        if time == "0min" {
-            stackViewInfo.codeInfoTimeView.isHidden = true
-        } else {
-            stackViewInfo.codeInfoTimeView.isHidden = false
-        }
-        if person == 0 {
-            stackViewInfo.codeInfoPersonView.isHidden = true
-        } else {
-            stackViewInfo.codeInfoPersonView.isHidden = false
-        }
-        
-        // Sendind infos by dependance injection
-        stackViewInfo.codeInfoTimeView.title.text = " : \(time) "
-        stackViewInfo.codeInfoPersonView.title.text = " : \(String(Int(person))) pers. "
-        
-        */
         recipeName.text = "  " + name
         recipeName.backgroundColor = UIColor(displayP3Red: 0.2, green: 0.2, blue: 0.2, alpha: 0.5)
-    }
-    
-    private func setupInfoView() {
-        self.addSubview(stackViewInfo)
-    }
-    
-    private func setupConstraintsInfoView() {
-        //stackViewInfo.topAnchor.constraint(equalTo: self.topAnchor, constant: 0).isActive = true
-        stackViewInfo.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 0).isActive = true
-        
-        stackViewInfo.bottomAnchor.constraint(equalTo: recipeName.topAnchor, constant: 0).isActive = true
-        //stackViewInfo.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -10).isActive = true
-        //self.trailingAnchor.constraint(equalTo: stackViewInfo.trailingAnchor, constant: 0).isActive = true
-        
     }
 }

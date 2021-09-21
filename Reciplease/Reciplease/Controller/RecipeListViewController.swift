@@ -49,8 +49,6 @@ enum ViewState {
     case error
     case empty
     case showData
-    // case error2(Error)
-    // case show(Recipe)
 }
 
 class RecipeListViewController: UIViewController {
@@ -76,9 +74,6 @@ class RecipeListViewController: UIViewController {
             case .showData:
                 receipesTableView.isHidden = false
                 receipesTableView.reloadData()
-                
-            //  case .error2(let error where error.):
-            //    allErrors(errorMessage: error.title, errorTitle: <#T##String#>)
             }
         }
     }
@@ -112,7 +107,7 @@ class RecipeListViewController: UIViewController {
         title = recipeMode.title
         imageView.image = recipeMode.emptyImage
         subtitle.text = recipeMode.subtitle
-        activityIndicator.hidesWhenStopped = true // possible de le faire storyboard
+        activityIndicator.hidesWhenStopped = true
         imageView.isHidden = true
         subtitle.isHidden = true
         toggleActivityIndicator(shown: true)
@@ -133,7 +128,6 @@ class RecipeListViewController: UIViewController {
            let recipeChoosenVC = segue.destination as? RecipeChoosenViewController,
            let index = receipesTableView.indexPathForSelectedRow?.row {
             recipeChoosenVC.recipe = recipes[index]
-           // recipeChoosenVC.infoView.recipe = recipes[index]
         }
     }
     
@@ -190,11 +184,9 @@ class RecipeListViewController: UIViewController {
 }
 
 extension RecipeListViewController: UITableViewDataSource {
-    /*
-     func numberOfSections(in tableView: UITableView) -> Int { // Pas nécessaire (1 par défaut)
-     return 1
-     }
-     */
+    
+    // func numberOfSection not necessary as 1 by default
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         recipes.count
     }
@@ -216,15 +208,8 @@ extension RecipeListViewController: UITableViewDelegate { // To delete cells one
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        print("Test touche") //uncomment this and comemnt prepareforsegue
-        //let sotry ...indexPath
-        //detailViewController
-        //recipeChoosenViewController.recipe = recipes[indexPath.row]
-        //recipeChoosenVC.recipe = recipes[indexPath.row]
-        //detailVC.recipe = recipes[indexPath.row]
-        // navigation.push
     }
-    // *** VERIFIER
+    
     private func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) throws -> UISwipeActionsConfiguration? { // Swipe action
         guard recipeMode == .database else {
             return nil
@@ -232,7 +217,6 @@ extension RecipeListViewController: UITableViewDelegate { // To delete cells one
         
         let deleteAction = UIContextualAction(
             style: .destructive, title: "Delete") { _, _, completionHandler in
-            //self.recipes.remove(at: indexPath.row)// Do catch à ajouter
             let recipeToDelete = self.recipes[indexPath.row]
             
             do {
@@ -244,16 +228,13 @@ extension RecipeListViewController: UITableViewDelegate { // To delete cells one
             } catch {
                 print("Error while deleting")
                 completionHandler(false)
-                self.allErrors(errorMessage: "Error", errorTitle: "subtitle") // better message
+                let error = AppError.errorDelete
+                if let errorMessage = error.errorDescription, let errorTitle = error.failureReason {
+                    self.allErrors(errorMessage: errorMessage, errorTitle: errorTitle)
+                }
             }
-            //Catch completion = false, Alert : pas pu supprimer la recette
-            // print avant l'error (utilise pour les grosses boîtes)
         }
-        
-       // deleteAction.backgroundColor = .orange // Red par défaut pour le destructive
-        
         let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
-        //configuration.performsFirstActionWithFullSwipe = true // Ajouter alert controller
         return configuration
     }
 }

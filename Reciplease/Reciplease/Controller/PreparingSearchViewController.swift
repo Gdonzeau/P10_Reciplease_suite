@@ -69,7 +69,7 @@ class PreparingSearchViewController: UIViewController {
     }
     private func addIngredient() {
         guard ingredientName.text != "" else {
-            let error = APIErrors.nothingIsWritten
+            let error = AppError.nothingIsWritten
             if let errorMessage = error.errorDescription, let errorTitle = error.failureReason {
                 allErrors(errorMessage: errorMessage, errorTitle: errorTitle)
             }
@@ -86,7 +86,7 @@ class PreparingSearchViewController: UIViewController {
     
     private func gettingIngredients() {
         guard ingredientsList.count > 0 else {
-            let error = APIErrors.nothingIsWritten
+            let error = AppError.nothingIsWritten
             if let errorMessage = error.errorDescription, let errorTitle = error.failureReason {
                 allErrors(errorMessage: errorMessage, errorTitle: errorTitle)
             }

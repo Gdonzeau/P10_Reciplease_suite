@@ -61,18 +61,4 @@ class StackViewInfo: UIStackView {
         addArrangedSubview(codeInfoPersonView)
         
     }
-    //TODELETE
-    /*
-    func subViewsConstraints() {
-        codeInfoTimeView.topAnchor.constraint(equalTo: topAnchor, constant: 0).isActive  = true
-        codeInfoTimeView.bottomAnchor.constraint(equalTo: codeInfoPersonView.topAnchor, constant: 0).isActive = true
-        
-        codeInfoTimeView.widthAnchor.constraint(equalTo: codeInfoPersonView.widthAnchor).isActive = true
-        codeInfoPersonView.widthAnchor.constraint(equalTo: codeInfoTimeView.widthAnchor).isActive = true
-            
-        
-        codeInfoPersonView.topAnchor.constraint(equalTo: codeInfoTimeView.bottomAnchor, constant: 0).isActive = true
-        codeInfoPersonView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0).isActive = true
-    }
- */
 }
