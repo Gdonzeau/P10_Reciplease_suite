@@ -9,7 +9,7 @@ import Foundation
 // Different potential errors
 //AppErrors
 enum AppError: String, LocalizedError {
-    
+    case loadingError = "Loading Error."
     case coreDataError = "CoreData Error."
     case errorDelete = "Error while deleting"
     case errorSaving = "Error while saving"
@@ -31,6 +31,8 @@ enum AppError: String, LocalizedError {
             return "There is no url adress for this recipe"
         case .noImage:
             return "There are no image associated with this recipe"
+        case .loadingError:
+            return "There was an loading error"
         }
     }
     var failureReason: String? {
@@ -47,6 +49,8 @@ enum AppError: String, LocalizedError {
             return "No url adress"
         case .noImage:
             return "No image associated"
+        case .loadingError:
+            return "Loading Error"
         }
     }
 }

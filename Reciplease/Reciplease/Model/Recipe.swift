@@ -34,9 +34,9 @@ struct Recipe {
     }
     
     private func convertDatasToStringArray(ingredients: Data?) -> [String] {
-        guard let datas = ingredients else {
-            return []
-        }
+        guard let datas = ingredients else { return [] }
+            
+        
         let data = Data(datas)
         return (try? JSONDecoder().decode([String].self, from: data)) ?? []
     }
@@ -44,7 +44,7 @@ struct Recipe {
 
 extension Recipe: Codable {
     
-    enum BlaBla: String, CodingKey {
+    enum Rename: String, CodingKey {
         case recipe
         case name = "label"
         case imageURL = "image"
@@ -59,9 +59,9 @@ extension Recipe: Codable {
     }
 
     init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: BlaBla.self)
+        let container = try decoder.container(keyedBy: Rename.self)
 
-        let recipe = try container.nestedContainer(keyedBy: BlaBla.self, forKey: .recipe)
+        let recipe = try container.nestedContainer(keyedBy: Rename.self, forKey: .recipe)
 
         name = try recipe.decode(String.self, forKey: .name)
         imageURL = try recipe.decode(String.self, forKey: .imageURL)

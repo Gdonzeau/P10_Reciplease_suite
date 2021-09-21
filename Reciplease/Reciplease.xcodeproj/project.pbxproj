@@ -28,8 +28,6 @@
 		04C83E5F26D3F8F600821BB2 /* FakeResponseAlamofire.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C83E5E26D3F8F600821BB2 /* FakeResponseAlamofire.swift */; };
 		04C83E7126D5940500821BB2 /* Recipes.json in Resources */ = {isa = PBXBuildFile; fileRef = 04C83E7026D5940400821BB2 /* Recipes.json */; };
 		04C83E7626D5961700821BB2 /* FakeResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C83E7526D5961700821BB2 /* FakeResponse.swift */; };
-		04C83E8B26D8E53C00821BB2 /* TestStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C83E8A26D8E53A00821BB2 /* TestStorage.swift */; };
-		04C83E9026D90D6300821BB2 /* RecipeStorageManagerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C83E8F26D90D6300821BB2 /* RecipeStorageManagerTest.swift */; };
 		04D9386D26DE82C4005A4536 /* RecipleaseStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D9386C26DE82C4005A4536 /* RecipleaseStorageTests.swift */; };
 		04F8A603269DC67800B12445 /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F8A602269DC67800B12445 /* Recipe.swift */; };
 		04F8A60E269E49A100B12445 /* RecipeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04F8A60D269E49A100B12445 /* RecipeTableViewCell.swift */; };
@@ -85,8 +83,6 @@
 		04C83E5E26D3F8F600821BB2 /* FakeResponseAlamofire.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeResponseAlamofire.swift; sourceTree = "<group>"; };
 		04C83E7026D5940400821BB2 /* Recipes.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Recipes.json; sourceTree = "<group>"; };
 		04C83E7526D5961700821BB2 /* FakeResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeResponse.swift; sourceTree = "<group>"; };
-		04C83E8A26D8E53A00821BB2 /* TestStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestStorage.swift; sourceTree = "<group>"; };
-		04C83E8F26D90D6300821BB2 /* RecipeStorageManagerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeStorageManagerTest.swift; sourceTree = "<group>"; };
 		04D9386C26DE82C4005A4536 /* RecipleaseStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipleaseStorageTests.swift; sourceTree = "<group>"; };
 		04F8A602269DC67800B12445 /* Recipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
 		04F8A60D269E49A100B12445 /* RecipeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeTableViewCell.swift; sourceTree = "<group>"; };
@@ -171,11 +167,7 @@
 			children = (
 				04C83E6B26D58CA800821BB2 /* TestStorage */,
 				04C83E6C26D58CB600821BB2 /* TestAPI */,
-				046E0561269328B100C2F91C /* RecipleaseNetworkTests.swift */,
-				04C83E7526D5961700821BB2 /* FakeResponse.swift */,
-				04D9386C26DE82C4005A4536 /* RecipleaseStorageTests.swift */,
 				046E0563269328B100C2F91C /* Info.plist */,
-				04B5075826D26B8B00455263 /* MockUrlProtocol.swift */,
 			);
 			path = RecipleaseTests;
 			sourceTree = "<group>";
@@ -246,8 +238,8 @@
 		04C83E6B26D58CA800821BB2 /* TestStorage */ = {
 			isa = PBXGroup;
 			children = (
-				04C83E8A26D8E53A00821BB2 /* TestStorage.swift */,
-				04C83E8F26D90D6300821BB2 /* RecipeStorageManagerTest.swift */,
+				04D9386C26DE82C4005A4536 /* RecipleaseStorageTests.swift */,
+				04C83E7526D5961700821BB2 /* FakeResponse.swift */,
 			);
 			path = TestStorage;
 			sourceTree = "<group>";
@@ -255,8 +247,10 @@
 		04C83E6C26D58CB600821BB2 /* TestAPI */ = {
 			isa = PBXGroup;
 			children = (
+				046E0561269328B100C2F91C /* RecipleaseNetworkTests.swift */,
 				04C83E7026D5940400821BB2 /* Recipes.json */,
 				04C83E5E26D3F8F600821BB2 /* FakeResponseAlamofire.swift */,
+				04B5075826D26B8B00455263 /* MockUrlProtocol.swift */,
 			);
 			path = TestAPI;
 			sourceTree = "<group>";
@@ -546,8 +540,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				04C83E9026D90D6300821BB2 /* RecipeStorageManagerTest.swift in Sources */,
-				04C83E8B26D8E53C00821BB2 /* TestStorage.swift in Sources */,
 				04C83E5F26D3F8F600821BB2 /* FakeResponseAlamofire.swift in Sources */,
 				04D9386D26DE82C4005A4536 /* RecipleaseStorageTests.swift in Sources */,
 				046E0562269328B100C2F91C /* RecipleaseNetworkTests.swift in Sources */,

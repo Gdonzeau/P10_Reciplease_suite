@@ -66,7 +66,10 @@ class RecipeListViewController: UIViewController {
             case .loading:
                 activityIndicator.startAnimating()
             case .error:
-                allErrors(errorMessage: "Error", errorTitle: "subtitle")
+                let error = AppError.loadingError
+                if let errorMessage = error.errorDescription, let errorTitle = error.failureReason {
+                    self.allErrors(errorMessage: errorMessage, errorTitle: errorTitle)
+                }
             case .empty:
                 //stack view image / title / subtitle
                 subtitle.isHidden = false

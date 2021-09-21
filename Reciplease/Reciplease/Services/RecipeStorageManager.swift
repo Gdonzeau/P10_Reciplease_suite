@@ -54,6 +54,6 @@ class RecipeCoreDataManager {
                 }
             }
             try viewContext.save()
-        } catch { print("Error while deleting : \(error)") ; throw error } // Pas sûr
+        } catch { print("Error while deleting : \(error)") ; throw error }
     }
 }
