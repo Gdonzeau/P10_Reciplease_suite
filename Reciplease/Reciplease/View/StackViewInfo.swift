@@ -27,7 +27,7 @@ class StackViewInfo: UIStackView {
             guard let persons = persons else { return }
             
             codeInfoPersonView.image = UIImage(systemName: "person")
-            codeInfoPersonView.title = "\(persons) pers. "
+            codeInfoPersonView.title = "\(Int(persons)) pers. "
         }
     }
 

@@ -134,7 +134,6 @@ class RecipeChoosenViewController: UIViewController {
             let config = SFSafariViewController.Configuration()
             config.entersReaderIfAvailable = true
             let vc = SFSafariViewController(url: url, configuration: config)
-            //vc.modalPresentationStyle = .popover
             vc.modalPresentationStyle = .fullScreen
             vc.modalTransitionStyle = .coverVertical
             present(vc, animated: true)

@@ -99,7 +99,7 @@ class RecipeListViewController: UIViewController {
         super.viewDidLoad()
         overrideUserInterfaceStyle = .dark
         setupView()
-        //options()
+        
         getRecipes()
     }
     func options() {

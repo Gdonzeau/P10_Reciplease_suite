@@ -25,7 +25,6 @@ class PreparingSearchViewController: UIViewController {
     @IBAction func addIngredientButton(_ sender: UIButton) {
         ingredientName.resignFirstResponder()
         addIngredient()
-        //paraTest = "Привет"
     }
     @IBAction func searchRecipesButton(_ sender: UIButton) {
         gettingIngredients()

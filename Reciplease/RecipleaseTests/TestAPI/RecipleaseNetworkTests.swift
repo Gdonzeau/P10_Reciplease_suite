@@ -41,7 +41,7 @@ class RecipleaseNetworkTests: XCTestCase {
     
     func testError() {
         let expectation = XCTestExpectation(description: "recipe error")
-       // MockUrlProtocol.data = FakeResponse.recipeIncorrectData
+       
         MockUrlProtocol.error = AFError.explicitlyCancelled
         
         recipeService.getRecipes(ingredients: "Lemon") { (result) in
@@ -51,10 +51,7 @@ class RecipleaseNetworkTests: XCTestCase {
             }
             
             XCTAssertNotNil(error)
-            /*
-            let error = try? XCTUnwrap(recipeResponse.asAFError)
-            XCTAssertTrue(error?.errorDescription == "Response could not be decoded because of error:\nThe data couldn’t be read because it isn’t in the correct format.")
-            */
+            
             expectation.fulfill()
         }
         wait(for: [expectation], timeout: 1)

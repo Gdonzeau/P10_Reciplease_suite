@@ -63,21 +63,6 @@ class InfoView: UIView {
             contentStackView.topAnchor.constraint(equalTo: topAnchor),
             contentStackView.bottomAnchor.constraint(equalTo: bottomAnchor),
         ])
-        
     }
-    
-    /*
-    func setupConstraints() { // Contraintes pour symbolTime et title
-        symbolTime.topAnchor.constraint(equalTo: self.topAnchor, constant: 0).isActive = true
-        symbolTime.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 0).isActive = true
-        symbolTime.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0).isActive = true
-        symbolTime.trailingAnchor.constraint(equalTo: title.leadingAnchor, constant: 0).isActive = true
-        
-        title.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        title.leadingAnchor.constraint(equalTo: symbolTime.trailingAnchor, constant: 0).isActive = true
-        title.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 0).isActive = true
-        title.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 0).isActive = true
-    }
- */
 }
 
